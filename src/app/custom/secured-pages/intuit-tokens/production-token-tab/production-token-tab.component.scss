@@ -1,0 +1,78 @@
+@import "src/@fuse/scss/fuse";
+
+app-production-token-tab {
+
+    #production-token-tab {
+        max-width: 1200px;
+
+        .production-token-tab-content {
+
+            .general {
+
+                .table-row {
+
+                    .key {
+                        padding: 0 16px 0 0;
+                        font-weight: 600;
+                    }
+
+                    .highlight {
+                        color: rgb(3, 155, 229);
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+
+    }
+
+    // Profile boxes
+    .profile-box {
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 16px;
+        @include mat-elevation(2);
+
+        header {
+            padding: 16px;
+
+            .title {
+                font-size: 17px;
+            }
+
+            .more {
+                cursor: pointer;
+            }
+        }
+
+        .content {
+            padding: 16px;
+        }
+
+        footer {
+            padding: 8px;
+            border-top: 1px solid;
+        }
+
+        &.info-box {
+
+            .info-line {
+                margin-bottom: 24px;
+
+                .title {
+                    font-size: 15px;
+                    font-weight: 600;
+                    padding-bottom: 4px;
+                }
+
+                .info {
+
+                }
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+}

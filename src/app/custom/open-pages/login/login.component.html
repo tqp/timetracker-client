@@ -1,0 +1,120 @@
+<div id="login" fxLayout="column">
+
+    <div id="login-form-wrapper" fxLayout="column" fxLayoutAlign="center center">
+
+        <div id="login-form" [@animate]="{value:'*',params:{duration:'300ms',y:'100px'}}">
+
+            <div class="logo logo-container">
+                <img src="assets/custom/images/logos/inductive-minds-logo_transp.png" alt="IM Logo">
+            </div>
+
+            <div class="title">LOGIN TO TIMETRACKER</div>
+
+            <!--
+            <button mat-raised-button class="im">
+                Log in with your Inductive Minds E-mail
+            </button>
+            -->
+
+            <form ngNoForm action="https://accounts.google.com/o/oauth2/v2/auth" method="GET" style="margin-top: 10px;">
+                <input type="hidden" name="client_id" value="{{googleClientId}}">
+                <input type="hidden" name="redirect_uri" value="{{googleRedirectUri}}">
+                <input type="hidden" name="state" value="{{csrfToken}}">
+                <input type="hidden" name="prompt" value="select_account">
+                <input type="hidden" name="response_type" value="code">
+                <input type="hidden" name="scope" value="profile email openid">
+                <!--
+                <input type="hidden" name="login_hint" value="tim.powers@inductiveminds.com">
+                -->
+                <button mat-raised-button class="im" type="submit">
+                    Log in with your Inductive Minds E-mail
+                </button>
+            </form>
+
+            <button [@expandContract]="loginFormVisible ? 'contracted' : 'expanded'" mat-raised-button class="local"
+                    (click)="toggleLoginFormVisible()">
+                Log in with a Username and Password
+            </button>
+
+            <form [@expandContract]="loginFormVisible ? 'expanded' : 'contracted'" name="loginForm"
+                  [formGroup]="loginForm" novalidate style="margin-top: 10px;">
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input matInput formControlName="email">
+                    <mat-icon matSuffix class="secondary-text">mail</mat-icon>
+                    <mat-error *ngIf="loginForm.get('email').hasError('required')">
+                        Email is required
+                    </mat-error>
+                    <mat-error
+                        *ngIf="!loginForm.get('email').hasError('required') &&
+                                loginForm.get('email').hasError('email')">
+                        Please enter a valid email address
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Password</mat-label>
+                    <input matInput type="password" formControlName="password">
+                    <mat-icon matSuffix class="secondary-text">vpn_key</mat-icon>
+                    <mat-error *ngIf="loginForm.get('password').hasError('required')">
+                        Password is required
+                    </mat-error>
+                    <mat-error *ngIf="loginForm.get('password').hasError('customValidator')">
+                        {{errorMessage}}
+                    </mat-error>
+                </mat-form-field>
+
+                <!--
+                <div class="remember-forgot-password" fxLayout="row" fxLayout.xs="column"
+                     fxLayoutAlign="space-between center">
+                    <mat-checkbox class="remember-me" aria-label="Remember Me">
+                        Remember Me
+                    </mat-checkbox>
+
+                    <a class="forgot-password" [routerLink]="'/pages/auth/forgot-password'">
+                        Forgot Password?
+                    </a>
+
+                </div>
+                -->
+
+                <div class="button-row">
+
+                    <button mat-raised-button class="form-row-button close-form" aria-label="Close Form" (click)="toggleLoginFormVisible()">
+                        Close Form
+                    </button>
+
+                    <button mat-raised-button class="form-row-button login" aria-label="Login" [disabled]="loginForm.invalid"
+                            (click)="loginApp()">
+                        Login
+                    </button>
+
+                </div>
+
+            </form>
+
+            <!--
+            <div class="separator">
+                <span class="text">OR</span>
+            </div>
+
+            <button mat-raised-button class="google">
+                Log in with Google
+            </button>
+
+            <button mat-raised-button class="facebook">
+                Log in with Facebook
+            </button>
+
+            <div class="register" fxLayout="column" fxLayoutAlign="center center">
+                <span class="text">Don't have an account?</span>
+                <a class="link" [routerLink]="'/pages/auth/register'">Create an account</a>
+            </div>
+            -->
+
+        </div>
+
+    </div>
+
+</div>

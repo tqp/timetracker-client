@@ -1,0 +1,37 @@
+@mixin profile-app-user-theme($theme) {
+
+    $background: map-get($theme, background);
+    $foreground: map-get($theme, foreground);
+    $primary: map-get($theme, primary);
+
+    app-user-info {
+
+        #user-info {
+
+            .user-info-content {
+
+                .work {
+
+                    .job {
+
+                        .date {
+                            color: map-get($foreground, secondary-text);
+                        }
+                    }
+                }
+            }
+        }
+
+        .profile-box {
+
+            .content {
+                background-color: map-get($background, card);
+            }
+
+            footer {
+                border-top-color: map-get($foreground, divider);
+                background-color: rgba(0, 0, 0, 0.06);
+            }
+        }
+    }
+}

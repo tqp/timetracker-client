@@ -1,6 +1,140 @@
 import { FuseNavigation } from '@fuse/types';
+import { environment } from '../../environments/environment';
 
 export const navigation: FuseNavigation[] = [
+    {
+        id: 'my-info',
+        title: 'My Pages',
+        type: 'group',
+        role: 'ROLE_USER',
+        icon: 'apps',
+        children: [
+            {
+                id: 'my-dashboard',
+                title: 'My Dashboard',
+                type: 'item',
+                role: 'ROLE_USER',
+                icon: 'insert_chart',
+                url: 'secured-pages/user-dashboard'
+            },
+            {
+                id: 'holiday-list',
+                title: 'Holiday List',
+                type: 'item',
+                role: 'ROLE_USER',
+                icon: 'calendar_today',
+                url: 'secured-pages/holiday-list'
+            }
+        ]
+    },
+    {
+        id: 'manager-items',
+        title: 'Manager Pages',
+        type: 'group',
+        role: 'ROLE_MANAGER',
+        icon: 'apps',
+        children: [
+            {
+                id: 'employee-table',
+                title: 'Employee Table',
+                type: 'item',
+                role: 'ROLE_MANAGER',
+                icon: 'group',
+                url: 'secured-pages/employee-table'
+            },
+            {
+                id: 'time-activity',
+                title: 'All Time Activity',
+                type: 'item',
+                role: 'ROLE_MANAGER',
+                icon: 'access_time',
+                url: 'secured-pages/time-activity'
+            },
+            {
+                id: 'intuit-tokens',
+                title: 'Intuit Token Management',
+                type: 'item',
+                role: 'ROLE_MANAGER',
+                icon: 'vpn_key',
+                url: '/secured-pages/intuit-tokens'
+            },
+        ]
+    },
+    {
+        id: 'administrator-items',
+        title: 'Administrator Pages',
+        type: 'group',
+        role: 'ROLE_ADMIN',
+        icon: 'apps',
+        children: [
+            {
+                id: 'user-management',
+                title: 'User Management',
+                type: 'collapsable',
+                role: 'ROLE_ADMIN',
+                icon: 'group',
+                children: [
+                    {
+                        id: 'user-list',
+                        title: 'User List',
+                        type: 'item',
+                        role: 'ROLE_ADMIN',
+                        url: '/pages/invoices/modern'
+                    }
+                ]
+            },
+            {
+                id: 'intuit-administration',
+                title: 'Synchronize Intuit Data',
+                type: 'item',
+                role: 'ROLE_ADMIN',
+                icon: 'update',
+                url: '/secured-pages/intuit-sync'
+            },
+            {
+                id: 'file-upload',
+                title: 'File Upload',
+                type: 'item',
+                role: 'ROLE_ADMIN',
+                icon: 'insert_drive_file',
+                url: '/secured-pages/file-upload'
+            },
+            {
+                id: 'swagger',
+                title: 'Swagger',
+                type: 'item',
+                role: 'ROLE_ADMIN',
+                icon: 'extension',
+                externalUrl: true,
+                openInNewTab: true,
+                url: environment.apiUrl + '/swagger-ui.html'
+            }
+        ]
+    },
+    {
+        id: 'documentation',
+        title: 'About the App',
+        icon: 'import_contacts',
+        type: 'group',
+        role: 'ROLE_MANAGER',
+        children: [
+            {
+                id: 'change-log',
+                title: 'Change Log',
+                type: 'item',
+                role: 'ROLE_MANAGER',
+                icon: 'update',
+                url: 'secured-pages/change-log',
+                badge: {
+                    title: '2.0.0',
+                    bg: '#09d261',
+                    fg: '#FFFFFF'
+                }
+            }
+        ]
+    },
+
+    // Default Fuse Template Navigation Targets
     {
         id       : 'applications',
         title    : 'Applications',

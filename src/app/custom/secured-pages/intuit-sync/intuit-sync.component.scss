@@ -1,0 +1,86 @@
+@import "src/@fuse/scss/fuse";
+
+#intuit-sync {
+
+    .icon-rotate {
+        animation: rotating 3s linear infinite;
+        color: green;
+    }
+
+    .header {
+        position: relative;
+        flex: 1 0 auto;
+        height: 280px;
+        max-height: 280px;
+        text-align: center;
+        overflow: hidden;
+
+        @include media-breakpoint('xs') {
+            height: 240px;
+            padding: 16px;
+        }
+    }
+
+    .content {
+
+        .actions {
+            width: 100%;
+            max-width: 1040px;
+            margin: 0 auto;
+
+            .action {
+                padding: 8px 0;
+
+                &:hover {
+                    .action-content {
+                        border: none;
+                        @include mat-elevation(12);
+                    }
+                }
+
+                .action-content {
+                    border-radius: 4px;
+                    overflow: hidden;
+                    transition: box-shadow 200ms ease-in-out;
+                    @include mat-elevation(1);
+
+                    .header {
+                        padding: 16px 24px;
+                        height: 64px !important;
+                        min-height: 64px !important;
+                        max-height: 64px !important;
+
+                        .category {
+                            text-transform: capitalize;
+                            text-align: left;
+                            font-weight: 600;
+                        }
+
+                        .last-run {
+                            font-size: 13px;
+                            font-weight: 600;
+                            display: flex;
+                            flex-direction: row;
+                        }
+
+                        .last-sync-timestamp {
+                            width: 150px;
+                        }
+
+                        .length {
+
+                            .length-icon {
+                                margin-right: 8px;
+                            }
+
+                            .min {
+                                font-size: 16px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+}

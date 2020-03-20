@@ -1,0 +1,49 @@
+<div id="token-info" class="p-24" fxLayout="row wrap">
+
+    <div class="token-info-content" fxLayout="column" fxFlex="100" fxFlex.gt-sm="100" fxFlex.gt-md="100">
+
+        <div class="profile-box info-box general" fxLayout="column">
+
+            <header class="accent">
+                <div class="title">Token Information</div>
+            </header>
+
+            <div class="content">
+
+                <div class="info-line">
+                    <!--
+                    <div class="title">Token Info</div>
+                    -->
+                    <table class="info table">
+                        <tr class="table-row">
+                            <td class="key">Subject:</td>
+                            <td class="value">{{decodedToken.sub}}</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">Issued At:</td>
+                            <td class="value">{{decodedToken.iatText}}</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">Expiration:</td>
+                            <td class="value">{{decodedToken.expText}}</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">Authorities:</td>
+                            <td class="value">{{decodedToken.authorities}}</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="info-line">
+                    <div class="title">Raw Token</div>
+                    <div class="info" style="word-wrap: break-word;">
+                        {{tokenService.getToken()}}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

@@ -6,6 +6,8 @@ import { filter, takeUntil } from 'rxjs/operators';
 import { FuseNavigationItem } from '@fuse/types';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
+import { TokenService } from '../../../../../app/custom/services/token.service';
+import { AuthService } from '../../../../../app/custom/services/auth.service';
 
 @Component({
     selector   : 'fuse-nav-vertical-collapsable',
@@ -17,6 +19,9 @@ export class FuseNavVerticalCollapsableComponent implements OnInit, OnDestroy
 {
     @Input()
     item: FuseNavigationItem;
+
+    @Input()
+    authorities: string;
 
     @HostBinding('class')
     classes = 'nav-collapsable nav-item';
@@ -33,11 +38,15 @@ export class FuseNavVerticalCollapsableComponent implements OnInit, OnDestroy
      * @param {ChangeDetectorRef} _changeDetectorRef
      * @param {FuseNavigationService} _fuseNavigationService
      * @param {Router} _router
+     * @param tokenService
+     * @param authService
      */
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseNavigationService: FuseNavigationService,
-        private _router: Router
+        private _router: Router,
+        private tokenService: TokenService,
+        private authService: AuthService
     )
     {
         // Set the private defaults

@@ -20,27 +20,48 @@ import { FakeDbService } from 'app/fake-db/fake-db.service';
 import { AppComponent } from 'app/app.component';
 import { AppStoreModule } from 'app/store/store.module';
 import { LayoutModule } from 'app/layout/layout.module';
+import { SecuredPageResolverService } from './custom/services/secured-page-resolver.service';
 
 const appRoutes: Routes = [
+    // Custom App Routes
     {
-        path        : 'apps',
+        path: 'open-pages',
+        loadChildren: () => import('./custom/open-pages/open-pages.module').then(m => m.OpenPagesModule)
+    },
+    {
+        path: 'secured-pages',
+        loadChildren: () => import('./custom/secured-pages/secured-pages.module').then(m => m.SecuredPagesModule),
+        resolve: {
+            securedPageResolver: SecuredPageResolverService
+        }
+    },
+
+    // Default Fuse Routes
+    {
+        path: 'apps',
         loadChildren: () => import('./main/apps/apps.module').then(m => m.AppsModule)
     },
     {
-        path        : 'pages',
+        path: 'pages',
         loadChildren: () => import('./main/pages/pages.module').then(m => m.PagesModule)
     },
     {
-        path        : 'ui',
+        path: 'ui',
         loadChildren: () => import('./main/ui/ui.module').then(m => m.UIModule)
     },
     {
-        path        : 'documentation',
+        path: 'documentation',
         loadChildren: () => import('./main/documentation/documentation.module').then(m => m.DocumentationModule)
     },
+    // {
+    //     path: '**',
+    //     redirectTo: 'apps/dashboards/analytics'
+    // },
+
+    // Default App Route
     {
-        path      : '**',
-        redirectTo: 'apps/dashboards/analytics'
+        path: '**',
+        redirectTo: 'secured-pages/my-profile'
     }
 ];
 
@@ -48,7 +69,7 @@ const appRoutes: Routes = [
     declarations: [
         AppComponent
     ],
-    imports     : [
+    imports: [
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
@@ -56,7 +77,7 @@ const appRoutes: Routes = [
 
         TranslateModule.forRoot(),
         InMemoryWebApiModule.forRoot(FakeDbService, {
-            delay             : 0,
+            delay: 0,
             passThruUnknownUrl: true
         }),
 
@@ -78,10 +99,9 @@ const appRoutes: Routes = [
         LayoutModule,
         AppStoreModule
     ],
-    bootstrap   : [
+    bootstrap: [
         AppComponent
     ]
 })
-export class AppModule
-{
+export class AppModule {
 }

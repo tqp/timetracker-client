@@ -1,0 +1,143 @@
+<div id="intuit-sync" class="page-layout simple fullwidth angular-material-elements">
+
+    <!-- HEADER -->
+    <div class="header accent p-24 h-60" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row"
+         fxLayoutAlign.gt-xs="space-between center">
+
+        <div fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="column" fxLayoutAlign.gt-xs="center start">
+            <div class="h2 mt-0">{{title}}</div>
+        </div>
+
+        <!--
+        <a mat-raised-button class="reference-button mt-16 mt-sm-0" href="https://material.angular.io/"
+           target="_blank">
+            <mat-icon class="mr-8">link</mat-icon>
+            <span>Reference</span>
+        </a>
+        -->
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT -->
+    <div class="content p-24">
+
+        <div class="container">
+
+            <div class="actions" fxLayout="column wrap" fxLayoutAlign="start" [@animateStagger]="{value:'50'}">
+
+                <div class="action" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm="33"
+                     [@animate]="{value:'*',params:{y:'100%'}}">
+                    <div class="action-content" fxLayout="column" fxFlex="1 1 auto">
+                        <div class="header" fxLayout="row" fxLayoutAlign="center center">
+                            <div class="length" fxLayout="row" fxLayoutAlign="center center">
+                                <mat-icon *ngIf="!employeeSyncInProgress" class="length-icon s-20">group</mat-icon>
+                                <mat-icon *ngIf="employeeSyncInProgress" class="icon-rotate length-icon s-20">sync
+                                </mat-icon>
+                            </div>
+                            <div class="category" fxFlex>Sync Intuit Employee Table</div>
+                            <div class="last-run">
+                                <div style="margin-right: 5px;">Last Sync:</div>
+                                <div class="last-sync-timestamp">{{lastEmployeeSyncTimestamp}}</div>
+                            </div>
+                            <button mat-button color="accent" (click)="syncEmployeeList()">START</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm="33"
+                     [@animate]="{value:'*',params:{y:'100%'}}">
+                    <div class="action-content" fxLayout="column" fxFlex="1 1 auto">
+                        <div class="header" fxLayout="row" fxLayoutAlign="center center">
+                            <div class="length" fxLayout="row" fxLayoutAlign="center center">
+                                <mat-icon *ngIf="!userListSyncInProgress" class="length-icon s-20">group</mat-icon>
+                                <mat-icon *ngIf="userListSyncInProgress" class="icon-rotate length-icon s-20">sync
+                                </mat-icon>
+                            </div>
+                            <div class="category" fxFlex>Sync User List with Intuit Employee Table</div>
+                            <div class="last-run">
+                                <div style="margin-right: 5px;">Last Sync:</div>
+                                <div class="last-sync-timestamp">{{lastUserListSyncTimestamp}}</div>
+                            </div>
+                            <button mat-button color="accent" (click)="syncUserListWithEmployeeList()">START</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm="33"
+                     [@animate]="{value:'*',params:{y:'100%'}}">
+                    <div class="action-content" fxLayout="column" fxFlex="1 1 auto">
+                        <div class="header" fxLayout="row" fxLayoutAlign="center center">
+                            <div class="length" fxLayout="row" fxLayoutAlign="center center">
+                                <mat-icon *ngIf='!timeActivitySyncInProgressChangesCompare' class="length-icon s-20">access_time
+                                </mat-icon>
+                                <mat-icon *ngIf="timeActivitySyncInProgressChangesCompare" class="icon-rotate length-icon s-20">sync
+                                </mat-icon>
+                            </div>
+                            <div class="category" fxFlex>Compare Time Activity Since Last Sync</div>
+                            <div class="last-run">
+                                <div style="margin-right: 5px;">Last Sync:</div>
+                                <div class="last-sync-timestamp">{{lastTimeActivitySyncTimestamp}}</div>
+                            </div>
+                            <button mat-button color="accent" (click)="compareTimeActivitySinceLastSync()">START
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm="33"
+                     [@animate]="{value:'*',params:{y:'100%'}}">
+                    <div class="action-content" fxLayout="column" fxFlex="1 1 auto">
+                        <div class="header" fxLayout="row" fxLayoutAlign="center center">
+                            <div class="length" fxLayout="row" fxLayoutAlign="center center">
+                                <mat-icon *ngIf='!timeActivitySyncInProgressChanges' class="length-icon s-20">access_time
+                                </mat-icon>
+                                <mat-icon *ngIf="timeActivitySyncInProgressChanges" class="icon-rotate length-icon s-20">sync
+                                </mat-icon>
+                            </div>
+                            <div class="category" fxFlex>Sync Time Activity: Since Last Sync</div>
+                            <div class="last-run">
+                                <div style="margin-right: 5px;">Last Sync:</div>
+                                <div class="last-sync-timestamp">{{lastTimeActivitySyncTimestamp}}</div>
+                            </div>
+                            <button mat-button color="accent" (click)="syncTimeActivitySinceLastSync()">START</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm="33"
+                     [@animate]="{value:'*',params:{y:'100%'}}">
+                    <div class="action-content" fxLayout="column" fxFlex="1 1 auto">
+                        <div class="header" fxLayout="row" fxLayoutAlign="center center">
+                            <div class="length" fxLayout="row" fxLayoutAlign="center center">
+                                <mat-icon *ngIf='!timeActivitySyncInProgressMonth' class="length-icon s-20">access_time
+                                </mat-icon>
+                                <mat-icon *ngIf="timeActivitySyncInProgressMonth" class="icon-rotate length-icon s-20">sync
+                                </mat-icon>
+                            </div>
+                            <div class="category" fxFlex>Sync Time Activity: Last Month</div>
+                            <button mat-button color="accent" (click)="syncTimeActivityMonth()">START</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm="33"
+                     [@animate]="{value:'*',params:{y:'100%'}}">
+                    <div class="action-content" fxLayout="column" fxFlex="1 1 auto">
+                        <div class="header" fxLayout="row" fxLayoutAlign="center center">
+                            <div class="length" fxLayout="row" fxLayoutAlign="center center">
+                                <mat-icon *ngIf='!timeActivitySyncInProgressFull' class="length-icon s-20">access_time
+                                </mat-icon>
+                                <mat-icon *ngIf="timeActivitySyncInProgressFull" class="icon-rotate length-icon s-20">sync
+                                </mat-icon>
+                            </div>
+                            <div class="category" fxFlex>Sync Time Activity: Full Sync</div>
+                            <button mat-button color="accent" (click)="syncTimeActivityFull()">START</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

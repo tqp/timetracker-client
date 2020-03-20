@@ -1,0 +1,70 @@
+<div id="user-info" class="p-24" fxLayout="row wrap">
+
+    <div class="user-info-content" fxLayout="column" fxFlex="100" fxFlex.gt-sm="100" fxFlex.gt-md="100">
+
+        <div class="profile-box info-box general" *ngIf="user != null" fxLayout="column">
+
+            <header class="accent">
+                <div class="title">User Information</div>
+            </header>
+
+            <div class="content">
+
+                <div class="info-line">
+                    <!--
+                    <div class="title">Token Info</div>
+                    -->
+                    <table class="info table">
+                        <tr class="table-row">
+                            <td class="key">Username:</td>
+                            <td class="value">{{user.username}}</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">Surname:</td>
+                            <td class="value">{{user.surname}}</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">Given Name:</td>
+                            <td class="value">{{user.givenName}}</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">Roles:</td>
+                            <td class="value">
+                                <span *ngFor="let role of user.roles | slice:0:4; let $last=last">
+                                    {{role.name}}<span *ngIf="!$last">, </span>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">Status:</td>
+                            <td class="value">{{user.status}}</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">Last Login:</td>
+                            <td class="value">{{user.lastLogin}}</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">Login Count:</td>
+                            <td class="value">{{user.loginCount}}</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">User ID:</td>
+                            <td class="value">{{user.userGuid}}</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">Created:</td>
+                            <td class="value">{{user.createdOn}} by {{user.createdBy}}</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">Updated:</td>
+                            <td class="value">{{user.updatedOn}} by {{user.updatedBy}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,39 @@
+<div id="intuit-tokens" class="page-layout simple tabbed">
+
+    <!-- HEADER -->
+    <div class="header accent p-24 h-60" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row"
+         fxLayoutAlign.gt-xs="space-between center">
+
+        <div fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="column" fxLayoutAlign.gt-xs="center start">
+            <div class="h2 mt-0">{{title}}</div>
+        </div>
+
+        <!--
+        <a mat-raised-button class="reference-button mt-16 mt-sm-0" href="https://material.angular.io/"
+           target="_blank">
+            <mat-icon class="mr-8">link</mat-icon>
+            <span>Reference</span>
+        </a>
+        -->
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT -->
+    <div class="content">
+
+        <mat-tab-group dynamicHeight="true">
+
+            <mat-tab label="Production Tokens">
+                <app-production-token-tab></app-production-token-tab>
+            </mat-tab>
+            <mat-tab label="Sandbox Tokens">
+                <app-sandbox-token-tab></app-sandbox-token-tab>
+            </mat-tab>
+
+        </mat-tab-group>
+
+    </div>
+    <!-- / CONTENT -->
+
+</div>
+

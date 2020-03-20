@@ -119,6 +119,11 @@ $typography: mat-typography-config(
 @import "src/app/main/pages/faq/faq.theme";
 @import "src/app/main/pages/knowledge-base/knowledge-base.theme";
 
+// Custom Themes
+@import "src/app/custom/secured-pages/my-profile/user-info/user-info.theme";
+@import "src/app/custom/secured-pages/my-profile/token-info/token-info.theme";
+@import "src/app/custom/secured-pages/my-profile/diagnostic-info/diagnostic-info.theme";
+
 @import "src/app/main/ui/cards/cards.theme";
 
 // Define a mixin for easier access

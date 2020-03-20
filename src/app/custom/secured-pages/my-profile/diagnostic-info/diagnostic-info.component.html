@@ -1,0 +1,50 @@
+<div id="diagnostic-info" class="p-24" fxLayout="row wrap">
+
+    <div class="diagnostic-info-content" fxLayout="column" fxFlex="100" fxFlex.gt-sm="100" fxFlex.gt-md="100">
+
+        <div class="profile-box info-box general" fxLayout="column">
+
+            <header class="accent">
+                <div class="title">Web Service Diagnostics</div>
+            </header>
+
+            <div class="content">
+
+                <div class="info-line">
+
+                    <table class="info table">
+                        <tr class="table-row">
+                            <td class="key">Open Endpoint Test:</td>
+                            <mat-icon class="nav-link-icon red-800-fg" *ngIf="openTestResult === 'Blocked'">sentiment_dissatisfied</mat-icon>
+                            <mat-icon class="nav-link-icon green-800-fg" *ngIf="openTestResult !== 'Blocked'">sentiment_satisfied</mat-icon>
+                            <td class="value">{{openTestResult}}</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">User Endpoint Test:</td>
+                            <mat-icon class="nav-link-icon red-800-fg" *ngIf="userTestResult === 'Blocked'">sentiment_dissatisfied</mat-icon>
+                            <mat-icon class="nav-link-icon green-800-fg" *ngIf="userTestResult !== 'Blocked'">sentiment_satisfied</mat-icon>
+                            <td class="value">{{userTestResult}}</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">Manager Endpoint Test:</td>
+                            <mat-icon class="nav-link-icon red-800-fg" *ngIf="managerTestResult === 'Blocked'">sentiment_dissatisfied</mat-icon>
+                            <mat-icon class="nav-link-icon green-800-fg" *ngIf="managerTestResult !== 'Blocked'">sentiment_satisfied</mat-icon>
+                            <td class="value">{{managerTestResult}}</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">Administrator Endpoint Test:</td>
+                            <mat-icon class="nav-link-icon red-800-fg" *ngIf="adminTestResult === 'Blocked'">sentiment_dissatisfied</mat-icon>
+                            <mat-icon class="nav-link-icon green-800-fg" *ngIf="adminTestResult !== 'Blocked'">sentiment_satisfied</mat-icon>
+                            <td class="value">{{adminTestResult}}</td>
+                        </tr>
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

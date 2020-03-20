@@ -1,0 +1,86 @@
+<div id="production-token-tab" class="p-24" fxLayout="row wrap">
+
+    <div class="production-token-tab-content" fxLayout="column" fxFlex="100" fxFlex.gt-sm="100" fxFlex.gt-md="100">
+
+        <div class="profile-box info-box general" fxLayout="column">
+
+            <header class="accent">
+                <div class="title">Intuit Production Token Information</div>
+            </header>
+
+            <div class="content">
+
+                <div class="info-line">
+
+                    <div class="title">Configuration</div>
+
+                    <table class="info table">
+                        <tr class="table-row">
+                            <td class="key">Client ID:</td>
+                            <td class="value">{{clientId}}</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">Redirect URI:</td>
+                            <td class="value">{{redirectUri}}</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="info-line" *ngIf="intuitToken">
+
+                    <div class="title">Access Token</div>
+
+                    <table class="info table">
+                        <tr class="table-row">
+                            <td class="key">Environment:</td>
+                            <td class="value">{{intuitToken.environment}}</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">Realm ID:</td>
+                            <td class="value">{{intuitToken.realmId}}</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">Access Token (first 60 chars):</td>
+                            <td class="value">{{intuitToken.accessToken.slice(0, 60)}}</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">Access Token Issued:</td>
+                            <td class="value">{{intuitToken.tokenIssuedDisplay}}</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">Access Token Validity:</td>
+                            <td class="value">{{intuitToken.accessTokenValidity}}</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">Access Token Expiration Date:</td>
+                            <td class="value highlight">{{intuitToken.accessTokenExpiresDate}}</td>
+                        </tr>
+
+                        <tr class="table-row">
+                            <td class="key">Refresh Token:</td>
+                            <td class="value">{{intuitToken.refreshToken}}</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">Refresh Token Validity:</td>
+                            <td class="value">{{intuitToken.refreshTokenValidity}}</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">Refresh Token Expiration Date:</td>
+                            <td class="value highlight">{{intuitToken.refreshTokenExpiresDate}}</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <button mat-raised-button color="accent"
+                        aria-label="Refresh Access Token"
+                        (click)="refreshAccessToken()">
+                    Refresh Access Token
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
