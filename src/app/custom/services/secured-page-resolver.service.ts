@@ -14,7 +14,6 @@ export class SecuredPageResolverService implements Resolve<any> {
 
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
         this.authService.isAuthenticated().subscribe(response => {
-            console.log('response', response);
             if (response === false) {
                 this.router.navigate(['/open-pages/login']).then();
             }

@@ -1,6 +1,34 @@
 # TimeTracker Client    
 
+### AWS Amplify Configuration
+
+#### Adding a Custom Domain
+- Open Route 53
+- On the left navigation pane, choose App Settings, Domain management, and then choose Add domain.
+- In Enter your root domain, enter your root domain (https://awesomedomain.com).
+- Select the domain you want to use and then choose Configure Domain.
+
+#### AWS Rewrite vs. Redirect
+If, after deploying the app on AWS Amplify, all refreshes take you back to the main page (i.e. index.html), you need to
+update the "Rewrites and Redirects" setting in Amplify.
+
+I had issues with the default of:
+```text
+Source address: /<*>
+Target address: /index.html
+Type: 404 (Redirect)
+```
+Changing the type to Rewrite worked better, but resulted in 404 errors (duh!).  
+I had MUCH more luck with this regex I found on the internet:
+```text
+Source Address: </^[^.]+$|\\.(?!(css|gif|ico|jpg|js|png|txt|svg|woff|ttf|map|json)$)([^.]+$)/>
+Target Address: /index.html
+Type: 200 (rewrite)
+```
+
+
 ### Changes from the Fuse Template
+Use this when upgrading to a new version of the Fuse Template.
 
 Standard Custom Changes
 - src/index.html: 

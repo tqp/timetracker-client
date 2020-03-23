@@ -9,6 +9,7 @@ export class User {
     public lastLogin: string;
     public loginCount: number;
     public theme: string;
+    public picture: string;
     public roles: Role[];
     public status: string;
     public createdOn: number;
