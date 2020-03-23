@@ -19,7 +19,7 @@ export class TokenStorageService {
     }
 
     public saveJwtToken(token: string): void {
-        // console.log('TokenStorageService -> saveJwtToken: ' + token);
+        console.log('TokenStorageService -> saveJwtToken: ' + token);
         window.sessionStorage.removeItem(this.TOKEN_KEY);
         window.sessionStorage.setItem(this.TOKEN_KEY, token);
         localStorage.setItem(this.TOKEN_KEY, token);

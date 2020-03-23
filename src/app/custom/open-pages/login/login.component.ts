@@ -120,7 +120,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         // console.log('password: ' + this.loginForm.value.password);
         this.authService.attemptAuth(this.loginForm.value.email, this.loginForm.value.password).subscribe(
             response => {
-                // console.log('LogonPage -> attemptLogin: ' + JSON.stringify(response));
+                console.log('LogonPage -> attemptLogin: ' + JSON.stringify(response));
                 this.tokenService.saveToken(response.token);
                 this.router.navigate(['/secured-pages/my-profile']).then();
             },
@@ -138,7 +138,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private getGoogleAuthConfig(): void {
         this.authService.getGoogleAuthConfig().subscribe(
             data => {
-                // console.log('GoogleAuthConfig:', data);
+                console.log('GoogleAuthConfig:', data);
                 this.googleClientId = data.clientId;
                 this.googleRedirectUri = data.redirectUri;
             },

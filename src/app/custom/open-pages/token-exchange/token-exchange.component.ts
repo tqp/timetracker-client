@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TokenExchangeService} from '../../services/token-exchange.service';
 import {TokenStorageService} from '../../services/token-storage.service';
+import { TokenService } from '../../services/token.service';
 
 @Component({
     selector: 'app-token-exchange',
@@ -13,6 +14,7 @@ export class TokenExchangeComponent implements OnInit {
     constructor(protected route: ActivatedRoute,
                 protected tokenExchangeService: TokenExchangeService,
                 protected tokenStorageService: TokenStorageService,
+                protected tokenService: TokenService,
                 protected router: Router) {
     }
 
@@ -31,6 +33,7 @@ export class TokenExchangeComponent implements OnInit {
                 // console.log('TokenExchangeComponent -> exchangeTokens:');
                 // console.dir(data);
                 this.tokenStorageService.saveJwtToken(data.value);
+                // this.tokenService.saveToken(data.value);
                 this.router.navigate(['/home']).then(() => {
                     console.log('The token exchange process is re-routing you...');
                 });

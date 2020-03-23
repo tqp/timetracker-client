@@ -5,4 +5,5 @@ export class Token {
   public expText: string;
   public sub: string;
   public authorities: string;
+  public rawToken: string;
 }

@@ -73,6 +73,7 @@ export class TokenInfoComponent implements OnInit, OnDestroy {
     private getTokenInformation(): any {
         this.authService.getTokenInfo().subscribe(
             response => {
+                console.log('response', response);
                 this.decodedToken = response;
                 this.decodedToken.authorities = this.decodedToken.authorities.replace(/,/g, ', ');
                 this.decodedToken.iatText = moment(this.decodedToken.iat * 1000).format('DD-MMM-YYYY h:mm:ss a').toUpperCase();

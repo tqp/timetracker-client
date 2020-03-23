@@ -63,6 +63,7 @@ export class AuthService {
                     this.tokenInfo.exp = decodedToken.exp;
                     this.tokenInfo.sub = decodedToken.sub;
                     this.tokenInfo.authorities = decodedToken.authorities;
+                    this.tokenInfo.rawToken = token;
                 } else {
                     console.error('Token could not be decoded.');
                 }

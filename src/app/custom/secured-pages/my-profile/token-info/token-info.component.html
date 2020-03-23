@@ -37,6 +37,13 @@
                 <div class="info-line">
                     <div class="title">Raw Token</div>
                     <div class="info" style="word-wrap: break-word;">
+                        {{decodedToken.rawToken}}
+                    </div>
+                </div>
+
+                <div class="info-line">
+                    <div class="title">Token in Local Storage</div>
+                    <div class="info" style="word-wrap: break-word;">
                         {{tokenService.getToken()}}
                     </div>
                 </div>
