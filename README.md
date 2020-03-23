@@ -40,6 +40,12 @@ Standard Custom Changes
     - update logo-text to "TIMETRACKER"
     - comment-out user section
 - src/@fuse/components/navigation/navigation.component.ts:
+    - replace: (IMPORTANT!!! This allows the NavBar to update when Role permissions arrive asynchronously)
+        ```text
+        changeDetection: ChangeDetectionStrategy.OnPush
+        with
+        changeDetection: ChangeDetectionStrategy.Default
+        ```
     - add to definitions:
         ```
         @Input()

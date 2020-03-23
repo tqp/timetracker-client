@@ -134,6 +134,32 @@ export const navigation: FuseNavigation[] = [
         ]
     },
 
+    {
+        id: 'my-account',
+        title: 'My Account',
+        icon: 'import_contacts',
+        type: 'group',
+        role: 'ROLE_USER',
+        children: [
+            {
+                id: 'my-profile',
+                title: 'My Profile',
+                type: 'item',
+                role: 'ROLE_USER',
+                icon: 'account_circle',
+                url: '/secured-pages/my-profile'
+            },
+            {
+                id: 'logout',
+                title: 'Logout',
+                type: 'item',
+                role: 'ROLE_USER',
+                icon: 'exit_to_app',
+                url: '/open-pages/logout'
+            }
+        ]
+    },
+
     // Default Fuse Template Navigation Targets
     {
         id       : 'applications',

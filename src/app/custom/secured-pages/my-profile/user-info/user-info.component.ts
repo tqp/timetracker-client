@@ -58,7 +58,6 @@ export class UserInfoComponent implements OnInit, OnDestroy {
             });
 
         this.getMyUserInfo();
-        this.getTokenInformation();
     }
 
     /**
@@ -80,23 +79,6 @@ export class UserInfoComponent implements OnInit, OnDestroy {
                 } else {
                     this.user.lastLogin = 'User has never logged in.';
                 }
-            },
-            error => {
-                console.error('Error: ', error);
-                this.authService.errorHandler(error);
-            }
-        );
-    }
-
-    private getTokenInformation(): any {
-        // console.log('MyProfileComponent -> getTokenInformation');
-        this.authService.getTokenInfo().subscribe(
-            response => {
-                // console.log('MyProfileComponent -> getTokenInformation: result=', result);
-                this.decodedToken = response;
-                // this.decodedToken.authorities = this.decodedToken.authorities.replace(/,/g, ', ');
-                this.decodedToken.iatText = moment(this.decodedToken.iat * 1000).format('DD-MMM-YYYY h:mm:ss a').toUpperCase();
-                this.decodedToken.expText = moment(this.decodedToken.exp * 1000).format('DD-MMM-YYYY h:mm:ss a').toUpperCase();
             },
             error => {
                 console.error('Error: ', error);

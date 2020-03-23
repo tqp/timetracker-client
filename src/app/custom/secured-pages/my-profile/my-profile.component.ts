@@ -26,6 +26,7 @@ export class MyProfileComponent implements OnInit {
     private getMyUserInfo(): any {
         this.userProfileService.getMyUserInfo().subscribe(
             response => {
+                // console.log('response', response);
                 this.user = response;
             },
             error => {

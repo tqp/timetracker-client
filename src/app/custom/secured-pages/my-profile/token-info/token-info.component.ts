@@ -58,7 +58,6 @@ export class TokenInfoComponent implements OnInit, OnDestroy {
                 this.about = about;
             });
 
-        this.getMyUserInfo();
         this.getTokenInformation();
     }
 
@@ -69,23 +68,6 @@ export class TokenInfoComponent implements OnInit, OnDestroy {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
-    }
-
-    private getMyUserInfo(): any {
-        this.userProfileService.getMyUserInfo().subscribe(
-            response => {
-                this.user = response;
-                if (this.user.lastLogin) {
-                    this.user.lastLogin = moment(this.user.lastLogin).format('DD-MMM-YYYY h:mm:ss a').toUpperCase();
-                } else {
-                    this.user.lastLogin = 'User has never logged in.';
-                }
-            },
-            error => {
-                console.error('Error: ', error);
-                this.authService.errorHandler(error);
-            }
-        );
     }
 
     private getTokenInformation(): any {

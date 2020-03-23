@@ -1,14 +1,14 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable, Observer} from 'rxjs';
-import {Token} from '../models/Token';
-import {TokenService} from './token.service';
-import {TokenHelperService} from './token-helper.service';
-import {Router} from '@angular/router';
-import {environment} from '../../../environments/environment';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, Observer } from 'rxjs';
+import { Token } from '../models/Token';
+import { TokenService } from './token.service';
+import { TokenHelperService } from './token-helper.service';
+import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 import * as moment from 'moment';
-import {FuseNavigationItem} from '../../../@fuse/types';
+import { FuseNavigationItem } from '../../../@fuse/types';
 
 @Injectable({
     providedIn: 'root'
@@ -92,15 +92,29 @@ export class AuthService {
 
     public errorHandler(error): void {
         let errorMessage = 'An unknown error occurred.';
-        switch (error.status) {
-            case 401:
-                errorMessage = 'Your session timed-out.';
-                this.router.navigate(['/login-page'], {queryParams: {error: errorMessage}}).then();
-                break;
-            case 404:
-                errorMessage = 'That page could not be found.';
-                this.router.navigate(['/login-page'], {queryParams: {error: errorMessage}}).then();
-                break;
+        this.tokenService.clearToken();
+        this.clearTokenInfo();
+        if (error.status) {
+            switch (error.status) {
+                case 401:
+                    errorMessage = 'Your session timed-out.';
+                    this.router.navigate(['/login-page'], {queryParams: {error: errorMessage}}).then();
+                    break;
+                case 403:
+                    errorMessage = 'A permissions issue was encountered when accessing that page.';
+                    this.router.navigate(['/login-page'], {queryParams: {error: errorMessage}}).then();
+                    break;
+                case 404:
+                    errorMessage = 'That page could not be found.';
+                    this.router.navigate(['/login-page'], {queryParams: {error: errorMessage}}).then();
+                    break;
+                default:
+                    errorMessage = 'An error was encountered.';
+                    this.router.navigate(['/login-page'], {queryParams: {error: errorMessage}}).then();
+                    break;
+            }
+        } else {
+            this.router.navigateByUrl('/open-pages/login').then();
         }
     }
 

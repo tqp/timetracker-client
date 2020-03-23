@@ -6,7 +6,7 @@
 
         <div class="user-info" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
              fxLayoutAlign.gt-sm="start center" *ngIf="user">
-            <img class="profile-image avatar huge" src="{{user.picture}}"
+            <img *ngIf="user.picture != null" class="profile-image avatar huge" src="{{user.picture}}"
                  [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
             <div class="name" *ngIf="user" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
                 {{user.givenName}} {{user.surname}}

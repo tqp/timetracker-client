@@ -17,23 +17,22 @@ export class TokenExchangeComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        console.log('TokenExchangeComponent -> ngOnInit');
         this.route.queryParams.subscribe((params) => {
             const shortLivedToken = params['slt'];
-            console.log('TokenExchangeComponent -> ngOnInit: shortLivedToken=[' + this.tokenExchangeService.shortId(shortLivedToken) + ']');
+            // console.log('TokenExchangeComponent -> ngOnInit: shortLivedToken=[' + this.tokenExchangeService.shortId(shortLivedToken) + ']');
             this.exchangeTokens(shortLivedToken);
         });
     }
 
     private exchangeTokens(shortLivedToken: string): void {
-        console.log('TokenExchangeComponent -> exchangeTokens: shortLivedToken=[' + this.tokenExchangeService.shortId(shortLivedToken) + ']');
+        // console.log('TokenExchangeComponent -> exchangeTokens: shortLivedToken=[' + this.tokenExchangeService.shortId(shortLivedToken) + ']');
         this.tokenExchangeService.exchangeToken(shortLivedToken).subscribe(
             data => {
-                console.log('TokenExchangeComponent -> exchangeTokens:');
-                console.dir(data);
+                // console.log('TokenExchangeComponent -> exchangeTokens:');
+                // console.dir(data);
                 this.tokenStorageService.saveJwtToken(data.value);
                 this.router.navigate(['/home']).then(() => {
-                    console.log('TokenExchangeComponent is re-routing...');
+                    console.log('The token exchange process is re-routing you...');
                 });
             },
             error => {

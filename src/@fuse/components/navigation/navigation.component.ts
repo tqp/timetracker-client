@@ -12,7 +12,7 @@ import { TokenStorageService } from '../../../app/custom/services/token-storage.
     templateUrl: './navigation.component.html',
     styleUrls: ['./navigation.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.Default
 })
 export class FuseNavigationComponent implements OnInit {
     @Input()
