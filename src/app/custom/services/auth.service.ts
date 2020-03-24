@@ -93,12 +93,12 @@ export class AuthService {
 
     public errorHandler(error): void {
         let errorMessage = 'An unknown error occurred.';
-        this.tokenService.clearToken();
-        this.clearTokenInfo();
         if (error.status) {
             switch (error.status) {
                 case 401:
                     errorMessage = 'Your session timed-out.';
+                    this.tokenService.clearToken();
+                    this.clearTokenInfo();
                     this.router.navigate(['/login-page'], {queryParams: {error: errorMessage}}).then();
                     break;
                 case 403:

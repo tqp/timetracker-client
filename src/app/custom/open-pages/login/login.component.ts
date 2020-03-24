@@ -1,13 +1,13 @@
-import {AfterViewInit, Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {FuseConfigService} from '@fuse/services/config.service';
-import {fuseAnimations} from '@fuse/animations';
-import {AuthService} from '../../services/auth.service';
-import {TokenService} from '../../services/token.service';
-import {Router} from '@angular/router';
+import { AfterViewInit, Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FuseConfigService } from '@fuse/services/config.service';
+import { fuseAnimations } from '@fuse/animations';
+import { AuthService } from '../../services/auth.service';
+import { TokenService } from '../../services/token.service';
+import { Router } from '@angular/router';
 
-import {v4 as uuid} from 'uuid';
-import {animate, state, style, transition, trigger} from '@angular/animations';
+import { v4 as uuid } from 'uuid';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
     selector: 'login',
@@ -138,7 +138,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private getGoogleAuthConfig(): void {
         this.authService.getGoogleAuthConfig().subscribe(
             data => {
-                console.log('GoogleAuthConfig:', data);
+                // console.log('GoogleAuthConfig:', data);
                 this.googleClientId = data.clientId;
                 this.googleRedirectUri = data.redirectUri;
             },
