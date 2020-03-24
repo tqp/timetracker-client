@@ -19,11 +19,11 @@ export class TokenStorageService {
     }
 
     public saveJwtToken(token: string): void {
-        console.log('TokenStorageService -> saveJwtToken: ' + token);
+        // console.log('TokenStorageService -> saveJwtToken: ' + token);
         window.sessionStorage.removeItem(this.TOKEN_KEY);
         window.sessionStorage.setItem(this.TOKEN_KEY, token);
         localStorage.setItem(this.TOKEN_KEY, token);
-        this.token.next(token);
+        this.token.next(token); // Important: The Toolbar and Navigation components are listening for changes to this Observable.
     }
 
     public getJwtToken(): string {

@@ -1,14 +1,14 @@
 import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import {Token} from '../../../models/Token';
-import {User} from '../../../models/User';
-import {Subject} from 'rxjs';
-import {MyProfileService} from '../my-profile.service';
-import {AuthService} from '../../../services/auth.service';
-import {TokenService} from '../../../services/token.service';
-import {UserProfileService} from '../../../services/user-profile.service';
-import {takeUntil} from 'rxjs/operators';
+import { Token } from '../../../models/Token';
+import { User } from '../../../models/User';
+import { Subject } from 'rxjs';
+import { MyProfileService } from '../my-profile.service';
+import { AuthService } from '../../../services/auth.service';
+import { TokenService } from '../../../services/token.service';
+import { UserProfileService } from '../../../services/user-profile.service';
+import { takeUntil } from 'rxjs/operators';
 import * as moment from 'moment';
-import {fuseAnimations} from '../../../../../@fuse/animations';
+import { fuseAnimations } from '../../../../../@fuse/animations';
 
 @Component({
     selector: 'app-user-info',
@@ -62,10 +62,12 @@ export class UserInfoComponent implements OnInit, OnDestroy {
 
         // this.getMyUserInfo();
 
-        if (this.user.lastLogin) {
-            this.user.lastLogin = moment(this.user.lastLogin).format('DD-MMM-YYYY h:mm:ss a').toUpperCase();
-        } else {
-            this.user.lastLogin = 'User has never logged in.';
+        if (this.user) {
+            if (this.user.lastLogin) {
+                this.user.lastLogin = moment(this.user.lastLogin).format('DD-MMM-YYYY h:mm:ss a').toUpperCase();
+            } else {
+                this.user.lastLogin = 'User has never logged in.';
+            }
         }
     }
 

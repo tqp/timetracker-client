@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
@@ -19,7 +19,8 @@ import { User } from '../../../custom/models/User';
     selector: 'toolbar',
     templateUrl: './toolbar.component.html',
     styleUrls: ['./toolbar.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Default
 })
 
 export class ToolbarComponent implements OnInit, OnDestroy {
@@ -189,6 +190,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.userProfileService.getMyUserInfo().subscribe(
             response => {
                 // console.log('response', response);
+                // console.log('Toolbar User Info Returned', response);
                 this.user = response;
             },
             error => {

@@ -84,6 +84,7 @@ export class FuseNavigationComponent implements OnInit {
         // If a token is present, get the User's info.
         // For the cases where the page may load before the token has been obtained,
         // watch for changes to the token Observable. When we have a token, load the data.
+        // See token-storage.service.ts for the Observable.
         if (this.tokenService.getToken()) {
             this.getAuthoritiesFromToken();
         } else {
