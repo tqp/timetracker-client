@@ -1,0 +1,37 @@
+<div class="page-layout simple fullwidth angular-material-elements">
+
+    <!-- CONTENT -->
+    <div class="content">
+
+        <div class="main-widget">
+
+            <div class="position-relative p-24 blue-600"
+                 fxLayout="row" fxLayoutAlign="space-between center">
+                <div fxLayout="column" fxLayoutAlign="start start">
+                    <span class="h2">Hours Recorded</span>
+                    <span class="h5 secondary-text">Total hours recorded by month</span>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center">
+                    <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer" *ngFor="let year of distinctYears"
+                         (click)="getData(year)"
+                         [ngClass]="{'blue-700': selectedYear === year}">
+                        {{year}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="position-relative h-256 pb-16 blue-600">
+                <canvas baseChart
+                        [datasets]="chartData"
+                        [labels]="widgets.labels"
+                        [colors]="widgets.colors"
+                        [options]="widgets.options"
+                        [chartType]="widgets.chartType">
+                </canvas>
+                <!--                        [datasets]="widgets.data[widget1SelectedYear]"-->
+            </div>
+
+        </div>
+
+    </div>
+</div>

@@ -11,7 +11,7 @@ const routes = [
 ];
 
 @NgModule({
-    declarations: [],
+    declarations: [LogoutComponent],
     imports: [
         RouterModule.forChild(routes),
         CommonModule

@@ -108,7 +108,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
         this.loginForm = this._formBuilder.group({
             email: ['admin@mail.com', [Validators.required, Validators.email]],
-            password: ['admin1', Validators.required]
+            password: ['admin1', Validators.required],
+            generalError: ['']
         }, {});
     }
 
@@ -120,13 +121,13 @@ export class LoginComponent implements OnInit, AfterViewInit {
         // console.log('password: ' + this.loginForm.value.password);
         this.authService.attemptAuth(this.loginForm.value.email, this.loginForm.value.password).subscribe(
             response => {
-                console.log('LogonPage -> attemptLogin: ' + JSON.stringify(response));
+                // console.log('LogonPage -> attemptLogin: ' + JSON.stringify(response));
                 this.tokenService.saveToken(response.token);
-                this.router.navigate(['/secured-pages/my-profile']).then();
+                this.router.navigate(['/secured-pages/home']).then();
             },
             error => {
-                console.error('Error: ', error);
-                this.displayError(error);
+                console.error('Error: ', error.error);
+                this.displayError(error.error);
             }
         );
     }
@@ -143,17 +144,18 @@ export class LoginComponent implements OnInit, AfterViewInit {
                 this.googleRedirectUri = data.redirectUri;
             },
             error => {
-                // console.error('Error: ', error);
+                console.error('Error: ', error);
+                error.error = 'CannotConnectToServer';
                 this.displayError(error.error);
             }
         );
     }
 
     private displayError(error): void {
-        console.log('error', error);
-        switch (error.error) {
+        console.log('error: ', error);
+        switch (error) {
             case 'Bad credentials':
-                this.errorMessage = 'The username or password you entered is incorrect.';
+                this.errorMessage = 'Incorrect username or password.';
                 break;
             case 'UsernameNotFoundException':
                 this.errorMessage = 'The user you logged in with doesn\'t have access to this site.';
@@ -164,10 +166,13 @@ export class LoginComponent implements OnInit, AfterViewInit {
             case 'UserDisabled':
                 this.errorMessage = 'That User is currently disabled.';
                 break;
+            case 'CannotConnectToServer':
+                this.errorMessage = 'Could not connect to the Timetracker server.';
+                break;
             default:
-                this.errorMessage = 'An unknown error occurred. ' + error.error.error;
+                this.errorMessage = 'An unknown error occurred.';
         }
-        this.loginForm.get('password').setErrors({customValidator: true});
-        this.loginForm.get('password').markAsTouched();
+        this.loginForm.get('generalError').setErrors({customValidator: true});
+        this.loginForm.get('generalError').markAsTouched();
     }
 }

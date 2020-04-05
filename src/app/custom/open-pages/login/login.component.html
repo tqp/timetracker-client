@@ -24,6 +24,9 @@
                 <input type="hidden" name="response_type" value="code">
                 <input type="hidden" name="scope" value="profile email openid">
                 <!--
+                <input type="hidden" name="hd" value="inductiveminds.com">
+                -->
+                <!--
                 <input type="hidden" name="login_hint" value="tim.powers@inductiveminds.com">
                 -->
                 <button mat-raised-button class="im" type="submit">
@@ -37,7 +40,7 @@
             </button>
 
             <form [@expandContract]="loginFormVisible ? 'expanded' : 'contracted'" name="loginForm"
-                  [formGroup]="loginForm" novalidate style="margin-top: 10px;">
+                  [formGroup]="loginForm" novalidate style="margin-top: 0;">
 
                 <mat-form-field appearance="outline">
                     <mat-label>Email</mat-label>
@@ -65,27 +68,15 @@
                     </mat-error>
                 </mat-form-field>
 
-                <!--
-                <div class="remember-forgot-password" fxLayout="row" fxLayout.xs="column"
-                     fxLayoutAlign="space-between center">
-                    <mat-checkbox class="remember-me" aria-label="Remember Me">
-                        Remember Me
-                    </mat-checkbox>
-
-                    <a class="forgot-password" [routerLink]="'/pages/auth/forgot-password'">
-                        Forgot Password?
-                    </a>
-
-                </div>
-                -->
-
                 <div class="button-row">
 
-                    <button mat-raised-button class="form-row-button close-form" aria-label="Close Form" (click)="toggleLoginFormVisible()">
+                    <button mat-raised-button class="form-row-button close-form" aria-label="Close Form"
+                            (click)="toggleLoginFormVisible()">
                         Close Form
                     </button>
 
-                    <button mat-raised-button class="form-row-button login" aria-label="Login" [disabled]="loginForm.invalid"
+                    <button mat-raised-button class="form-row-button login" aria-label="Login"
+                            [disabled]="loginForm.invalid"
                             (click)="loginApp()">
                         Login
                     </button>
@@ -94,24 +85,11 @@
 
             </form>
 
-            <!--
-            <div class="separator">
-                <span class="text">OR</span>
+            <div style="margin-top: 10px; height: 20px;">
+                <mat-error *ngIf="loginForm.get('generalError').hasError('customValidator')">
+                    {{errorMessage}}
+                </mat-error>
             </div>
-
-            <button mat-raised-button class="google">
-                Log in with Google
-            </button>
-
-            <button mat-raised-button class="facebook">
-                Log in with Facebook
-            </button>
-
-            <div class="register" fxLayout="column" fxLayoutAlign="center center">
-                <span class="text">Don't have an account?</span>
-                <a class="link" [routerLink]="'/pages/auth/register'">Create an account</a>
-            </div>
-            -->
 
         </div>
 

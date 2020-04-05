@@ -1,32 +1,34 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { EmployeeTableComponent } from './employee-table.component';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
 import { FuseSharedModule } from '../../../../@fuse/shared.module';
 import { FuseHighlightModule, FuseWidgetModule } from '../../../../@fuse/components';
-import { MatTableModule } from '@angular/material/table';
+import { EmployeeListComponent } from './employee-list.component';
 
 const routes: Routes = [
     {
-        path: 'employee-table',
-        component: EmployeeTableComponent
+        path: 'employee-list',
+        component: EmployeeListComponent
     }
 ];
 
 @NgModule({
-    declarations: [EmployeeTableComponent],
+    declarations: [EmployeeListComponent],
     imports: [
         CommonModule,
         RouterModule.forChild(routes),
 
         MatIconModule,
         MatTableModule,
+        MatSortModule,
 
         FuseSharedModule,
         FuseHighlightModule,
         FuseWidgetModule
     ]
 })
-export class EmployeeTableModule {
+export class EmployeeListModule {
 }

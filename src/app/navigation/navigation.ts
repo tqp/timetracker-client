@@ -15,7 +15,7 @@ export const navigation: FuseNavigation[] = [
                 type: 'item',
                 role: 'ROLE_USER',
                 icon: 'insert_chart',
-                url: 'secured-pages/user-dashboard'
+                url: 'secured-pages/my-dashboard'
             },
             {
                 id: 'holiday-list',
@@ -35,12 +35,20 @@ export const navigation: FuseNavigation[] = [
         icon: 'apps',
         children: [
             {
-                id: 'employee-table',
-                title: 'Employee Table',
+                id: 'manager-dashboard',
+                title: 'Manager Dashboard',
+                type: 'item',
+                role: 'ROLE_MANAGER',
+                icon: 'insert_chart',
+                url: 'secured-pages/manager-dashboard'
+            },
+            {
+                id: 'employee-list',
+                title: 'Employee List',
                 type: 'item',
                 role: 'ROLE_MANAGER',
                 icon: 'group',
-                url: 'secured-pages/employee-table'
+                url: 'secured-pages/employee-list'
             },
             {
                 id: 'time-activity',
@@ -72,7 +80,7 @@ export const navigation: FuseNavigation[] = [
                 title: 'User Management',
                 type: 'collapsable',
                 role: 'ROLE_ADMIN',
-                icon: 'group',
+                icon: 'supervised_user_circle',
                 children: [
                     {
                         id: 'user-list',
@@ -123,7 +131,7 @@ export const navigation: FuseNavigation[] = [
                 title: 'Change Log',
                 type: 'item',
                 role: 'ROLE_MANAGER',
-                icon: 'update',
+                icon: 'change_history',
                 url: 'secured-pages/change-log',
                 badge: {
                     title: '2.0.0',

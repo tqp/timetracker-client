@@ -61,7 +61,7 @@ const appRoutes: Routes = [
     // Default App Route
     {
         path: '**',
-        redirectTo: 'secured-pages/my-profile'
+        redirectTo: 'secured-pages/my-dashboard'
     }
 ];
 

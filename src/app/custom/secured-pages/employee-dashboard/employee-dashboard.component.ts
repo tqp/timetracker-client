@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
+import {EmployeeDashboardService} from './employee-dashboard.service';
 
 @Component({
-    selector: 'app-user-dashboard',
-    templateUrl: './user-dashboard.component.html',
-    styleUrls: ['./user-dashboard.component.scss']
+    selector: 'app-employee-dashboard',
+    templateUrl: './employee-dashboard.component.html',
+    styleUrls: ['./employee-dashboard.component.scss']
 })
-export class UserDashboardComponent implements OnInit {
-    title = 'User Dashboard';
+export class EmployeeDashboardComponent implements OnInit {
+    title = 'Employee Dashboard';
 
     date: any;
     daysInThisMonth: any;
@@ -18,7 +19,7 @@ export class UserDashboardComponent implements OnInit {
     currentDate: any;
     timekeeping: Timekeeping[] = [];
 
-    constructor() {
+    constructor(private employeeDashboardService: EmployeeDashboardService) {
     }
 
     ngOnInit(): void {
@@ -37,6 +38,10 @@ export class UserDashboardComponent implements OnInit {
 
         this.currentMonth = this.monthNames[this.date.getMonth()];
         this.currentYear = this.date.getFullYear();
+
+        console.log('Current Month: ' + this.currentMonth + ' ' + this.currentYear);
+
+        this.getUserHoursByMonthAndYear();
 
         if (this.date.getMonth() === new Date().getMonth()) {
             this.currentDate = new Date().getDate();
@@ -91,6 +96,17 @@ export class UserDashboardComponent implements OnInit {
             // console.log('checking ' + item.date + ' against ' + comparisonDate);
             return item.date === comparisonDate;
         });
+    }
+
+    private getUserHoursByMonthAndYear(): any {
+        this.employeeDashboardService.getEmployeeHoursByMonthAndYear().subscribe(
+            result => {
+                console.log('result', result);
+            },
+            error => {
+                console.error('Error: ' + error.message);
+            }
+        );
     }
 }
 

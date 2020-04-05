@@ -57,7 +57,7 @@ export class DiagnosticInfoComponent implements OnInit, OnDestroy {
                 this.about = about;
             });
 
-        this.getEndpointTestsResults();
+        // this.getEndpointTestsResults();
     }
 
     /**

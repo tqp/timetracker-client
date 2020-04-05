@@ -4,19 +4,17 @@ import {RouterModule, Routes} from '@angular/router';
 import {MatIconModule} from '@angular/material/icon';
 import {FuseSharedModule} from '../../../../@fuse/shared.module';
 import {FuseHighlightModule, FuseWidgetModule} from '../../../../@fuse/components';
-import {UserDashboardComponent} from './user-dashboard.component';
+import {EmployeeDashboardComponent} from './employee-dashboard.component';
 
 const routes: Routes = [
     {
-        path: 'user-dashboard',
-        component: UserDashboardComponent
+        path: 'employee-dashboard',
+        component: EmployeeDashboardComponent
     }
 ];
 
 @NgModule({
-    declarations: [
-        UserDashboardComponent
-    ],
+    declarations: [EmployeeDashboardComponent],
     imports: [
         RouterModule.forChild(routes),
         CommonModule,
@@ -28,5 +26,5 @@ const routes: Routes = [
         FuseWidgetModule
     ]
 })
-export class UserDashboardModule {
+export class EmployeeDashboardModule {
 }
