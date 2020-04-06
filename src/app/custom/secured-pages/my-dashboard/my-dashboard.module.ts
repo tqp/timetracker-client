@@ -5,6 +5,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {FuseSharedModule} from '../../../../@fuse/shared.module';
 import {FuseHighlightModule, FuseWidgetModule} from '../../../../@fuse/components';
 import {MyDashboardComponent} from './my-dashboard.component';
+import {HighchartsChartModule} from 'highcharts-angular';
 
 const routes: Routes = [
     {
@@ -14,16 +15,17 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    declarations: [MyDashboardComponent],
+    declarations: [
+        MyDashboardComponent
+    ],
     imports: [
         RouterModule.forChild(routes),
         CommonModule,
-
         MatIconModule,
-
         FuseSharedModule,
         FuseHighlightModule,
-        FuseWidgetModule
+        FuseWidgetModule,
+        HighchartsChartModule
     ]
 })
 export class MyDashboardModule {

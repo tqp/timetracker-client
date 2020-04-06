@@ -21,6 +21,7 @@ import { AppComponent } from 'app/app.component';
 import { AppStoreModule } from 'app/store/store.module';
 import { LayoutModule } from 'app/layout/layout.module';
 import { SecuredPageResolverService } from './custom/services/secured-page-resolver.service';
+import {HighchartsChartComponent, HighchartsChartModule} from 'highcharts-angular';
 
 const appRoutes: Routes = [
     // Custom App Routes
@@ -70,6 +71,7 @@ const appRoutes: Routes = [
         AppComponent
     ],
     imports: [
+        HighchartsChartModule,
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
