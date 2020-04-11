@@ -37,6 +37,12 @@
                             <mat-icon class="nav-link-icon green-800-fg" *ngIf="adminTestResult !== 'Blocked'">sentiment_satisfied</mat-icon>
                             <td class="value">{{adminTestResult}}</td>
                         </tr>
+                        <tr class="table-row">
+                            <td class="key">Developer Endpoint Test:</td>
+                            <mat-icon class="nav-link-icon red-800-fg" *ngIf="developerTestResult === 'Blocked'">sentiment_dissatisfied</mat-icon>
+                            <mat-icon class="nav-link-icon green-800-fg" *ngIf="developerTestResult !== 'Blocked'">sentiment_satisfied</mat-icon>
+                            <td class="value">{{developerTestResult}}</td>
+                        </tr>
                     </table>
 
                 </div>

@@ -64,7 +64,7 @@ export const navigation: FuseNavigation[] = [
                 type: 'item',
                 role: 'ROLE_MANAGER',
                 icon: 'vpn_key',
-                url: '/secured-pages/intuit-tokens'
+                url: 'secured-pages/intuit-tokens'
             },
         ]
     },
@@ -97,15 +97,7 @@ export const navigation: FuseNavigation[] = [
                 type: 'item',
                 role: 'ROLE_ADMIN',
                 icon: 'update',
-                url: '/secured-pages/intuit-sync'
-            },
-            {
-                id: 'file-upload',
-                title: 'File Upload',
-                type: 'item',
-                role: 'ROLE_ADMIN',
-                icon: 'insert_drive_file',
-                url: '/secured-pages/file-upload'
+                url: 'secured-pages/intuit-sync'
             },
             {
                 id: 'swagger',
@@ -116,6 +108,48 @@ export const navigation: FuseNavigation[] = [
                 externalUrl: true,
                 openInNewTab: true,
                 url: environment.apiUrl + '/swagger-ui.html'
+            }
+        ]
+    },
+    {
+        id: 'developer-pages',
+        title: 'Developer Pages',
+        type: 'group',
+        role: 'ROLE_DEVELOPER',
+        icon: 'apps',
+        children: [
+            {
+                id: 'fuel-tracker',
+                title: 'Fuel Tracker',
+                type: 'collapsable',
+                role: 'ROLE_DEVELOPER',
+                icon: 'local_gas_station',
+                children: [
+                    {
+                        id: 'fuel-dashboard',
+                        title: 'Fuel Dashboard',
+                        type: 'item',
+                        role: 'ROLE_DEVELOPER',
+                        icon: 'insert_chart',
+                        url: 'developer-pages/fuel-dashboard'
+                    },
+                    {
+                        id: 'fuel-station-list',
+                        title: 'Fuel Station List',
+                        type: 'item',
+                        role: 'ROLE_DEVELOPER',
+                        icon: 'store',
+                        url: 'developer-pages/fuel-station-list'
+                    }
+                ]
+            },
+            {
+                id: 'file-upload',
+                title: 'File Upload',
+                type: 'item',
+                role: 'ROLE_DEVELOPER',
+                icon: 'insert_drive_file',
+                url: 'developer-pages/file-upload'
             }
         ]
     },

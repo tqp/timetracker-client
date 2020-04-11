@@ -23,6 +23,7 @@ export class DiagnosticInfoComponent implements OnInit, OnDestroy {
     public userTestResult = 'Blocked';
     public managerTestResult = 'Blocked';
     public adminTestResult = 'Blocked';
+    public developerTestResult = 'Blocked';
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -57,7 +58,7 @@ export class DiagnosticInfoComponent implements OnInit, OnDestroy {
                 this.about = about;
             });
 
-        // this.getEndpointTestsResults();
+        this.getEndpointTestsResults();
     }
 
     /**
@@ -104,6 +105,16 @@ export class DiagnosticInfoComponent implements OnInit, OnDestroy {
         this.diagnosticsService.getAdminEndpoint().subscribe(
             data => {
                 this.adminTestResult = data.value;
+            },
+            error => {
+                // console.error('Error: ', error);
+                this.authService.errorHandler(error);
+            }
+        );
+
+        this.diagnosticsService.getDeveloperEndpoint().subscribe(
+            data => {
+                this.developerTestResult = data.value;
             },
             error => {
                 // console.error('Error: ', error);

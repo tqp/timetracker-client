@@ -1,0 +1,64 @@
+<div class="page-layout simple fullwidth angular-material-elements">
+
+    <!-- HEADER -->
+    <div class="header accent p-24 h-60" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row"
+         fxLayoutAlign.gt-xs="space-between center">
+
+        <div fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="column" fxLayoutAlign.gt-xs="center start">
+            <div class="h2 mt-0">{{title}}</div>
+        </div>
+
+        <!-- TOOLBAR -->
+        <div class="toolbar" fxLayout="row" fxLayoutAlign="start center">
+
+            <button mat-icon-button aria-label="Add New Station" matTooltip="Add New Station" (click)="createFuelStation()">
+                <mat-icon>add_box</mat-icon>
+            </button>
+
+        </div>
+        <!-- / TOOLBAR -->
+
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT -->
+    <div class="content p-24">
+        <!--
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+        -->
+
+        <div class="table-container" [style.height.px]="tableHeight">
+            <table mat-table [dataSource]="dataSource" matSort>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="stationName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Station Name</th>
+                    <td mat-cell *matCellDef="let row">
+                        <a [routerLink]="['/developer-pages/fuel-station-detail/' + row.stationGuid]" preserveFragment>
+                            {{row.stationName}}
+                        </a>
+                    </td>
+                </ng-container>
+
+                <!-- City Column -->
+                <ng-container matColumnDef="stationCity">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>City</th>
+                    <td mat-cell *matCellDef="let row"> {{row.stationCity}}</td>
+                </ng-container>
+
+                <!-- State Column -->
+                <ng-container matColumnDef="stationState">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>State</th>
+                    <td mat-cell *matCellDef="let row"> {{row.stationState}}</td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true;"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                </tr>
+            </table>
+        </div>
+
+    </div>
+</div>
