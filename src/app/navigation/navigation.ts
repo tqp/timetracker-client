@@ -104,7 +104,7 @@ export const navigation: FuseNavigation[] = [
                 title: 'Swagger',
                 type: 'item',
                 role: 'ROLE_ADMIN',
-                icon: 'extension',
+                icon: 'settings',
                 externalUrl: true,
                 openInNewTab: true,
                 url: environment.apiUrl + '/swagger-ui.html'
@@ -132,6 +132,14 @@ export const navigation: FuseNavigation[] = [
                         role: 'ROLE_DEVELOPER',
                         icon: 'insert_chart',
                         url: 'developer-pages/fuel-dashboard'
+                    },
+                    {
+                        id: 'fuel-activity-list',
+                        title: 'Fuel Activity',
+                        type: 'item',
+                        role: 'ROLE_DEVELOPER',
+                        icon: 'local_gas_station',
+                        url: 'developer-pages/fuel-activity-list'
                     },
                     {
                         id: 'fuel-station-list',

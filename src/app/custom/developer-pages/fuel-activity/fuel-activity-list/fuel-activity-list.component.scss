@@ -1,0 +1,62 @@
+@import "src/@fuse/scss/fuse";
+
+app-fuel-activity-list {
+    display: flex;
+    flex: 1 1 auto;
+    width: 100%;
+
+    .mat-table {
+        width: 100%;
+        background: transparent;
+        box-shadow: none;
+
+        .odometer {
+            width: 50px;
+            text-align: right;
+        }
+
+        .trip-meter {
+            width: 50px;
+            text-align: right;
+        }
+
+        .gallons {
+            width: 38px;
+            text-align: right;
+        }
+
+        .price-per-gallon {
+            width: 86px;
+            text-align: right;
+        }
+
+        .total-cost {
+            width: 50px;
+            text-align: right;
+        }
+
+        .miles-per-gallon {
+            width: 66px;
+            text-align: right;
+        }
+
+        .mat-row {
+            position: relative;
+            cursor: pointer;
+            padding: 8px;
+
+            .mat-cell {
+                min-width: 0;
+
+                &.mat-column-detail-button {
+                    flex: 0 1 auto;
+                    padding: 0 24px 0 0;
+
+                    @include media-breakpoint('gt-md') {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {FuelStation} from '../../models/FuelStation';
-import {AuthService} from '../../services/auth.service';
-import {FuseProgressBarService} from '../../../../@fuse/components/progress-bar/progress-bar.service';
-import {FuelStationDetailService} from './fuel-station-detail.service';
+import {FuelStation} from '../../../models/FuelStation';
+import {AuthService} from '../../../services/auth.service';
+import {FuseProgressBarService} from '../../../../../@fuse/components/progress-bar/progress-bar.service';
 import {FormGroup} from '@angular/forms';
-import {FuseConfirmDialogComponent} from '../../../../@fuse/components/confirm-dialog/confirm-dialog.component';
+import {FuseConfirmDialogComponent} from '../../../../../@fuse/components/confirm-dialog/confirm-dialog.component';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {FuelStationEditDialogComponent} from '../fuel-station-edit-dialog/fuel-station-edit-dialog.component';
+import {FuelStationService} from '../fuel-station.service';
 
 @Component({
     selector: 'app-fuel-station-detail',
@@ -24,7 +24,7 @@ export class FuelStationDetailComponent implements OnInit {
 
     constructor(private route: ActivatedRoute,
                 private router: Router,
-                private fuelStationDetailService: FuelStationDetailService,
+                private fuelStationService: FuelStationService,
                 private authService: AuthService,
                 private _fuseProgressBarService: FuseProgressBarService,
                 public _matDialog: MatDialog) {
@@ -37,7 +37,7 @@ export class FuelStationDetailComponent implements OnInit {
 
     private getFuelStation(stationGuid: string): void {
         this._fuseProgressBarService.show();
-        this.fuelStationDetailService.getFuelStationDetail(stationGuid).subscribe(
+        this.fuelStationService.getFuelStationDetail(stationGuid).subscribe(
             result => {
                 this.fuelStation = result;
                 this._fuseProgressBarService.hide();
@@ -51,7 +51,7 @@ export class FuelStationDetailComponent implements OnInit {
 
     public updateFuelStation(fuelStation: FuelStation): void {
         this.dialogRef = this._matDialog.open(FuelStationEditDialogComponent, {
-            panelClass: 'contact-form-dialog',
+            panelClass: 'fuel-station-edit-dialog',
             data: {
                 fuelStation: fuelStation,
                 action: 'edit'
@@ -67,7 +67,7 @@ export class FuelStationDetailComponent implements OnInit {
                 const formData: FormGroup = response[1];
                 switch (actionType) {
                     case 'save':
-                        this.fuelStationDetailService.updateFuelStation(formData.getRawValue()).then(m => {
+                        this.fuelStationService.updateFuelStation(formData.getRawValue()).then(() => {
                             this.getFuelStation(formData.getRawValue().stationGuid);
                         });
                         break;
@@ -91,9 +91,7 @@ export class FuelStationDetailComponent implements OnInit {
 
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if (result) {
-                console.log('deleteThingy');
-                this.fuelStationDetailService.deleteFuelStation(stationGuid).then(m => {
-                    console.log('meow');
+                this.fuelStationService.deleteFuelStation(stationGuid).then(() => {
                     this.router.navigate(['developer-pages/fuel-station-list']).then();
                 });
             }

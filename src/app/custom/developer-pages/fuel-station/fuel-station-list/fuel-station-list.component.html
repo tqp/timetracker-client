@@ -11,7 +11,8 @@
         <!-- TOOLBAR -->
         <div class="toolbar" fxLayout="row" fxLayoutAlign="start center">
 
-            <button mat-icon-button aria-label="Add New Station" matTooltip="Add New Station" (click)="createFuelStation()">
+            <button mat-icon-button aria-label="Add New Station" matTooltip="Add New Station"
+                    (click)="createFuelStation()">
                 <mat-icon>add_box</mat-icon>
             </button>
 
@@ -29,7 +30,7 @@
         </mat-form-field>
         -->
 
-        <div class="table-container" [style.height.px]="tableHeight">
+        <div class="table-container" [style.height.px]="tableHeight" *ngIf="dataSource">
             <table mat-table [dataSource]="dataSource" matSort>
 
                 <!-- Name Column -->

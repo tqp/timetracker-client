@@ -67,7 +67,7 @@ export class MyDashboardComponent implements OnInit {
         this.currentMonth = this.monthNames[this.date.getMonth()];
         this.currentYear = this.date.getFullYear();
 
-        console.log('Current Month: ' + this.currentMonth + ' ' + this.currentYear);
+        // console.log('Current Month: ' + this.currentMonth + ' ' + this.currentYear);
 
         this.getUserHoursByMonthAndYear();
 
@@ -129,7 +129,7 @@ export class MyDashboardComponent implements OnInit {
     private getUserHoursByMonthAndYear(): any {
         this.employeeDashboardService.getEmployeeHoursByMonthAndYear().subscribe(
             result => {
-                console.log('result', result);
+                // console.log('result', result);
             },
             error => {
                 console.error('Error: ' + error.message);

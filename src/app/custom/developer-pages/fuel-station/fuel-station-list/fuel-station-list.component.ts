@@ -1,12 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
-import {AuthService} from '../../services/auth.service';
-import {FuseProgressBarService} from '../../../../@fuse/components/progress-bar/progress-bar.service';
-import {FuelStationListService} from './fuel-station-list.service';
-import {FuelStation} from '../../models/FuelStation';
+import {AuthService} from '../../../services/auth.service';
+import {FuseProgressBarService} from '../../../../../@fuse/components/progress-bar/progress-bar.service';
+import {FuelStationService} from '../fuel-station.service';
+import {FuelStation} from '../../../models/FuelStation';
 import {FuelStationEditDialogComponent} from '../fuel-station-edit-dialog/fuel-station-edit-dialog.component';
 import {FormGroup} from '@angular/forms';
-import {FuelStationDetailService} from '../fuel-station-detail/fuel-station-detail.service';
 import {MatDialog} from '@angular/material/dialog';
 
 @Component({
@@ -21,9 +20,8 @@ export class FuelStationListComponent implements OnInit {
     public tableHeight: number;
     public dialogRef: any;
 
-    constructor(private fuelStationListService: FuelStationListService,
+    constructor(private fuelStationService: FuelStationService,
                 private authService: AuthService,
-                private fuelStationDetailService: FuelStationDetailService,
                 private _fuseProgressBarService: FuseProgressBarService,
                 public _matDialog: MatDialog) {
     }
@@ -41,7 +39,7 @@ export class FuelStationListComponent implements OnInit {
 
     private getFuelStationList(): void {
         this._fuseProgressBarService.show();
-        this.fuelStationListService.getFuelStationList().subscribe(
+        this.fuelStationService.getFuelStationList().subscribe(
             result => {
                 console.log('result', result);
                 const fuelStationList: FuelStation[] = result;
@@ -58,7 +56,7 @@ export class FuelStationListComponent implements OnInit {
 
     public createFuelStation(): void {
         this.dialogRef = this._matDialog.open(FuelStationEditDialogComponent, {
-            panelClass: 'contact-form-dialog',
+            panelClass: 'fuel-station-edit-dialog',
             data: {
                 action: 'new'
             }
@@ -69,7 +67,7 @@ export class FuelStationListComponent implements OnInit {
                 if (!response) {
                     return;
                 }
-                this.fuelStationDetailService.createFuelStation(response.getRawValue()).then(m => {
+                this.fuelStationService.createFuelStation(response.getRawValue()).then(m => {
                     this.getFuelStationList();
                 });
             });

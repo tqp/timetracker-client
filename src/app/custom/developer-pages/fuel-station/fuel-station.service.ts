@@ -8,7 +8,7 @@ import {FuelStation} from '../../models/FuelStation';
 @Injectable({
     providedIn: 'root'
 })
-export class FuelStationDetailService {
+export class FuelStationService {
 
     constructor(private http: HttpClient,
                 private tokenService: TokenService) {
@@ -23,6 +23,16 @@ export class FuelStationDetailService {
                         resolve(response);
                     });
             });
+        } else {
+            console.error('No token was present.');
+            return null;
+        }
+    }
+
+    public getFuelStationList(): Observable<any> {
+        const token = this.tokenService.getToken();
+        if (token) {
+            return this.http.get(environment.apiUrl + '/api/v1/fuel/station', {headers: this.tokenService.setAuthorizationHeader(token)});
         } else {
             console.error('No token was present.');
             return null;

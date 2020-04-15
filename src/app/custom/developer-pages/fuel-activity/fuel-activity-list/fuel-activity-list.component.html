@@ -1,0 +1,140 @@
+<div class="page-layout simple fullwidth angular-material-elements">
+
+    <!-- HEADER -->
+    <div class="header accent p-24 h-60" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row"
+         fxLayoutAlign.gt-xs="space-between center">
+
+        <div fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="column" fxLayoutAlign.gt-xs="center start">
+            <div class="h2 mt-0">{{title}}</div>
+        </div>
+
+        <!-- TOOLBAR -->
+        <div class="toolbar" fxLayout="row" fxLayoutAlign="start center">
+
+            <button mat-icon-button aria-label="Add New Station" matTooltip="Add New Station"
+                    (click)="createFuelActivity()">
+                <mat-icon>add_box</mat-icon>
+            </button>
+
+        </div>
+        <!-- / TOOLBAR -->
+
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT -->
+    <div class="content p-24">
+
+        <mat-table #table [dataSource]="dataSource"
+                   [@animateStagger]="{value:'50'}">
+
+            <!-- Date Column -->
+            <ng-container matColumnDef="fuelActivityDate">
+                <mat-header-cell *matHeaderCellDef>Date</mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                    <p class="text-truncate font-weight-600">{{row.fuelActivityDate | date: 'MM/dd/yyyy'}}</p>
+                </mat-cell>
+            </ng-container>
+
+            <!-- Odometer Column -->
+            <ng-container matColumnDef="fuelActivityOdometer">
+                <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Odometer</mat-header-cell>
+                <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>
+                    <div class="odometer text-truncate">
+                        {{row.fuelActivityOdometer}}
+                    </div>
+                </mat-cell>
+            </ng-container>
+
+            <!-- Trip Meter Column -->
+            <ng-container matColumnDef="fuelActivityTripMeter">
+                <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Trip Meter</mat-header-cell>
+                <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>
+                    <p class="trip-meter text-truncate">
+                        {{row.fuelActivityTripMeter.toFixed(1)}}
+                    </p>
+                </mat-cell>
+            </ng-container>
+
+            <!-- Gallons Column -->
+            <ng-container matColumnDef="fuelActivityGallons">
+                <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Gallons</mat-header-cell>
+                <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>
+                    <p class="gallons text-truncate">
+                        {{row.fuelActivityGallons.toFixed(3)}}
+                    </p>
+                </mat-cell>
+            </ng-container>
+
+            <!-- Price Per Gallon Column -->
+            <ng-container matColumnDef="fuelActivityPricePerGallon">
+                <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Price per Gallon</mat-header-cell>
+                <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>
+                    <p class="price-per-gallon text-truncate">
+                        ${{row.fuelActivityPricePerGallon.toFixed(3)}}
+                    </p>
+                </mat-cell>
+            </ng-container>
+
+            <!-- Total Cost Column -->
+            <ng-container matColumnDef="fuelActivityTotalCost">
+                <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Total Cost</mat-header-cell>
+                <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>
+                    <p class="total-cost text-truncate">
+                        ${{row.fuelActivityTotalCost.toFixed(2)}}
+                    </p>
+                </mat-cell>
+            </ng-container>
+
+            <!-- Miles Per Gallon (Car) Column -->
+            <ng-container matColumnDef="fuelActivityMilesPerGallonCar">
+                <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>MPG (Car)</mat-header-cell>
+                <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>
+                    <p class="miles-per-gallon text-truncate">
+                        {{row.fuelActivityMilesPerGallon}}
+                    </p>
+                </mat-cell>
+            </ng-container>
+
+            <!-- Miles Per Gallon (Calc) Column -->
+            <ng-container matColumnDef="fuelActivityMilesPerGallonCalc">
+                <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>MPG (Calc.)</mat-header-cell>
+                <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>
+                    <p class="miles-per-gallon text-truncate">
+                        {{(row.fuelActivityTripMeter / row.fuelActivityGallons).toFixed(1)}}
+                    </p>
+                </mat-cell>
+            </ng-container>
+
+            <!-- Buttons Column -->
+            <ng-container matColumnDef="buttons">
+                <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                <mat-cell *matCellDef="let contact">
+                    <div fxFlex="row" fxLayoutAlign="end center">
+
+                        <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More"
+                                (click)="$event.stopPropagation();">
+                            <mat-icon class="secondary-text">more_vert</mat-icon>
+                        </button>
+
+                        <mat-menu #moreMenu="matMenu">
+                            <button mat-menu-item aria-label="remove" (click)="deleteFuelActivity(contact)">
+                                <mat-icon>delete</mat-icon>
+                                <span>Remove</span>
+                            </button>
+                        </mat-menu>
+                    </div>
+
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let fuelActivity; columns: displayedColumns;"
+                     class="fuel-activity"
+                     (click)="editFuelActivity(fuelActivity)"
+                     [@animate]="{value:'*',params:{y:'100%'}}">
+            </mat-row>
+        </mat-table>
+    </div>
+</div>
+
