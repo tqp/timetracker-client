@@ -25,83 +25,93 @@
     <!-- CONTENT -->
     <div class="content p-24">
 
-        <mat-table #table [dataSource]="dataSource"
+        <table mat-table #table [dataSource]="dataSource"
                    [@animateStagger]="{value:'50'}">
 
             <!-- Date Column -->
-            <ng-container matColumnDef="fuelActivityDate">
+            <ng-container matColumnDef="activityDate">
                 <mat-header-cell *matHeaderCellDef>Date</mat-header-cell>
                 <mat-cell *matCellDef="let row">
-                    <p class="text-truncate font-weight-600">{{row.fuelActivityDate | date: 'MM/dd/yyyy'}}</p>
+                    <p class="text-truncate font-weight-600">{{row.activityDate | date: 'MM/dd/yyyy'}}</p>
+                </mat-cell>
+            </ng-container>
+
+            <!-- Station Name Column -->
+            <ng-container matColumnDef="stationGuid">
+                <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Station</mat-header-cell>
+                <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>
+                    <div class="station text-truncate">
+                        {{row.stationGuid}}
+                    </div>
                 </mat-cell>
             </ng-container>
 
             <!-- Odometer Column -->
-            <ng-container matColumnDef="fuelActivityOdometer">
+            <ng-container matColumnDef="activityOdometer">
                 <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Odometer</mat-header-cell>
                 <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>
                     <div class="odometer text-truncate">
-                        {{row.fuelActivityOdometer}}
+                        {{row.activityOdometer}}
                     </div>
                 </mat-cell>
             </ng-container>
 
             <!-- Trip Meter Column -->
-            <ng-container matColumnDef="fuelActivityTripMeter">
+            <ng-container matColumnDef="activityTripMeter">
                 <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Trip Meter</mat-header-cell>
                 <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>
                     <p class="trip-meter text-truncate">
-                        {{row.fuelActivityTripMeter.toFixed(1)}}
+                        {{row.activityTripMeter.toFixed(1)}}
                     </p>
                 </mat-cell>
             </ng-container>
 
             <!-- Gallons Column -->
-            <ng-container matColumnDef="fuelActivityGallons">
+            <ng-container matColumnDef="activityGallons">
                 <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Gallons</mat-header-cell>
                 <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>
                     <p class="gallons text-truncate">
-                        {{row.fuelActivityGallons.toFixed(3)}}
+                        {{row.activityGallons.toFixed(3)}}
                     </p>
                 </mat-cell>
             </ng-container>
 
             <!-- Price Per Gallon Column -->
-            <ng-container matColumnDef="fuelActivityPricePerGallon">
+            <ng-container matColumnDef="activityPricePerGallon">
                 <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Price per Gallon</mat-header-cell>
                 <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>
                     <p class="price-per-gallon text-truncate">
-                        ${{row.fuelActivityPricePerGallon.toFixed(3)}}
+                        ${{row.activityPricePerGallon.toFixed(3)}}
                     </p>
                 </mat-cell>
             </ng-container>
 
             <!-- Total Cost Column -->
-            <ng-container matColumnDef="fuelActivityTotalCost">
+            <ng-container matColumnDef="activityTotalCost">
                 <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Total Cost</mat-header-cell>
                 <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>
                     <p class="total-cost text-truncate">
-                        ${{row.fuelActivityTotalCost.toFixed(2)}}
+                        ${{row.activityTotalCost.toFixed(2)}}
                     </p>
                 </mat-cell>
             </ng-container>
 
             <!-- Miles Per Gallon (Car) Column -->
-            <ng-container matColumnDef="fuelActivityMilesPerGallonCar">
+            <ng-container matColumnDef="activityMilesPerGallonCar">
                 <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>MPG (Car)</mat-header-cell>
                 <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>
                     <p class="miles-per-gallon text-truncate">
-                        {{row.fuelActivityMilesPerGallon}}
+                        {{row.activityMilesPerGallon}}
                     </p>
                 </mat-cell>
             </ng-container>
 
             <!-- Miles Per Gallon (Calc) Column -->
-            <ng-container matColumnDef="fuelActivityMilesPerGallonCalc">
+            <ng-container matColumnDef="activityMilesPerGallonCalc">
                 <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>MPG (Calc.)</mat-header-cell>
                 <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>
                     <p class="miles-per-gallon text-truncate">
-                        {{(row.fuelActivityTripMeter / row.fuelActivityGallons).toFixed(1)}}
+                        {{(row.activityTripMeter / row.activityGallons).toFixed(1)}}
                     </p>
                 </mat-cell>
             </ng-container>
@@ -129,12 +139,12 @@
             </ng-container>
 
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let fuelActivity; columns: displayedColumns;"
+            <mat-row *matRowDef="let activity; columns: displayedColumns;"
                      class="fuel-activity"
-                     (click)="editFuelActivity(fuelActivity)"
+                     (click)="editFuelActivity(activity)"
                      [@animate]="{value:'*',params:{y:'100%'}}">
             </mat-row>
-        </mat-table>
+        </table>
     </div>
 </div>
 

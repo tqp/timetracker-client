@@ -24,6 +24,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatRippleModule} from '@angular/material/core';
 import {FuelActivityEditDialogComponent} from './fuel-activity-edit-dialog/fuel-activity-edit-dialog.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 const routes: Routes = [
     {
@@ -37,7 +38,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    declarations: [FuelActivityListComponent],
+    declarations: [FuelActivityListComponent, FuelActivityDetailComponent, FuelActivityEditDialogComponent],
     imports: [
         CommonModule,
         RouterModule.forChild(routes),
@@ -51,6 +52,7 @@ const routes: Routes = [
         MatToolbarModule,
         MatTooltipModule,
         MatMenuModule,
+        MatAutocompleteModule,
 
         MatCheckboxModule,
         MatDatepickerModule,
@@ -66,7 +68,8 @@ const routes: Routes = [
         FuseConfirmDialogModule
     ],
     providers: [
-        ContactsService
+        ContactsService,
+        MatTableModule
     ],
     entryComponents: [
         FuelActivityEditDialogComponent

@@ -37,7 +37,7 @@ export class FuelStationDetailComponent implements OnInit {
 
     private getFuelStation(stationGuid: string): void {
         this._fuseProgressBarService.show();
-        this.fuelStationService.getFuelStationDetail(stationGuid).subscribe(
+        this.fuelStationService.getFuelStation(stationGuid).subscribe(
             result => {
                 this.fuelStation = result;
                 this._fuseProgressBarService.hide();

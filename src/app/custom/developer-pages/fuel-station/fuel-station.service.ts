@@ -39,7 +39,7 @@ export class FuelStationService {
         }
     }
 
-    public getFuelStationDetail(stationGuid: string): Observable<any> {
+    public getFuelStation(stationGuid: string): Observable<any> {
         const token = this.tokenService.getToken();
         if (token) {
             return this.http.get(environment.apiUrl + '/api/v1/fuel/station/' + stationGuid, {headers: this.tokenService.setAuthorizationHeader(token)});

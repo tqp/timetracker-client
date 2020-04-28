@@ -58,6 +58,16 @@ export class FuelActivityService {
         }
     }
 
+    public getFuelActivityWithStation(activityGuid: string): Observable<any> {
+        const token = this.tokenService.getToken();
+        if (token) {
+            return this.http.get(environment.apiUrl + '/api/v1/fuel/activity/with-station/' + activityGuid, {headers: this.tokenService.setAuthorizationHeader(token)});
+        } else {
+            console.error('No token was present.');
+            return null;
+        }
+    }
+
     public updateFuelActivity(fuelActivity: FuelActivity): Promise<any> {
         const token = this.tokenService.getToken();
         if (token) {
@@ -77,7 +87,7 @@ export class FuelActivityService {
         const token = this.tokenService.getToken();
         if (token) {
             return new Promise((resolve, reject) => {
-                this.http.delete(environment.apiUrl + '/api/v1/fuel/activity/' + fuelActivity.fuelActivityGuid, {headers: this.tokenService.setAuthorizationHeader(token)})
+                this.http.delete(environment.apiUrl + '/api/v1/fuel/activity/' + fuelActivity.activityGuid, {headers: this.tokenService.setAuthorizationHeader(token)})
                     .subscribe(response => {
                         resolve(response);
                     });

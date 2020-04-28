@@ -41,7 +41,6 @@ export class FuelStationListComponent implements OnInit {
         this._fuseProgressBarService.show();
         this.fuelStationService.getFuelStationList().subscribe(
             result => {
-                console.log('result', result);
                 const fuelStationList: FuelStation[] = result;
                 this.dataSource = new MatTableDataSource([...fuelStationList].sort((a, b) => (a.stationName > b.stationName) ? 1 : -1));
                 this._fuseProgressBarService.hide();

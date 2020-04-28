@@ -29,14 +29,15 @@ export class FuelActivityListComponent implements OnInit, OnDestroy {
     user: any;
     dataSource: MatTableDataSource<FuelActivity>;
     displayedColumns = [
-        'fuelActivityDate',
-        'fuelActivityOdometer',
-        'fuelActivityTripMeter',
-        'fuelActivityGallons',
-        'fuelActivityPricePerGallon',
-        'fuelActivityTotalCost',
-        'fuelActivityMilesPerGallonCar',
-        'fuelActivityMilesPerGallonCalc',
+        'activityDate',
+        'stationGuid',
+        'activityOdometer',
+        'activityTripMeter',
+        'activityGallons',
+        'activityPricePerGallon',
+        'activityTotalCost',
+        'activityMilesPerGallonCar',
+        'activityMilesPerGallonCalc',
         'buttons'
     ];
     dialogRef: any;
@@ -71,7 +72,6 @@ export class FuelActivityListComponent implements OnInit, OnDestroy {
     }
 
     public createFuelActivity(): void {
-        console.log('1');
         this.dialogRef = this._matDialog.open(FuelActivityEditDialogComponent, {
             panelClass: 'fuel-activity-edit-dialog',
             data: {
@@ -94,9 +94,8 @@ export class FuelActivityListComponent implements OnInit, OnDestroy {
         this._fuseProgressBarService.show();
         this.fuelActivityService.getFuelActivityList().subscribe(
             result => {
-                console.log('result', result);
                 const fuelActivityList: FuelActivity[] = result;
-                this.dataSource = new MatTableDataSource([...fuelActivityList].sort((a, b) => (a.fuelActivityDate > b.fuelActivityDate) ? 1 : -1));
+                this.dataSource = new MatTableDataSource([...fuelActivityList].sort((a, b) => (a.activityDate > b.activityDate) ? 1 : -1));
                 this._fuseProgressBarService.hide();
             },
             error => {
@@ -107,11 +106,11 @@ export class FuelActivityListComponent implements OnInit, OnDestroy {
         );
     }
 
-    editFuelActivity(fuelActivity): void {
+    editFuelActivity(fuelActivity: FuelActivity): void {
         this.dialogRef = this._matDialog.open(FuelActivityEditDialogComponent, {
             panelClass: 'fuel-activity-edit-dialog',
             data: {
-                fuelActivity: fuelActivity,
+                activityGuid: fuelActivity.activityGuid,
                 action: 'edit'
             }
         });
@@ -125,6 +124,7 @@ export class FuelActivityListComponent implements OnInit, OnDestroy {
                 const formData: FormGroup = response[1];
                 switch (actionType) {
                     case 'save':
+                        console.log('updateFuelActivity', formData.getRawValue().fuelActivity);
                         this.fuelActivityService.updateFuelActivity(formData.getRawValue()).then(() => {
                             this.getFuelActivityList();
                         });

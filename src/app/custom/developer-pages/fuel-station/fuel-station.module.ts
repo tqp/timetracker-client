@@ -12,6 +12,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {FuseSharedModule} from '../../../../@fuse/shared.module';
 import {FuseConfirmDialogModule, FuseHighlightModule, FuseWidgetModule} from '../../../../@fuse/components';
 import {FuelStationDetailComponent} from './fuel-station-detail/fuel-station-detail.component';
+import {FuelStationEditDialogComponent} from './fuel-station-edit-dialog/fuel-station-edit-dialog.component';
 
 const routes: Routes = [
     {
@@ -25,7 +26,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    declarations: [FuelStationListComponent, FuelStationDetailComponent],
+    declarations: [FuelStationListComponent, FuelStationDetailComponent, FuelStationEditDialogComponent],
     imports: [
         CommonModule,
         RouterModule.forChild(routes),
@@ -43,6 +44,9 @@ const routes: Routes = [
         FuseHighlightModule,
         FuseWidgetModule,
         FuseConfirmDialogModule
+    ],
+    entryComponents: [
+        FuelStationEditDialogComponent
     ]
 })
 export class FuelStationModule {

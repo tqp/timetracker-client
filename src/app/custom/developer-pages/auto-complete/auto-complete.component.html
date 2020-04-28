@@ -1,0 +1,72 @@
+<div style="padding: 20px;">
+
+    <!--
+    <form class="example-form" [formGroup]="myForm">
+        <div>
+            <mat-form-field style="width: 250px;">
+                <input type="text" placeholder="Last Name" matInput formControlName="lastName"
+                       [matAutocomplete]="autoLastName" autocomplete="off">
+                <mat-autocomplete [autoActiveFirstOption]="true" #autoLastName="matAutocomplete"
+                                  panelWidth="300px">
+                    <mat-option *ngFor="let option of lastNameAutoCompleteOptions | async"
+                                [value]="option.lastName"
+                                (onSelectionChange)="populateNameGroup(option)">
+                        {{option.lastName}}, {{option.firstName}} {{option.middleName}}
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-hint>Auto-Complete</mat-hint>
+            </mat-form-field>
+            <mat-form-field style="width: 200px; margin-left: 5px;">
+                <input type="text" placeholder="First Name" matInput formControlName="firstName" autocomplete="off">
+            </mat-form-field>
+            <mat-form-field style="width: 200px; margin-left: 5px;">
+                <input type="text" placeholder="Middle Name" matInput formControlName="middleName" autocomplete="off">
+            </mat-form-field>
+        </div>
+
+        <div class="address" [formGroup]="myForm.get('address')">
+            <mat-form-field style="width: 460px;">
+                <input type="text" placeholder="Street" matInput formControlName="street" [matAutocomplete]="autoStreet"
+                       autocomplete="off">
+                <mat-autocomplete [autoActiveFirstOption]="true" #autoStreet="matAutocomplete" panelWidth="300px">
+                    <mat-option *ngFor="let option of addressAutoCompleteOptions | async" [value]="option.address"
+                                (onSelectionChange)="populateAddressGroup(option)">
+                        {{option.address}}, {{option.city}}, {{option.state}}
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-hint>Auto-Complete</mat-hint>
+            </mat-form-field>
+            <br/>
+            <mat-form-field style="width: 250px;">
+                <input type="text" placeholder="City" matInput formControlName="city" autocomplete="off">
+            </mat-form-field>
+            <mat-form-field style="width: 250px;">
+                <input type="text" placeholder="State" matInput formControlName="state" autocomplete="off">
+            </mat-form-field>
+            <mat-form-field style="width: 250px;">
+                <input type="text" placeholder="Zip Code" matInput formControlName="zipCode" autocomplete="off">
+            </mat-form-field>
+        </div>
+    </form>
+    -->
+
+    <form class="auto-complete-form" [formGroup]="autoCompleteForm" style="display: flex; flex-direction: column;">
+        <mat-form-field style="width: 200px; margin-left: 5px;">
+            <input type="text" placeholder="Station Name" matInput formControlName="stationName" autocomplete="off"
+                   [matAutocomplete]="autocompleteStationName">
+            <mat-autocomplete [autoActiveFirstOption]="true" #autocompleteStationName="matAutocomplete"
+                              panelWidth="300px">
+                <mat-option *ngFor="let option of stationNameAutoCompleteOptions | async"
+                            [value]="option.stationName"
+                            (onSelectionChange)="clickStationNameOption(option)">
+                    {{option.stationName}}
+                </mat-option>
+            </mat-autocomplete>
+            <mat-hint>Auto-Complete</mat-hint>
+        </mat-form-field>
+        <mat-form-field style="width: 200px; margin-left: 5px;">
+            <input type="text" placeholder="Station Address" matInput formControlName="stationAddress"
+                   autocomplete="off">
+        </mat-form-field>
+    </form>
+</div>

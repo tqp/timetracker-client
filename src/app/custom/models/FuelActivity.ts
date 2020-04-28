@@ -1,36 +1,38 @@
 import {FuseUtils} from '../../../@fuse/utils';
 
 export class FuelActivity {
-    fuelActivityGuid: string;
-    fuelActivityDate: string;
+    activityGuid?: string;
+    activityDate?: string;
 
     // Car Data
-    fuelActivityOdometer: number;
-    fuelActivityTripMeter: number;
-    fuelActivityMilesPerGallon: number;
+    activityOdometer?: number;
+    activityTripMeter?: number;
+    activityMilesPerGallon?: number;
 
     // Station Data
-    fuelActivityGallons: number;
-    fuelActivityPricePerGallon: number;
-    fuelActivityTotalCost: number;
+    stationGuid?: string;
+    activityGallons?: number;
+    activityPricePerGallon?: number;
+    activityTotalCost?: number;
 
     /**
      * Constructor
      *
      * @param fuelActivity
      */
-    constructor(fuelActivity) {
+    constructor(fuelActivity: FuelActivity) {
         {
-            this.fuelActivityGuid = fuelActivity.fuelActivityGuid || FuseUtils.generateGUID();
-            this.fuelActivityDate = fuelActivity.fuelActivityDate || '';
+            this.activityGuid = fuelActivity.activityGuid || FuseUtils.generateGUID();
+            this.activityDate = fuelActivity.activityDate || '';
 
-            this.fuelActivityOdometer = fuelActivity.fuelActivityOdometer || '';
-            this.fuelActivityTripMeter = fuelActivity.fuelActivityTripMeter || '';
-            this.fuelActivityMilesPerGallon = fuelActivity.fuelActivityMilesPerGallon || '';
+            this.activityOdometer = fuelActivity.activityOdometer || 0;
+            this.activityTripMeter = fuelActivity.activityTripMeter || 0;
+            this.activityMilesPerGallon = fuelActivity.activityMilesPerGallon || 0;
 
-            this.fuelActivityGallons = fuelActivity.fuelActivityGallons || '';
-            this.fuelActivityPricePerGallon = fuelActivity.fuelActivityPricePerGallon || '';
-            this.fuelActivityTotalCost = fuelActivity.fuelActivityTotalCost || '';
+            this.stationGuid = fuelActivity.stationGuid || '';
+            this.activityGallons = fuelActivity.activityGallons || 0;
+            this.activityPricePerGallon = fuelActivity.activityPricePerGallon || 0;
+            this.activityTotalCost = fuelActivity.activityTotalCost || 0;
         }
     }
 }

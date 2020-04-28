@@ -12,62 +12,152 @@
 
     <div mat-dialog-content class="p-24 pb-0 m-0" fusePerfectScrollbar>
 
-        <form [formGroup]="activityForm">
+        <div fxLayout="row" fxLayoutAlign="start start">
 
-            <div fxLayout="row" fxLayoutAlign="start start">
-                <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Date</mat-label>
-                    <input [matDatepicker]="fuelActivityDatePicker" name="fuelActivityDate" formControlName="fuelActivityDate" matInput required>
-                    <mat-datepicker-toggle matSuffix [for]="fuelActivityDatePicker"></mat-datepicker-toggle>
-                    <mat-datepicker #fuelActivityDatePicker></mat-datepicker>
-                </mat-form-field>
+            <div id="station-col" style="margin-right: 40px;">
+
+                <form [formGroup]="fuelStationSubForm" *ngIf="station">
+
+                    <div fxLayout="row" fxLayoutAlign="start start">
+
+                        <mat-form-field appearance="outline" fxFlex>
+                            <mat-label>Station Name</mat-label>
+                            <input #stationName name="stationName" id="stationName" formControlName="stationName" matInput required
+                                   [matAutocomplete]="autocompleteStationName">
+                            <mat-autocomplete [autoActiveFirstOption]="true" #autocompleteStationName="matAutocomplete"
+                                              panelWidth="300px">
+                                <mat-option *ngFor="let option of stationNameAutoCompleteOptions | async"
+                                            [value]="option.stationName"
+                                            (onSelectionChange)="clickStationNameOption(option)">
+                                    {{option.stationName}}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="start start">
+                        <mat-form-field appearance="outline" fxFlex>
+                            <mat-label>Station Affiliation</mat-label>
+                            <input name="stationAffiliation" formControlName="stationAffiliation" matInput required>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="start start">
+                        <mat-form-field appearance="outline" fxFlex>
+                            <mat-label>Address 1</mat-label>
+                            <input name="stationAddress1" formControlName="stationAddress1" matInput required>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="start start">
+                        <mat-form-field appearance="outline" fxFlex>
+                            <mat-label>City</mat-label>
+                            <input name="stationCity" formControlName="stationCity" matInput required>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="start start">
+                        <mat-form-field appearance="outline" fxFlex>
+                            <mat-label>State</mat-label>
+                            <input name="stationState" formControlName="stationState" matInput required>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="start start">
+                        <mat-form-field appearance="outline" fxFlex>
+                            <mat-label>Zip Code</mat-label>
+                            <input name="stationZip" formControlName="stationZip" matInput required>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="start start">
+                        <mat-form-field appearance="outline" fxFlex>
+                            <mat-label>Phone Number</mat-label>
+                            <mat-icon matSuffix class="secondary-text">phone</mat-icon>
+                            <input name="stationPhone" formControlName="stationPhone" matInput>
+                        </mat-form-field>
+                    </div>
+
+                </form>
+
             </div>
 
+            <div id="activity-col">
 
-            <div fxLayout="row" fxLayoutAlign="start start">
-                <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Odometer</mat-label>
-                    <input name="fuelActivityOdometer" formControlName="fuelActivityOdometer" matInput required>
-                </mat-form-field>
+                <form [formGroup]="fuelActivitySubForm">
+
+                    <div fxLayout="row" fxLayoutAlign="start start">
+                        <mat-form-field appearance="outline" fxFlex>
+                            <mat-label>Station GUID</mat-label>
+                            <input name="stationGuid" formControlName="stationGuid" matInput required>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="start start">
+                        <mat-form-field appearance="outline" fxFlex>
+                            <mat-label>Date</mat-label>
+                            <input [matDatepicker]="activityDatePicker" name="activityDate"
+                                   formControlName="activityDate" matInput required>
+                            <mat-datepicker-toggle matSuffix [for]="activityDatePicker"></mat-datepicker-toggle>
+                            <mat-datepicker #activityDatePicker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="start start">
+                        <mat-form-field appearance="outline" fxFlex>
+                            <mat-label>Odometer</mat-label>
+                            <input name="activityOdometer" formControlName="activityOdometer" matInput required>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="start start">
+                        <mat-form-field appearance="outline" fxFlex>
+                            <mat-label>Trip Meter</mat-label>
+                            <input name="activityTripMeter" formControlName="activityTripMeter" matInput
+                                   required>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="start start">
+                        <mat-form-field appearance="outline" fxFlex>
+                            <mat-label>Miles per Gallon</mat-label>
+                            <input name="activityMilesPerGallon" formControlName="activityMilesPerGallon"
+                                   matInput
+                                   required>
+                        </mat-form-field>
+                    </div>
+
+
+                    <div fxLayout="row" fxLayoutAlign="start start">
+                        <mat-form-field appearance="outline" fxFlex>
+                            <mat-label>Gallons</mat-label>
+                            <input name="activityGallons" formControlName="activityGallons" matInput required>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="start start">
+                        <mat-form-field appearance="outline" fxFlex>
+                            <mat-label>Price per Gallon</mat-label>
+                            <input name="activityPricePerGallon" formControlName="activityPricePerGallon"
+                                   matInput
+                                   required>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="start start">
+                        <mat-form-field appearance="outline" fxFlex>
+                            <mat-label>Total Cost</mat-label>
+                            <input name="activityTotalCost" formControlName="activityTotalCost" matInput
+                                   required>
+                        </mat-form-field>
+                    </div>
+
+                </form>
+
             </div>
 
-            <div fxLayout="row" fxLayoutAlign="start start">
-                <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Trip Meter</mat-label>
-                    <input name="fuelActivityTripMeter" formControlName="fuelActivityTripMeter" matInput required>
-                </mat-form-field>
-            </div>
-
-            <div fxLayout="row" fxLayoutAlign="start start">
-                <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Miles per Gallon</mat-label>
-                    <input name="fuelActivityMilesPerGallon" formControlName="fuelActivityMilesPerGallon" matInput required>
-                </mat-form-field>
-            </div>
-
-
-            <div fxLayout="row" fxLayoutAlign="start start">
-                <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Gallons</mat-label>
-                    <input name="fuelActivityGallons" formControlName="fuelActivityGallons" matInput required>
-                </mat-form-field>
-            </div>
-
-            <div fxLayout="row" fxLayoutAlign="start start">
-                <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Price per Gallon</mat-label>
-                    <input name="fuelActivityPricePerGallon" formControlName="fuelActivityPricePerGallon" matInput required>
-                </mat-form-field>
-            </div>
-
-            <div fxLayout="row" fxLayoutAlign="start start">
-                <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Total Cost</mat-label>
-                    <input name="fuelActivityTotalCost" formControlName="fuelActivityTotalCost" matInput required>
-                </mat-form-field>
-            </div>
-
-        </form>
+        </div>
 
     </div>
 

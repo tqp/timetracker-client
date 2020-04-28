@@ -1,13 +1,13 @@
-import { AfterViewInit, Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { FuseConfigService } from '@fuse/services/config.service';
-import { fuseAnimations } from '@fuse/animations';
-import { AuthService } from '../../services/auth.service';
-import { TokenService } from '../../services/token.service';
-import { Router } from '@angular/router';
+import {AfterViewInit, Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FuseConfigService} from '@fuse/services/config.service';
+import {fuseAnimations} from '@fuse/animations';
+import {AuthService} from '../../services/auth.service';
+import {TokenService} from '../../services/token.service';
+import {Router} from '@angular/router';
 
-import { v4 as uuid } from 'uuid';
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import {v4 as uuid} from 'uuid';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
     selector: 'login',
@@ -142,6 +142,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
                 // console.log('GoogleAuthConfig:', data);
                 this.googleClientId = data.clientId;
                 this.googleRedirectUri = data.redirectUri;
+                if (this.loginForm.get('generalError').hasError('customValidator')) {
+                    console.log('Server connection restored.');
+                    this.loginForm.get('generalError').setErrors(null);
+                }
             },
             error => {
                 console.error('Error: ', error);
@@ -167,7 +171,15 @@ export class LoginComponent implements OnInit, AfterViewInit {
                 this.errorMessage = 'That User is currently disabled.';
                 break;
             case 'CannotConnectToServer':
-                this.errorMessage = 'Could not connect to the Timetracker server.';
+                this.errorMessage = 'Cannot connect to the Timetracker server.';
+                // Check again to see if server is back up.
+                setTimeout(() => {
+                    console.log('Checking server connection...');
+                    this.getGoogleAuthConfig();
+                    if (this.loginForm.get('generalError').hasError('customValidator')) {
+                        console.log('Still cannot connect to the Timetracker server.');
+                    }
+                }, 5000);
                 break;
             default:
                 this.errorMessage = 'An unknown error occurred.';

@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FuelDashboardModule} from './fuel-dashboard/fuel-dashboard.module';
 import {FileUploadModule} from './file-upload/file-upload.module';
-import {FuelStationEditDialogComponent} from './fuel-station/fuel-station-edit-dialog/fuel-station-edit-dialog.component';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatDatepickerModule} from '@angular/material/datepicker';
@@ -16,16 +15,16 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {FuseSharedModule} from '../../../@fuse/shared.module';
 import {FuseConfirmDialogModule, FuseSidebarModule} from '../../../@fuse/components';
 import {MatDialogModule} from '@angular/material/dialog';
-import {FuelActivityEditDialogComponent} from './fuel-activity/fuel-activity-edit-dialog/fuel-activity-edit-dialog.component';
-import {FuelActivityDetailComponent} from './fuel-activity/fuel-activity-detail/fuel-activity-detail.component';
 import {FuelStationModule} from './fuel-station/fuel-station.module';
 import {FuelActivityModule} from './fuel-activity/fuel-activity.module';
+import {AutoCompleteModule} from './auto-complete/auto-complete.module';
 
 @NgModule({
-    declarations: [FuelStationEditDialogComponent, FuelActivityEditDialogComponent, FuelActivityDetailComponent],
+    declarations: [],
     imports: [
         CommonModule,
 
+        AutoCompleteModule,
         FileUploadModule,
         FuelDashboardModule,
         FuelStationModule,
@@ -47,10 +46,7 @@ import {FuelActivityModule} from './fuel-activity/fuel-activity.module';
         FuseConfirmDialogModule,
         FuseSidebarModule
     ],
-    entryComponents: [
-        FuelStationEditDialogComponent,
-        FuelActivityEditDialogComponent
-    ]
+    entryComponents: []
 })
 export class DeveloperPagesModule {
 }

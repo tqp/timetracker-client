@@ -1,15 +1,15 @@
 import {FuseUtils} from '../../../@fuse/utils';
 
 export class FuelStation {
-    stationGuid: string;
-    stationName: string;
-    stationAffiliation: string;
-    stationAddress1: string;
-    stationAddress2: string;
-    stationCity: string;
-    stationState: number;
-    stationZip: string;
-    stationPhone: string;
+    stationGuid?: string;
+    stationName?: string;
+    stationAffiliation?: string;
+    stationAddress1?: string;
+    stationAddress2?: string;
+    stationCity?: string;
+    stationState?: number;
+    stationZip?: string;
+    stationPhone?: string;
 
     /**
      * Constructor
