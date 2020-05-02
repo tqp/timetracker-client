@@ -15,7 +15,7 @@ import {FuelStationService} from '../fuel-station.service';
     styleUrls: ['./fuel-station-detail.component.scss']
 })
 export class FuelStationDetailComponent implements OnInit {
-    public title = 'Fuel Station Detail';
+    public title = 'Fuel FuelStation Detail';
     public guid: string;
     public fuelStation: FuelStation;
 

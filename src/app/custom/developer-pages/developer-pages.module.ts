@@ -18,6 +18,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {FuelStationModule} from './fuel-station/fuel-station.module';
 import {FuelActivityModule} from './fuel-activity/fuel-activity.module';
 import {AutoCompleteModule} from './auto-complete/auto-complete.module';
+import {FuelActivityTwoModule} from './fuel-activity-two/fuel-activity-two.module';
 
 @NgModule({
     declarations: [],
@@ -29,6 +30,7 @@ import {AutoCompleteModule} from './auto-complete/auto-complete.module';
         FuelDashboardModule,
         FuelStationModule,
         FuelActivityModule,
+        FuelActivityTwoModule,
 
         MatButtonModule,
         MatCheckboxModule,

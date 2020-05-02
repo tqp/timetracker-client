@@ -14,7 +14,7 @@ export class FuelStationService {
                 private tokenService: TokenService) {
     }
 
-    public createFuelStation(fuelStation: FuelStation): Promise<any> {
+    public createFuelStation(fuelStation: FuelStation): Promise<FuelStation> {
         const token = this.tokenService.getToken();
         if (token) {
             return new Promise((resolve, reject) => {

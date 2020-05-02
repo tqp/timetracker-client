@@ -3,8 +3,10 @@ import {HttpClient} from '@angular/common/http';
 import {TokenService} from '../../services/token.service';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {environment} from '../../../../environments/environment';
-import {FuelActivity} from '../../models/FuelActivity';
+import {FuelFill} from '../../models/FuelFill';
 import {Contact} from '../../../main/apps/contacts/contact.model';
+import {FuelActivity} from '../../models/FuelActivity';
+import {map, pluck, switchMap, tap} from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -23,17 +25,7 @@ export class FuelActivityService {
                 private tokenService: TokenService) {
     }
 
-    public getContacts(): Observable<any> {
-        const token = this.tokenService.getToken();
-        if (token) {
-            return this.http.get('api/contacts-contacts');
-        } else {
-            console.error('No token was present.');
-            return null;
-        }
-    }
-
-    public createFuelActivity(fuelActivity: FuelActivity): Promise<any> {
+    public createFuelActivity(fuelActivity: FuelFill): Promise<FuelFill> {
         const token = this.tokenService.getToken();
         if (token) {
             return new Promise((resolve, reject) => {
@@ -48,27 +40,27 @@ export class FuelActivityService {
         }
     }
 
-    public getFuelActivityList(): Observable<any> {
+    public getFuelActivityList(): Observable<FuelActivity> {
         const token = this.tokenService.getToken();
         if (token) {
-            return this.http.get(environment.apiUrl + '/api/v1/fuel/activity', {headers: this.tokenService.setAuthorizationHeader(token)});
+            return this.http.get<FuelActivity>(environment.apiUrl + '/api/v1/fuel/activity', {headers: this.tokenService.setAuthorizationHeader(token)});
         } else {
             console.error('No token was present.');
             return null;
         }
     }
 
-    public getFuelActivityWithStation(activityGuid: string): Observable<any> {
+    public getFuelActivity(activityGuid: string): Observable<any> {
         const token = this.tokenService.getToken();
         if (token) {
-            return this.http.get(environment.apiUrl + '/api/v1/fuel/activity/with-station/' + activityGuid, {headers: this.tokenService.setAuthorizationHeader(token)});
+            return this.http.get(environment.apiUrl + '/api/v1/fuel/activity/' + activityGuid, {headers: this.tokenService.setAuthorizationHeader(token)});
         } else {
             console.error('No token was present.');
             return null;
         }
     }
 
-    public updateFuelActivity(fuelActivity: FuelActivity): Promise<any> {
+    public updateFuelActivity(fuelActivity: FuelFill): Promise<any> {
         const token = this.tokenService.getToken();
         if (token) {
             return new Promise((resolve, reject) => {
@@ -83,11 +75,11 @@ export class FuelActivityService {
         }
     }
 
-    public deleteFuelActivity(fuelActivity: FuelActivity): Promise<any> {
+    public deleteFuelActivity(fillGuid: string): Promise<any> {
         const token = this.tokenService.getToken();
         if (token) {
             return new Promise((resolve, reject) => {
-                this.http.delete(environment.apiUrl + '/api/v1/fuel/activity/' + fuelActivity.activityGuid, {headers: this.tokenService.setAuthorizationHeader(token)})
+                this.http.delete(environment.apiUrl + '/api/v1/fuel/activity/' + fillGuid, {headers: this.tokenService.setAuthorizationHeader(token)})
                     .subscribe(response => {
                         resolve(response);
                     });

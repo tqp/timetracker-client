@@ -5,10 +5,28 @@ app-fuel-activity-list {
     flex: 1 1 auto;
     width: 100%;
 
+    .table-container {
+        position: relative;
+        min-height: 100px;
+        overflow: auto;
+    }
+
+    table {
+        width: 100%;
+    }
+
     .mat-table {
         width: 100%;
         background: transparent;
         box-shadow: none;
+
+        .date {
+            width: 80px;
+        }
+
+        .station {
+            width: 300px;
+        }
 
         .odometer {
             width: 50px;
@@ -21,12 +39,12 @@ app-fuel-activity-list {
         }
 
         .gallons {
-            width: 38px;
+            width: 50px;
             text-align: right;
         }
 
         .price-per-gallon {
-            width: 86px;
+            width: 60px;
             text-align: right;
         }
 
@@ -36,8 +54,16 @@ app-fuel-activity-list {
         }
 
         .miles-per-gallon {
-            width: 66px;
+            width: 70px;
             text-align: right;
+        }
+
+        .button-header-cell {
+            max-width: 48px;
+        }
+
+        .button-cell {
+            max-width: 40px;
         }
 
         .mat-row {
@@ -58,5 +84,11 @@ app-fuel-activity-list {
                 }
             }
         }
+    }
+
+    .empty-table {
+        width: 100%;
+        padding: 20px 24px;
+        background: white;
     }
 }

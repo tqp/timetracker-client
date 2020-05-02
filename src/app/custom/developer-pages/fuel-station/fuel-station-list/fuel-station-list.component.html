@@ -11,7 +11,7 @@
         <!-- TOOLBAR -->
         <div class="toolbar" fxLayout="row" fxLayoutAlign="start center">
 
-            <button mat-icon-button aria-label="Add New Station" matTooltip="Add New Station"
+            <button mat-icon-button aria-label="Add New FuelStation" matTooltip="Add New FuelStation"
                     (click)="createFuelStation()">
                 <mat-icon>add_box</mat-icon>
             </button>
@@ -31,11 +31,11 @@
         -->
 
         <div class="table-container" [style.height.px]="tableHeight" *ngIf="dataSource">
-            <table mat-table [dataSource]="dataSource" matSort>
+            <table mat-table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}">
 
                 <!-- Name Column -->
                 <ng-container matColumnDef="stationName">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Station Name</th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>FuelStation Name</th>
                     <td mat-cell *matCellDef="let row">
                         <a [routerLink]="['/developer-pages/fuel-station-detail/' + row.stationGuid]" preserveFragment>
                             {{row.stationName}}

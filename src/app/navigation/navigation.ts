@@ -142,8 +142,16 @@ export const navigation: FuseNavigation[] = [
                         url: 'developer-pages/fuel-activity-list'
                     },
                     {
+                        id: 'fuel-activity-two-list',
+                        title: 'Fuel Activity Two',
+                        type: 'item',
+                        role: 'ROLE_DEVELOPER',
+                        icon: 'local_gas_station',
+                        url: 'developer-pages/fuel-activity-two-list'
+                    },
+                    {
                         id: 'fuel-station-list',
-                        title: 'Fuel Station List',
+                        title: 'Fuel FuelStation List',
                         type: 'item',
                         role: 'ROLE_DEVELOPER',
                         icon: 'store',

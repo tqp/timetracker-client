@@ -16,7 +16,7 @@
 
             <div id="station-col" style="margin-right: 40px;">
 
-                <form [formGroup]="fuelStationSubForm" *ngIf="station">
+                <form [formGroup]="stationSubForm" *ngIf="station">
 
                     <div fxLayout="row" fxLayoutAlign="start start">
 
@@ -85,14 +85,16 @@
 
             <div id="activity-col">
 
-                <form [formGroup]="fuelActivitySubForm">
+                <form [formGroup]="activitySubForm">
 
+                    <!--
                     <div fxLayout="row" fxLayoutAlign="start start">
                         <mat-form-field appearance="outline" fxFlex>
-                            <mat-label>Station GUID</mat-label>
-                            <input name="stationGuid" formControlName="stationGuid" matInput required>
+                            <mat-label>FuelStation GUID</mat-label>
+                            <input name="stationGuid" formControlName="stationGuid" matInput>
                         </mat-form-field>
                     </div>
+                    -->
 
                     <div fxLayout="row" fxLayoutAlign="start start">
                         <mat-form-field appearance="outline" fxFlex>
@@ -113,7 +115,7 @@
 
                     <div fxLayout="row" fxLayoutAlign="start start">
                         <mat-form-field appearance="outline" fxFlex>
-                            <mat-label>Trip Meter</mat-label>
+                            <mat-label>Distance</mat-label>
                             <input name="activityTripMeter" formControlName="activityTripMeter" matInput
                                    required>
                         </mat-form-field>
@@ -127,7 +129,6 @@
                                    required>
                         </mat-form-field>
                     </div>
-
 
                     <div fxLayout="row" fxLayoutAlign="start start">
                         <mat-form-field appearance="outline" fxFlex>

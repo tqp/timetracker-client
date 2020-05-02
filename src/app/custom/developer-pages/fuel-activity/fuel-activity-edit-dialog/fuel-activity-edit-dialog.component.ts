@@ -1,14 +1,13 @@
 import {AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {FuelActivity} from '../../../models/FuelActivity';
+import {FuelFill} from '../../../models/FuelFill';
 import {FuelStation} from '../../../models/FuelStation';
 import {catchError, debounceTime, map, startWith, switchMap} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
 import {AutoCompleteService} from '../../auto-complete/auto-complete.service';
 import {FuelActivityService} from '../fuel-activity.service';
-import {MatTableDataSource} from '@angular/material/table';
-import {FuelActivityStation} from '../../../models/FuelActivityStation';
+import {FuelActivity} from '../../../models/FuelActivity';
 
 @Component({
     selector: 'app-fuel-activity-edit-dialog',
@@ -19,7 +18,7 @@ import {FuelActivityStation} from '../../../models/FuelActivityStation';
 export class FuelActivityEditDialogComponent implements OnInit, AfterViewInit {
     action: string;
     activityGuid: string;
-    activity: FuelActivity;
+    activity: FuelFill;
     station: FuelStation;
     activityForm: FormGroup;
     dialogTitle: string;
@@ -43,17 +42,19 @@ export class FuelActivityEditDialogComponent implements OnInit, AfterViewInit {
         private fuelActivityService: FuelActivityService,
         private autoCompleteService: AutoCompleteService
     ) {
+        // console.log('data', data);
+
         // Set the defaults
         this.action = data.action;
 
         if (this.action === 'edit') {
             this.dialogTitle = 'Edit Fuel Activity';
-            this.activity = new FuelActivity({});
+            this.activity = new FuelFill({});
             this.station = new FuelStation({});
-            this.getFuelActivityWithStation(data.activityGuid);
+            this.getFuelActivity(data.fillGuid);
         } else {
             this.dialogTitle = 'New Fuel Activity';
-            this.activity = new FuelActivity({});
+            this.activity = new FuelFill({});
             this.station = new FuelStation({});
         }
 
@@ -66,11 +67,9 @@ export class FuelActivityEditDialogComponent implements OnInit, AfterViewInit {
             startWith(''),
             debounceTime(300),
             switchMap((value: string) => {
-                console.log('value:', value);
                 if (value !== '') {
                     return this.autoCompleteService.retrieveStationNameOptions(value.toLowerCase()).pipe(
                         map(results => {
-                            // console.log('results', results);
                             return results;
                         }),
                         catchError(() => {
@@ -95,15 +94,15 @@ export class FuelActivityEditDialogComponent implements OnInit, AfterViewInit {
         return this._formBuilder.group({
 
             fuelActivity: this._formBuilder.group({
-                    activityGuid: [this.activity.activityGuid],
-                    activityDate: [this.activity.activityDate],
-                    activityOdometer: [this.activity.activityOdometer],
-                    activityTripMeter: [this.activity.activityTripMeter],
-                    activityMilesPerGallon: [this.activity.activityMilesPerGallon],
+                    activityGuid: [this.activity.fillGuid],
+                    activityDate: [this.activity.fillDate],
+                    activityOdometer: [this.activity.fillOdometer],
+                    activityTripMeter: [this.activity.fillMilesTraveled],
+                    activityMilesPerGallon: [this.activity.fillMilesPerGallon],
                     stationGuid: [this.activity.stationGuid],
-                    activityGallons: [this.activity.activityGallons],
-                    activityPricePerGallon: [this.activity.activityPricePerGallon],
-                    activityTotalCost: [this.activity.activityTotalCost],
+                    activityGallons: [this.activity.fillGallons],
+                    activityPricePerGallon: [this.activity.fillCostPerGallon],
+                    activityTotalCost: [this.activity.fillTotalCost],
                 }
             ),
 
@@ -122,19 +121,19 @@ export class FuelActivityEditDialogComponent implements OnInit, AfterViewInit {
         });
     }
 
-    private getFuelActivityWithStation(activityGuid: string): void {
-        this.fuelActivityService.getFuelActivityWithStation(activityGuid).subscribe(
+    private getFuelActivity(fillGuid: string): void {
+        this.fuelActivityService.getFuelActivity(fillGuid).subscribe(
             result => {
-                const activity: FuelActivityStation = result;
+                const activity: FuelActivity = result;
 
                 const fuelActivitySubForm = this.activityForm.get('fuelActivity') as FormGroup;
-                fuelActivitySubForm.controls['stationGuid'].patchValue(activity.fuelActivity.stationGuid, {emitEvent: false});
-                fuelActivitySubForm.controls['activityDate'].patchValue(activity.fuelActivity.activityDate);
-                fuelActivitySubForm.controls['activityOdometer'].patchValue(activity.fuelActivity.activityOdometer);
-                fuelActivitySubForm.controls['activityTripMeter'].patchValue(activity.fuelActivity.activityTripMeter);
-                fuelActivitySubForm.controls['activityMilesPerGallon'].patchValue(activity.fuelActivity.activityMilesPerGallon);
-                fuelActivitySubForm.controls['activityGallons'].patchValue(activity.fuelActivity.activityGallons);
-                fuelActivitySubForm.controls['activityPricePerGallon'].patchValue(activity.fuelActivity.activityPricePerGallon);
+                fuelActivitySubForm.controls['stationGuid'].patchValue(activity.fuelFill.stationGuid, {emitEvent: false});
+                fuelActivitySubForm.controls['activityDate'].patchValue(activity.fuelFill.fillDate);
+                fuelActivitySubForm.controls['activityOdometer'].patchValue(activity.fuelFill.fillOdometer);
+                fuelActivitySubForm.controls['activityTripMeter'].patchValue(activity.fuelFill.fillMilesTraveled);
+                fuelActivitySubForm.controls['activityMilesPerGallon'].patchValue(activity.fuelFill.fillMilesPerGallon);
+                fuelActivitySubForm.controls['activityGallons'].patchValue(activity.fuelFill.fillGallons);
+                fuelActivitySubForm.controls['activityPricePerGallon'].patchValue(activity.fuelFill.fillCostPerGallon);
 
                 const fuelStationSubForm = this.activityForm.get('fuelStation') as FormGroup;
                 fuelStationSubForm.controls['stationName'].patchValue(activity.fuelStation.stationName, {emitEvent: false});
@@ -152,22 +151,22 @@ export class FuelActivityEditDialogComponent implements OnInit, AfterViewInit {
         return null;
     }
 
-    get fuelActivitySubForm(): any {
+    get activitySubForm(): any {
         return this.activityForm.get('fuelActivity') as FormGroup;
     }
 
-    get fuelStationSubForm(): any {
+    get stationSubForm(): any {
         return this.activityForm.get('fuelStation') as FormGroup;
     }
 
     public clickStationNameOption(option: FuelStation): void {
         console.log('option', option);
-        this.fuelActivitySubForm.controls['stationGuid'].patchValue(option.stationGuid);
-        this.fuelStationSubForm.controls['stationAffiliation'].patchValue(option.stationAffiliation);
-        this.fuelStationSubForm.controls['stationAddress1'].patchValue(option.stationAddress1);
-        this.fuelStationSubForm.controls['stationCity'].patchValue(option.stationCity);
-        this.fuelStationSubForm.controls['stationState'].patchValue(option.stationState);
-        this.fuelStationSubForm.controls['stationZip'].patchValue(option.stationZip);
-        this.fuelStationSubForm.controls['stationPhone'].patchValue(option.stationPhone);
+        this.activitySubForm.controls['stationGuid'].patchValue(option.stationGuid);
+        this.stationSubForm.controls['stationAffiliation'].patchValue(option.stationAffiliation);
+        this.stationSubForm.controls['stationAddress1'].patchValue(option.stationAddress1);
+        this.stationSubForm.controls['stationCity'].patchValue(option.stationCity);
+        this.stationSubForm.controls['stationState'].patchValue(option.stationState);
+        this.stationSubForm.controls['stationZip'].patchValue(option.stationZip);
+        this.stationSubForm.controls['stationPhone'].patchValue(option.stationPhone);
     }
 }

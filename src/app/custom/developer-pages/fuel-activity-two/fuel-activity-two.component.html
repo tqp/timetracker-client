@@ -5,19 +5,8 @@
          fxLayoutAlign.gt-xs="space-between center">
 
         <div fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="column" fxLayoutAlign.gt-xs="center start">
-            <div class="h2 mt-0">{{title}}</div>
+            <div class="h2 mt-0">Fuel Activity Two</div>
         </div>
-
-        <!-- TOOLBAR -->
-        <div class="toolbar" fxLayout="row" fxLayoutAlign="start center">
-
-            <button mat-icon-button aria-label="Add New Station" matTooltip="Add New Station"
-                    (click)="createFuelActivity()">
-                <mat-icon>add_box</mat-icon>
-            </button>
-
-        </div>
-        <!-- / TOOLBAR -->
 
     </div>
     <!-- / HEADER -->
@@ -132,12 +121,12 @@
                                 <mat-icon class="secondary-text">more_vert</mat-icon>
                             </button>
                             <mat-menu #moreMenu="matMenu">
-                                <button mat-menu-item aria-label="edit" (click)="editFuelActivity(row.fillGuid)">
+                                <button mat-menu-item aria-label="edit" (click)="editFuelActivity(row.fuelActivity)">
                                     <mat-icon>edit</mat-icon>
                                     <span>Edit</span>
                                 </button>
                                 <button mat-menu-item aria-label="delete"
-                                        (click)="deleteFuelActivity(row.fillGuid)">
+                                        (click)="deleteFuelActivity(row.fuelActivity)">
                                     <mat-icon>delete</mat-icon>
                                     <span>Delete</span>
                                 </button>

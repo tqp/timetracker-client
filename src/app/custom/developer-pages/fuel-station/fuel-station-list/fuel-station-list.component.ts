@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {AuthService} from '../../../services/auth.service';
 import {FuseProgressBarService} from '../../../../../@fuse/components/progress-bar/progress-bar.service';
@@ -7,14 +7,17 @@ import {FuelStation} from '../../../models/FuelStation';
 import {FuelStationEditDialogComponent} from '../fuel-station-edit-dialog/fuel-station-edit-dialog.component';
 import {FormGroup} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
+import {fuseAnimations} from '../../../../../@fuse/animations';
 
 @Component({
     selector: 'app-fuel-station-list',
     templateUrl: './fuel-station-list.component.html',
-    styleUrls: ['./fuel-station-list.component.scss']
+    styleUrls: ['./fuel-station-list.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    animations: fuseAnimations
 })
 export class FuelStationListComponent implements OnInit {
-    public title = 'Fuel Station List';
+    public title = 'Fuel FuelStation List';
     public displayedColumns: string[] = ['stationName', 'stationCity', 'stationState'];
     public dataSource: MatTableDataSource<FuelStation>;
     public tableHeight: number;

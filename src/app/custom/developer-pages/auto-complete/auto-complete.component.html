@@ -52,7 +52,7 @@
 
     <form class="auto-complete-form" [formGroup]="autoCompleteForm" style="display: flex; flex-direction: column;">
         <mat-form-field style="width: 200px; margin-left: 5px;">
-            <input type="text" placeholder="Station Name" matInput formControlName="stationName" autocomplete="off"
+            <input type="text" placeholder="FuelStation Name" matInput formControlName="stationName" autocomplete="off"
                    [matAutocomplete]="autocompleteStationName">
             <mat-autocomplete [autoActiveFirstOption]="true" #autocompleteStationName="matAutocomplete"
                               panelWidth="300px">
@@ -65,7 +65,7 @@
             <mat-hint>Auto-Complete</mat-hint>
         </mat-form-field>
         <mat-form-field style="width: 200px; margin-left: 5px;">
-            <input type="text" placeholder="Station Address" matInput formControlName="stationAddress"
+            <input type="text" placeholder="FuelStation Address" matInput formControlName="stationAddress"
                    autocomplete="off">
         </mat-form-field>
     </form>

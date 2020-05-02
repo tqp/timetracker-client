@@ -33,10 +33,10 @@ export class FuelStationEditDialogComponent {
         this.action = _data.action;
 
         if (this.action === 'edit') {
-            this.dialogTitle = 'Edit Station';
+            this.dialogTitle = 'Edit FuelStation';
             this.station = _data.fuelStation;
         } else {
-            this.dialogTitle = 'New Station';
+            this.dialogTitle = 'New FuelStation';
             this.station = new FuelStation({});
         }
 

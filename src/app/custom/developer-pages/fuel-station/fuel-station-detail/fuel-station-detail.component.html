@@ -13,17 +13,17 @@
         <!-- TOOLBAR -->
         <div class="toolbar" fxLayout="row" fxLayoutAlign="start center">
 
-            <button mat-icon-button aria-label="Delete Station" matTooltip="Delete Station"
+            <button mat-icon-button aria-label="Delete FuelStation" matTooltip="Delete FuelStation"
                     (click)="deleteFuelStation(fuelStation.stationGuid)">
                 <mat-icon>delete</mat-icon>
             </button>
 
-            <button mat-icon-button aria-label="Edit Station" matTooltip="Edit Station"
+            <button mat-icon-button aria-label="Edit FuelStation" matTooltip="Edit FuelStation"
                     (click)="updateFuelStation(fuelStation)">
                 <mat-icon>edit</mat-icon>
             </button>
 
-            <button mat-icon-button aria-label="Back to Station List" matTooltip="Back to Station List"
+            <button mat-icon-button aria-label="Back to FuelStation List" matTooltip="Back to FuelStation List"
                     [routerLink]="'/developer-pages/fuel-station-list'">
                 <mat-icon>arrow_back_ios</mat-icon>
             </button>
@@ -40,7 +40,7 @@
         <div class="section-box info-box general" fxLayout="column" *ngIf="fuelStation">
 
             <header class="accent">
-                <div class="title">Station Information</div>
+                <div class="title">FuelStation Information</div>
             </header>
 
             <div class="content">
@@ -49,7 +49,7 @@
 
                     <table class="info table">
                         <tr class="table-row">
-                            <td class="key">Station Name:</td>
+                            <td class="key">FuelStation Name:</td>
                             <td class="value">{{fuelStation.stationName}}</td>
                         </tr>
                         <tr class="table-row">
@@ -89,7 +89,7 @@
         <div class="section-box info-box general" fxLayout="column" *ngIf="fuelStation">
 
             <header class="accent">
-                <div class="title">Station History</div>
+                <div class="title">FuelStation History</div>
             </header>
 
             <div class="content">
