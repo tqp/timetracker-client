@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FuelStation} from '../../../models/FuelStation';
 import {AuthService} from '../../../services/auth.service';
@@ -8,6 +8,11 @@ import {FuseConfirmDialogComponent} from '../../../../../@fuse/components/confir
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {FuelStationEditDialogComponent} from '../fuel-station-edit-dialog/fuel-station-edit-dialog.component';
 import {FuelStationService} from '../fuel-station.service';
+import {FuelActivityService} from '../../fuel-activity/fuel-activity.service';
+import {MatSort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
+import {FuelActivityFlat} from '../../../models/FuelActivityFlat';
+import {FuelActivity} from '../../../models/FuelActivity';
 
 @Component({
     selector: 'app-fuel-station-detail',
@@ -15,24 +20,35 @@ import {FuelStationService} from '../fuel-station.service';
     styleUrls: ['./fuel-station-detail.component.scss']
 })
 export class FuelStationDetailComponent implements OnInit {
-    public title = 'Fuel FuelStation Detail';
-    public guid: string;
+    @ViewChild(MatSort, {static: true}) sort: MatSort;
+    public fuelActivityList: FuelActivity[];
+    public stationGuid: string;
     public fuelStation: FuelStation;
-
     public dialogRef: any;
     public confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
+    public dataSource;
+    public displayedColumns: string[] = [
+        'fillDate',
+        'fillOdometer',
+        'fillMilesTraveled',
+        'fillGallons',
+        'fillCostPerGallon',
+        'fillTotalCost'
+    ];
 
     constructor(private route: ActivatedRoute,
                 private router: Router,
                 private fuelStationService: FuelStationService,
+                private fuelActivityService: FuelActivityService,
                 private authService: AuthService,
                 private _fuseProgressBarService: FuseProgressBarService,
                 public _matDialog: MatDialog) {
     }
 
     ngOnInit(): void {
-        this.guid = this.route.snapshot.paramMap.get('guid');
-        this.getFuelStation(this.guid);
+        this.stationGuid = this.route.snapshot.paramMap.get('guid');
+        this.getFuelStation(this.stationGuid);
+        this.getFuelActivityListByStation(this.stationGuid);
     }
 
     private getFuelStation(stationGuid: string): void {
@@ -79,10 +95,7 @@ export class FuelStationDetailComponent implements OnInit {
             });
     }
 
-    /**
-     * Delete Contact
-     */
-    deleteFuelStation(stationGuid: string): void {
+    public deleteFuelStation(stationGuid: string): void {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: false
         });
@@ -97,6 +110,24 @@ export class FuelStationDetailComponent implements OnInit {
             }
             this.confirmDialogRef = null;
         });
+    }
 
+    public openDetail(fuelActivityFlat: FuelActivityFlat): void {
+        console.log('openDetail', fuelActivityFlat.fillGuid);
+        this.router.navigate(['/developer-pages/fuel-activity-detail', fuelActivityFlat.fillGuid]).then();
+    }
+
+    private getFuelActivityListByStation(stationGuid: string): void {
+        this.fuelActivityService.getFuelActivityListByStation(stationGuid).subscribe(
+            (result: any) => {
+                this.fuelActivityList = result;
+                const flat: any = this.fuelActivityService.flattenFuelActivityObject(result);
+                this.dataSource = new MatTableDataSource(flat);
+                this.dataSource.sort = this.sort;
+            },
+            error => {
+                console.error('Error: ' + error.message);
+            }
+        );
     }
 }

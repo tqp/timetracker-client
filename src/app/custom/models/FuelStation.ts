@@ -10,6 +10,7 @@ export class FuelStation {
     stationState?: number;
     stationZip?: string;
     stationPhone?: string;
+    stationVisitCount?: number;
 
     /**
      * Constructor
@@ -27,6 +28,7 @@ export class FuelStation {
             this.stationState = station.stationState || '';
             this.stationZip = station.stationZip || '';
             this.stationPhone = station.stationPhone || '';
+            this.stationVisitCount = station.stationVisitCount || 0;
         }
     }
 

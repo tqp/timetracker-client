@@ -26,6 +26,7 @@ export const fuseAnimations = [
         state('50', style('*')),
         state('100', style('*')),
         state('200', style('*')),
+        state('1000', style('*')),
 
         transition('void => 50',
             query('@*',
@@ -45,6 +46,13 @@ export const fuseAnimations = [
             query('@*',
                 [
                     stagger('200ms', [
+                        animateChild()
+                    ])
+                ], {optional: true})),
+        transition('void => 1000',
+            query('@*',
+                [
+                    stagger('1000ms', [
                         animateChild()
                     ])
                 ], {optional: true}))

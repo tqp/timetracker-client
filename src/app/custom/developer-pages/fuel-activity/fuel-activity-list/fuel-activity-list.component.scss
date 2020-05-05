@@ -1,94 +1,17 @@
 @import "src/@fuse/scss/fuse";
 
-app-fuel-activity-list {
-    display: flex;
-    flex: 1 1 auto;
+table {
     width: 100%;
+}
 
-    .table-container {
-        position: relative;
-        min-height: 100px;
-        overflow: auto;
-    }
+.table-container {
+    position: relative;
+    min-height: 100px;
+    overflow: auto;
+}
 
-    table {
-        width: 100%;
-    }
-
-    .mat-table {
-        width: 100%;
-        background: transparent;
-        box-shadow: none;
-
-        .date {
-            width: 80px;
-        }
-
-        .station {
-            width: 300px;
-        }
-
-        .odometer {
-            width: 50px;
-            text-align: right;
-        }
-
-        .trip-meter {
-            width: 50px;
-            text-align: right;
-        }
-
-        .gallons {
-            width: 50px;
-            text-align: right;
-        }
-
-        .price-per-gallon {
-            width: 60px;
-            text-align: right;
-        }
-
-        .total-cost {
-            width: 50px;
-            text-align: right;
-        }
-
-        .miles-per-gallon {
-            width: 70px;
-            text-align: right;
-        }
-
-        .button-header-cell {
-            max-width: 48px;
-        }
-
-        .button-cell {
-            max-width: 40px;
-        }
-
-        .mat-row {
-            position: relative;
-            cursor: pointer;
-            padding: 8px;
-
-            .mat-cell {
-                min-width: 0;
-
-                &.mat-column-detail-button {
-                    flex: 0 1 auto;
-                    padding: 0 24px 0 0;
-
-                    @include media-breakpoint('gt-md') {
-                        display: none;
-                    }
-                }
-            }
-        }
-    }
-
-    .empty-table {
-        width: 100%;
-        padding: 20px 24px;
-        background: white;
-    }
+.mat-row {
+    position: relative;
+    cursor: pointer;
+    padding: 8px;
 }

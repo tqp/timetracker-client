@@ -1,29 +1,28 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {TokenService} from '../../services/token.service';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {Observable} from 'rxjs';
 import {environment} from '../../../../environments/environment';
 import {FuelFill} from '../../models/FuelFill';
-import {Contact} from '../../../main/apps/contacts/contact.model';
 import {FuelActivity} from '../../models/FuelActivity';
-import {map, pluck, switchMap, tap} from 'rxjs/operators';
+import {ActivatedRouteSnapshot} from '@angular/router';
+import {FuelActivityFlat} from '../../models/FuelActivityFlat';
 
 @Injectable({
     providedIn: 'root'
 })
 export class FuelActivityService {
 
-    contacts: Contact[];
-    user: any;
-    onContactsChanged: BehaviorSubject<any>;
-    searchText: string;
-    filterBy: string;
-
-
     constructor(private http: HttpClient,
                 private _httpClient: HttpClient,
                 private tokenService: TokenService) {
     }
+
+    resolve(route: ActivatedRouteSnapshot): Observable<FuelActivity> {
+        return this.getFuelActivityList();
+    }
+
+    // CRUD METHODS
 
     public createFuelActivity(fuelActivity: FuelFill): Promise<FuelFill> {
         const token = this.tokenService.getToken();
@@ -50,21 +49,21 @@ export class FuelActivityService {
         }
     }
 
-    public getFuelActivity(activityGuid: string): Observable<any> {
+    public getFuelActivity(fillGuid: string): Observable<any> {
         const token = this.tokenService.getToken();
         if (token) {
-            return this.http.get(environment.apiUrl + '/api/v1/fuel/activity/' + activityGuid, {headers: this.tokenService.setAuthorizationHeader(token)});
+            return this.http.get(environment.apiUrl + '/api/v1/fuel/activity/' + fillGuid, {headers: this.tokenService.setAuthorizationHeader(token)});
         } else {
             console.error('No token was present.');
             return null;
         }
     }
 
-    public updateFuelActivity(fuelActivity: FuelFill): Promise<any> {
+    public updateFuelActivity(fuelFill: FuelFill): Promise<any> {
         const token = this.tokenService.getToken();
         if (token) {
             return new Promise((resolve, reject) => {
-                this.http.put(environment.apiUrl + '/api/v1/fuel/activity', {...fuelActivity}, {headers: this.tokenService.setAuthorizationHeader(token)})
+                this.http.put(environment.apiUrl + '/api/v1/fuel/activity', {...fuelFill}, {headers: this.tokenService.setAuthorizationHeader(token)})
                     .subscribe(response => {
                         resolve(response);
                     });
@@ -90,5 +89,35 @@ export class FuelActivityService {
         }
     }
 
+    // SUPPORT METHODS
+
+    public getFuelActivityListByStation(stationGuid: string): Observable<FuelActivity> {
+        const token = this.tokenService.getToken();
+        if (token) {
+            return this.http.get<FuelActivity>(environment.apiUrl + '/api/v1/fuel/activity/station/' + stationGuid, {headers: this.tokenService.setAuthorizationHeader(token)});
+        } else {
+            console.error('No token was present.');
+            return null;
+        }
+    }
+
+    public flattenFuelActivityObject(object: any): FuelActivityFlat {
+        return object.map(item => {
+            const fuelActivityFlatObject: FuelActivityFlat = {};
+            fuelActivityFlatObject.fillGuid = item.fuelFill.fillGuid;
+            fuelActivityFlatObject.fillDate = item.fuelFill.fillDate;
+            fuelActivityFlatObject.fillOdometer = item.fuelFill.fillOdometer;
+            fuelActivityFlatObject.stationAffiliation = item.fuelStation.stationAffiliation;
+            fuelActivityFlatObject.stationLocation = item.fuelStation.stationCity + ', ' + item.fuelStation.stationState;
+            fuelActivityFlatObject.fillMilesTraveled = item.fuelFill.fillMilesTraveled;
+            fuelActivityFlatObject.fillGallons = item.fuelFill.fillGallons;
+            fuelActivityFlatObject.fillCostPerGallon = item.fuelFill.fillCostPerGallon;
+            fuelActivityFlatObject.fillTotalCost = item.fuelFill.fillTotalCost;
+            fuelActivityFlatObject.fillMilesPerGallonCar = item.fuelFill.fillMilesPerGallon;
+            fuelActivityFlatObject.fillMilesPerGallonCalc = item.fuelFill.fillMilesTraveled / item.fuelFill.fillGallons;
+            fuelActivityFlatObject.fillComments = item.fuelFill.fillComments;
+            return fuelActivityFlatObject;
+        });
+    }
 
 }

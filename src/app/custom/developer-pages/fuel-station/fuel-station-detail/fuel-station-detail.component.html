@@ -6,7 +6,7 @@
 
         <div fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="column" fxLayoutAlign.gt-xs="center start">
             <div class="h2 mt-0">
-                <span *ngIf="fuelStation">{{fuelStation.stationName}}</span>
+                <span *ngIf="fuelStation">Fuel Station: {{fuelStation.stationName}}</span>
             </div>
         </div>
 
@@ -40,7 +40,7 @@
         <div class="section-box info-box general" fxLayout="column" *ngIf="fuelStation">
 
             <header class="accent">
-                <div class="title">FuelStation Information</div>
+                <div class="title">Fuel Station Information</div>
             </header>
 
             <div class="content">
@@ -49,7 +49,7 @@
 
                     <table class="info table">
                         <tr class="table-row">
-                            <td class="key">FuelStation Name:</td>
+                            <td class="key">Station Name:</td>
                             <td class="value">{{fuelStation.stationName}}</td>
                         </tr>
                         <tr class="table-row">
@@ -86,16 +86,81 @@
 
         </div>
 
-        <div class="section-box info-box general" fxLayout="column" *ngIf="fuelStation">
+        <div class="section-box info-box general" fxLayout="column" [hidden]="!fuelStation">
 
             <header class="accent">
-                <div class="title">FuelStation History</div>
+                <div class="title">Fuel Fill Information ({{fuelActivityList.length}})</div>
             </header>
 
             <div class="content">
 
-                <div class="info-line">
-                    There is no historical info for this station.
+                <div class="table-container"
+                     style="height: 300px; border-bottom: 1px solid rgba(0, 0, 0, 0.12);"
+                     [hidden]="!fuelStation">
+
+                    <table mat-table [dataSource]="dataSource"
+                           matSort matSortActive="fillDate" matSortDirection="desc" matSortDisableClear>
+
+                        <ng-container matColumnDef="fillDate">
+                            <th mat-header-cell *matHeaderCellDef>Date</th>
+                            <td mat-cell *matCellDef="let element">
+                                <div style="max-width: 90px;">
+                                    {{element.fillDate | date: 'MM/dd/yyyy'}}
+                                    {{element.fillComments != null ? '*' : ''}}
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="fillOdometer">
+                            <th mat-header-cell *matHeaderCellDef>Odometer</th>
+                            <td mat-cell *matCellDef="let element">
+                                <div style="max-width: 54px; text-align: right;">
+                                    {{element.fillOdometer}}
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="fillMilesTraveled">
+                            <th mat-header-cell *matHeaderCellDef>Distance</th>
+                            <td mat-cell *matCellDef="let element">
+                                <div style="max-width: 49px; text-align: right;">
+                                    {{element.fillMilesTraveled.toFixed(1)}}
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="fillGallons">
+                            <th mat-header-cell *matHeaderCellDef>Gallons</th>
+                            <td mat-cell *matCellDef="let element">
+                                <div style="max-width: 44px; text-align: right;">
+                                    {{element.fillGallons.toFixed(3)}}
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="fillCostPerGallon">
+                            <th mat-header-cell *matHeaderCellDef>$/Gal.</th>
+                            <td mat-cell *matCellDef="let element">
+                                <div style="max-width: 44px; text-align: right;">
+                                    {{element.fillCostPerGallon.toFixed(3)}}
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="fillTotalCost">
+                            <th mat-header-cell *matHeaderCellDef>Total Cost</th>
+                            <td mat-cell *matCellDef="let element">
+                                <div style="max-width: 57px; text-align: right;">
+                                    ${{element.fillTotalCost.toFixed(2)}}
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                            (click)="openDetail(row)"></tr>
+                    </table>
+
                 </div>
 
             </div>

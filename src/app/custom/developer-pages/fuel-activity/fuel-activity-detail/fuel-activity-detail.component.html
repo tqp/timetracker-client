@@ -1,1 +1,159 @@
-<p>fuel-activity-detail works!</p>
+<div class="page-layout simple fullwidth angular-material-elements">
+
+    <!-- HEADER -->
+    <div class="header accent p-24 h-60" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row"
+         fxLayoutAlign.gt-xs="space-between center">
+
+        <div fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="column" fxLayoutAlign.gt-xs="center start">
+            <div class="h2 mt-0">
+                <span *ngIf="fuelActivity">
+                    Fuel Activity on {{fuelActivity.fuelFill.fillDate | date: 'MM/dd/yyyy'}}
+                </span>
+            </div>
+        </div>
+
+        <!-- TOOLBAR -->
+        <div class="toolbar" fxLayout="row" fxLayoutAlign="start center">
+
+            <button mat-icon-button aria-label="Delete FStation" matTooltip="Delete Station"
+                    (click)="deleteFuelActivity(fuelActivity.fuelFill.fillGuid)">
+                <mat-icon>delete</mat-icon>
+            </button>
+
+            <button mat-icon-button aria-label="Edit Station" matTooltip="Edit Station"
+                    (click)="editFuelActivity(fuelActivity.fuelFill.fillGuid)">
+                <mat-icon>edit</mat-icon>
+            </button>
+
+            <button mat-icon-button aria-label="Back to Fuel Activity List" matTooltip="Back to Fuel Activity List"
+                    [routerLink]="'/developer-pages/fuel-activity-list'">
+                <mat-icon>arrow_back_ios</mat-icon>
+            </button>
+
+        </div>
+        <!-- / TOOLBAR -->
+
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT -->
+    <div class="content p-24">
+
+        <div class="section-box info-box general" fxLayout="column" *ngIf="fuelActivity">
+
+            <header class="accent">
+                <div class="title">Fuel Fill Information</div>
+            </header>
+
+            <div class="content">
+
+                <div class="info-line">
+
+                    <table class="info table">
+                        <tr class="table-row">
+                            <td class="key">Date:</td>
+                            <td class="value">{{fuelActivity.fuelFill.fillDate | date: 'MM/dd/yyyy hh:mm'}}</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">Odometer:</td>
+                            <td class="value">{{fuelActivity.fuelFill.fillOdometer}}</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">Distance:</td>
+                            <td class="value">{{fuelActivity.fuelFill.fillMilesTraveled.toFixed(1)}}</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">Gallons:</td>
+                            <td class="value">{{fuelActivity.fuelFill.fillGallons.toFixed(3)}}</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">$/Gal.:</td>
+                            <td class="value">${{fuelActivity.fuelFill.fillCostPerGallon.toFixed(3)}}</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">Total Cost:</td>
+                            <td class="value"
+                                [ngStyle]="{'color': getTotalCostColor(fuelActivity.fuelFill.fillGallons, fuelActivity.fuelFill.fillCostPerGallon, fuelActivity.fuelFill.fillTotalCost)}">
+                                ${{fuelActivity.fuelFill.fillTotalCost.toFixed(2)}}
+                            </td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">MPG (Car):</td>
+                            <td class="value"
+                                [ngStyle]="{'color': getMilesPerGallonColor(fuelActivity.fuelFill.fillMilesPerGallon, fuelActivity.fuelFill.fillMilesTraveled / fuelActivity.fuelFill.fillGallons)}">
+                                {{fuelActivity.fuelFill.fillMilesPerGallon.toFixed(1)}}
+                            </td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">MPG (Calc.):</td>
+                            <td class="value"
+                                [ngStyle]="{'color': getMilesPerGallonColor(fuelActivity.fuelFill.fillMilesPerGallon, fuelActivity.fuelFill.fillMilesTraveled / fuelActivity.fuelFill.fillGallons)}">
+                                {{(fuelActivity.fuelFill.fillMilesTraveled / fuelActivity.fuelFill.fillGallons).toFixed(1)}}
+                            </td>
+                        </tr>
+                        <tr class="table-row" *ngIf="fuelActivity.fuelFill.fillComments">
+                            <td class="key">Comments:</td>
+                            <td class="value">{{fuelActivity.fuelFill.fillComments}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="section-box info-box general" fxLayout="column" *ngIf="fuelActivity">
+
+            <header class="accent">
+                <div class="title">Fuel Station Information</div>
+            </header>
+
+            <div class="content">
+
+                <div class="info-line">
+
+                    <table class="info table">
+                        <tr class="table-row">
+                            <td class="key">Station Name:</td>
+                            <td class="value">
+                                <a [routerLink]="['/developer-pages/fuel-station-detail/' + fuelActivity.fuelStation.stationGuid]"
+                                   preserveFragment>
+                                    {{fuelActivity.fuelStation.stationName}}
+                                </a>
+                            </td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">Affiliation:</td>
+                            <td class="value">{{fuelActivity.fuelStation.stationAffiliation}}</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">Address:</td>
+                            <td class="value">{{fuelActivity.fuelStation.stationAddress1}}</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key"></td>
+                            <td class="value">{{fuelActivity.fuelStation.stationAddress2}}</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">City:</td>
+                            <td class="value">{{fuelActivity.fuelStation.stationCity}}</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">State:</td>
+                            <td class="value">{{fuelActivity.fuelStation.stationState}}</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">Zip Code:</td>
+                            <td class="value">{{fuelActivity.fuelStation.stationZip}}</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">Phone Number:</td>
+                            <td class="value">{{fuelActivity.fuelStation.stationPhone}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>

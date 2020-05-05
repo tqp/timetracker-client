@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {AuthService} from '../../../services/auth.service';
 import {FuseProgressBarService} from '../../../../../@fuse/components/progress-bar/progress-bar.service';
@@ -8,27 +8,12 @@ import {FuelActivityService} from '../fuel-activity.service';
 import {FormGroup} from '@angular/forms';
 import {FuelActivityEditDialogComponent} from '../fuel-activity-edit-dialog/fuel-activity-edit-dialog.component';
 import {FuseConfirmDialogComponent} from '../../../../../@fuse/components/confirm-dialog/confirm-dialog.component';
-import {Subject} from 'rxjs';
 import {fuseAnimations} from '../../../../../@fuse/animations';
 import {FuelStationService} from '../../fuel-station/fuel-station.service';
 import {FuelStation} from '../../../models/FuelStation';
-import {FuelActivity} from '../../../models/FuelActivity';
 import {MatSort} from '@angular/material/sort';
-
-export interface FuelActivityFlat {
-    fillGuid?: string;
-    fillDate?: string;
-    stationGuid?: string;
-    stationAffiliation?: string;
-    stationLocation?: string;
-    fillOdometer?: number;
-    fillMilesTraveled?: number;
-    fillGallons?: number;
-    fillCostPerGallon?: number;
-    fillTotalCost?: number;
-    fillMilesPerGallonCar?: number;
-    fillMilesPerGallonCalc?: number;
-}
+import {ActivatedRoute, Router} from '@angular/router';
+import {FuelActivityFlat} from '../../../models/FuelActivityFlat';
 
 @Component({
     selector: 'app-fuel-activity-list',
@@ -37,14 +22,13 @@ export interface FuelActivityFlat {
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations
 })
-export class FuelActivityListComponent implements OnInit, OnDestroy {
+export class FuelActivityListComponent implements OnInit, AfterViewInit {
     @ViewChild('dialogContent') public dialogRef: any;
     @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-    public confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
     public title = 'Fuel Activity';
-    public dataSource: MatTableDataSource<FuelActivity>;
-    public tableHeight: number;
+    public fuelActivityListFlat: FuelActivityFlat[];
+    public dataSource;
     public displayedColumns: string[] = [
         'fillDate',
         'stationAffiliation',
@@ -57,39 +41,39 @@ export class FuelActivityListComponent implements OnInit, OnDestroy {
         'fillMilesPerGallon',
         'buttons'
     ];
-
-    // Private
-    private _unsubscribeAll: Subject<any>;
+    public tableHeight: number;
+    public confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
 
     constructor(
+        private activatedRoute: ActivatedRoute,
+        private _fuseProgressBarService: FuseProgressBarService,
         private fuelActivityService: FuelActivityService,
         private fuelStationService: FuelStationService,
         public _matDialog: MatDialog,
-        private _fuseProgressBarService: FuseProgressBarService,
-        private authService: AuthService
+        private authService: AuthService,
+        private router: Router
     ) {
-        // Set the private defaults
-        this._unsubscribeAll = new Subject();
         this.calculateTableHeight();
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
-
     ngOnInit(): void {
+        // const fuelActivity: FuelActivity = this.activatedRoute.snapshot.data.fuelActivity;
+        // const flat: any = this.fuelActivityService.flattenFuelActivityObject(fuelActivity);
+        // this.fuelActivityListFlat = flat;
+        // console.log('flat', flat);
+        // this.dataSource = new MatTableDataSource(flat);
+
         this.getFuelActivityList();
+        // const flat: any = this.fuelActivityService.flattenFuelActivityObject(this.fuelActivity);
     }
 
-    ngOnDestroy(): void {
-        // Unsubscribe from all subscriptions
-        this._unsubscribeAll.next();
-        this._unsubscribeAll.complete();
+    public ngAfterViewInit(): void {
+        // this.dataSource.sort = this.sort;
     }
 
     private calculateTableHeight(): void {
         const pixelsAboveTable = 150;
-        const pixelsBelowTable = 20;
+        const pixelsBelowTable = 30;
         this.tableHeight = Math.round((window.innerHeight.valueOf() - pixelsAboveTable - pixelsBelowTable));
     }
 
@@ -106,8 +90,13 @@ export class FuelActivityListComponent implements OnInit, OnDestroy {
                 if (!response) {
                     return;
                 }
+                console.log('response', response.getRawValue());
+
                 const fuelFill: FuelFill = response.getRawValue().fuelFill;
                 const fuelStation: FuelStation = response.getRawValue().fuelStation;
+
+                console.log('fuelFill', fuelFill);
+
                 // If this is a new FuelStation...
                 if (!fuelFill.stationGuid) {
                     console.log('Creating New FuelStation...');
@@ -136,34 +125,27 @@ export class FuelActivityListComponent implements OnInit, OnDestroy {
         this._fuseProgressBarService.show();
         this.fuelActivityService.getFuelActivityList().subscribe(
             (result: any) => {
-                const fuelActivityListFlat = result.map(item => {
-                    const fuelActivityFlatObject: FuelActivityFlat = {};
-                    fuelActivityFlatObject.fillGuid = item.fuelFill.fillGuid;
-                    fuelActivityFlatObject.fillDate = item.fuelFill.fillDate;
-                    fuelActivityFlatObject.fillOdometer = item.fuelFill.fillOdometer;
-                    fuelActivityFlatObject.stationAffiliation = item.fuelStation.stationAffiliation;
-                    fuelActivityFlatObject.stationLocation = item.fuelStation.stationCity + ', ' + item.fuelStation.stationState;
-                    fuelActivityFlatObject.fillMilesTraveled = item.fuelFill.fillMilesTraveled;
-                    fuelActivityFlatObject.fillGallons = item.fuelFill.fillGallons;
-                    fuelActivityFlatObject.fillCostPerGallon = item.fuelFill.fillCostPerGallon;
-                    fuelActivityFlatObject.fillTotalCost = item.fuelFill.fillTotalCost;
-                    fuelActivityFlatObject.fillMilesPerGallonCar = item.fuelFill.fillMilesPerGallon;
-                    fuelActivityFlatObject.fillMilesPerGallonCalc = item.fuelFill.fillMilesTraveled / item.fuelFill.fillGallons;
-                    return fuelActivityFlatObject;
-                });
-                this.dataSource = new MatTableDataSource(fuelActivityListFlat);
+                if (!result) {
+                    return;
+                }
+                const flat: any = this.fuelActivityService.flattenFuelActivityObject(result);
+                this.fuelActivityListFlat = flat;
+                this.dataSource = new MatTableDataSource<FuelActivityFlat>(flat);
                 this.dataSource.sort = this.sort;
-                this._fuseProgressBarService.hide();
             },
             error => {
                 console.error('Error: ' + error.message);
                 this.authService.errorHandler(error);
                 this._fuseProgressBarService.hide();
+            },
+            () => {
+
+                this._fuseProgressBarService.hide();
             }
         );
     }
 
-    editFuelActivity(fillGuid: string): void {
+    public editFuelActivity(fillGuid: string): void {
         this.dialogRef = this._matDialog.open(FuelActivityEditDialogComponent, {
             panelClass: 'fuel-activity-edit-dialog',
             data: {
@@ -177,13 +159,11 @@ export class FuelActivityListComponent implements OnInit, OnDestroy {
                 if (!response) {
                     return;
                 }
-                console.log('response', response);
                 const actionType: string = response[0];
                 const formData: FormGroup = response[1];
                 switch (actionType) {
                     case 'save':
-                        console.log('updateFuelActivity', formData.getRawValue().fuelActivity);
-                        this.fuelActivityService.updateFuelActivity(formData.getRawValue()).then(() => {
+                        this.fuelActivityService.updateFuelActivity(formData.getRawValue().fuelFill).then(() => {
                             this.getFuelActivityList();
                         });
                         break;
@@ -209,6 +189,29 @@ export class FuelActivityListComponent implements OnInit, OnDestroy {
             }
             this.confirmDialogRef = null;
         });
+    }
 
+    public openDetail(fuelActivityFlat: FuelActivityFlat): void {
+        console.log('openDetail', fuelActivityFlat.fillGuid);
+        this.router.navigate(['/developer-pages/fuel-activity-detail', fuelActivityFlat.fillGuid]).then();
+    }
+
+    public getMilesPerGallonColor(car: number, calc: number): string {
+        const abs = Math.abs(car - calc);
+        if (abs > 4) {
+            return 'red';
+        } else if (abs > 2) {
+            return 'orange';
+        } else {
+            return 'green';
+        }
+    }
+
+    public getTotalCostColor(fillGallons: number, fillCostPerGallon: number, fillTotalCost: number): string {
+        if (Math.round(fillCostPerGallon * fillGallons) === Math.round(fillTotalCost)) {
+            return 'green';
+        } else {
+            return 'red';
+        }
     }
 }

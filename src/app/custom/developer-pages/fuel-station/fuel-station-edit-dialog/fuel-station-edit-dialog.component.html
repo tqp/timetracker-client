@@ -1,4 +1,4 @@
-<div class="dialog-content-wrapper">
+<div class="dialog-content-wrapper" *ngIf="action === 'new' || action === 'edit' && fuelStationLoaded">
     <mat-toolbar matDialogTitle class="mat-accent m-0">
 
         <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
@@ -12,25 +12,25 @@
 
     <div mat-dialog-content class="p-24 pb-0 m-0" fusePerfectScrollbar>
 
-        <form [formGroup]="stationForm">
+        <form [formGroup]="fuelStationForm">
 
             <div fxLayout="row" fxLayoutAlign="start start">
                 <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>FuelStation Name</mat-label>
+                    <mat-label>Station Name</mat-label>
                     <input name="stationName" formControlName="stationName" matInput required>
                 </mat-form-field>
             </div>
 
             <div fxLayout="row" fxLayoutAlign="start start">
                 <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>FuelStation Affiliation</mat-label>
+                    <mat-label>Affiliation</mat-label>
                     <input name="stationAffiliation" formControlName="stationAffiliation" matInput required>
                 </mat-form-field>
             </div>
 
             <div fxLayout="row" fxLayoutAlign="start start">
                 <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Address 1</mat-label>
+                    <mat-label>Address</mat-label>
                     <input name="stationAddress1" formControlName="stationAddress1" matInput required>
                 </mat-form-field>
             </div>
@@ -73,7 +73,7 @@
         <button *ngIf="action === 'edit'"
                 mat-button
                 class="mr-8"
-                (click)="matDialogRef.close(['delete',stationForm])"
+                (click)="matDialogRef.close(['delete',fuelStationForm])"
                 aria-label="Delete"
                 matTooltip="Delete">
             DELETE
@@ -82,8 +82,8 @@
         <button *ngIf="action !== 'edit'"
                 mat-button
                 class="save-button"
-                (click)="matDialogRef.close(stationForm)"
-                [disabled]="stationForm.invalid"
+                (click)="matDialogRef.close(fuelStationForm)"
+                [disabled]="fuelStationForm.invalid"
                 aria-label="SAVE">
             ADD
         </button>
@@ -91,8 +91,8 @@
         <button *ngIf="action === 'edit'"
                 mat-button
                 class="save-button"
-                (click)="matDialogRef.close(['save',stationForm])"
-                [disabled]="stationForm.invalid"
+                (click)="matDialogRef.close(['save',fuelStationForm])"
+                [disabled]="fuelStationForm.invalid"
                 aria-label="SAVE">
             SAVE
         </button>

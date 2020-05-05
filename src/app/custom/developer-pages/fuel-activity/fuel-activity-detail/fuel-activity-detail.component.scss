@@ -1,31 +1,57 @@
 @import "src/@fuse/scss/fuse";
 
-.fuel-activity-edit-dialog {
+// Profile boxes
+.section-box {
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 16px;
+    @include mat-elevation(2);
 
-    @include media-breakpoint('xs') {
-        width: 100%;
-    }
+    header {
+        padding: 16px;
 
-    @include media-breakpoint('gt-xs') {
-        width: 400px;
-    }
-
-    .mat-dialog-container {
-        padding: 0;
-
-        .mat-toolbar {
-            flex: 1 0 auto;
-            min-height: initial;
+        .title {
+            font-size: 17px;
         }
 
-        .toolbar-bottom {
-            height: auto;
+        .more {
+            cursor: pointer;
         }
     }
 
-    .dialog-content-wrapper {
-        max-height: 85vh;
-        display: flex;
-        flex-direction: column;
+    .content {
+        padding: 16px;
+    }
+
+    footer {
+        padding: 8px;
+        border-top: 1px solid;
+    }
+
+    &.info-box {
+
+        .info-line {
+            margin-bottom: 24px;
+
+            .title {
+                font-size: 15px;
+                font-weight: 600;
+                padding-bottom: 4px;
+            }
+
+            .key {
+                padding: 0 16px 0 0;
+                width: 150px;
+            }
+
+            .value {
+                padding: 0 16px 0 0;
+                font-weight: 600;
+            }
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
     }
 }

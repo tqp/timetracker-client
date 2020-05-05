@@ -25,23 +25,30 @@
     <!-- CONTENT -->
     <div class="content p-24">
 
-        <div class="table-container" [style.height.px]="tableHeight">
+        <div class="table-container" [style.height.px]="tableHeight"
+             style="border-bottom: 1px solid rgba(0, 0, 0, 0.12);"
+             [hidden]="!fuelActivityListFlat">
 
             <table mat-table [dataSource]="dataSource"
-                   matSort matSortActive="name" matSortDirection="desc" matSortDisableClear
-                   [@animateStagger]="{value:'50'}">
+                   matSort matSortActive="fillDate" matSortDirection="desc" matSortDisableClear>
 
-                <!-- Date Column -->
+                <ng-container matColumnDef="index">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Index</th>
+                    <td mat-cell *matCellDef="let element; let i = index;">
+                        {{i}}
+                    </td>
+                </ng-container>
+
                 <ng-container matColumnDef="fillDate">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
                     <td mat-cell *matCellDef="let element">
                         <div>
                             {{element.fillDate | date: 'MM/dd/yyyy'}}
+                            {{element.fillComments != null ? '*' : ''}}
                         </div>
                     </td>
                 </ng-container>
 
-                <!-- Affiliation Column -->
                 <ng-container matColumnDef="stationAffiliation">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Station</th>
                     <td mat-cell *matCellDef="let element">
@@ -51,7 +58,6 @@
                     </td>
                 </ng-container>
 
-                <!-- Location Column -->
                 <ng-container matColumnDef="stationLocation">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Location</th>
                     <td mat-cell *matCellDef="let element">
@@ -61,7 +67,6 @@
                     </td>
                 </ng-container>
 
-                <!-- Odometer Column -->
                 <ng-container matColumnDef="fillOdometer">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Odometer</th>
                     <td mat-cell *matCellDef="let element">
@@ -71,7 +76,6 @@
                     </td>
                 </ng-container>
 
-                <!-- Distance Column -->
                 <ng-container matColumnDef="fillMilesTraveled">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Distance</th>
                     <td mat-cell *matCellDef="let element">
@@ -81,7 +85,6 @@
                     </td>
                 </ng-container>
 
-                <!-- Gallons Column -->
                 <ng-container matColumnDef="fillGallons">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Gallons</th>
                     <td mat-cell *matCellDef="let element">
@@ -91,7 +94,6 @@
                     </td>
                 </ng-container>
 
-                <!-- Cost per Gallon Column -->
                 <ng-container matColumnDef="fillCostPerGallon">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>$/Gal.</th>
                     <td mat-cell *matCellDef="let element">
@@ -101,28 +103,27 @@
                     </td>
                 </ng-container>
 
-                <!-- Total Cost Column -->
                 <ng-container matColumnDef="fillTotalCost">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Cost</th>
                     <td mat-cell *matCellDef="let element">
-                        <div style="max-width: 57px; text-align: right;">
+                        <div style="max-width: 57px; text-align: right;"
+                             [ngStyle]="{'color': getTotalCostColor(element.fillGallons, element.fillCostPerGallon, element.fillTotalCost)}">
                             ${{element.fillTotalCost.toFixed(2)}}
                         </div>
                     </td>
                 </ng-container>
 
-                <!-- MPG Column -->
                 <ng-container matColumnDef="fillMilesPerGallon">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>MPG (Car/Calc.)</th>
                     <td mat-cell *matCellDef="let element">
-                        <div style="max-width: 80px; text-align: right;">
+                        <div style="max-width: 80px; text-align: right; color: red;"
+                             [ngStyle]="{'color': getMilesPerGallonColor(element.fillMilesPerGallonCar, element.fillMilesPerGallonCalc)}">
                             {{element.fillMilesPerGallonCar.toFixed(1)}}
                             / {{element.fillMilesPerGallonCalc.toFixed(1)}}
                         </div>
                     </td>
                 </ng-container>
 
-                <!-- Buttons Column -->
                 <ng-container matColumnDef="buttons">
                     <th mat-header-cell *matHeaderCellDef class="button-header-cell"></th>
                     <td mat-cell *matCellDef="let row" class="button-cell">
@@ -146,12 +147,15 @@
                     </td>
                 </ng-container>
 
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                    (click)="openDetail(row)"></tr>
             </table>
 
         </div>
 
     </div>
+
 </div>
+
 

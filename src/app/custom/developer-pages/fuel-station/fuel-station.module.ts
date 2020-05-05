@@ -13,6 +13,13 @@ import {FuseSharedModule} from '../../../../@fuse/shared.module';
 import {FuseConfirmDialogModule, FuseHighlightModule, FuseWidgetModule} from '../../../../@fuse/components';
 import {FuelStationDetailComponent} from './fuel-station-detail/fuel-station-detail.component';
 import {FuelStationEditDialogComponent} from './fuel-station-edit-dialog/fuel-station-edit-dialog.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatRippleModule} from '@angular/material/core';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 const routes: Routes = [
     {
@@ -26,24 +33,34 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    declarations: [FuelStationListComponent, FuelStationDetailComponent, FuelStationEditDialogComponent],
+    declarations: [
+        FuelStationListComponent,
+        FuelStationDetailComponent,
+        FuelStationEditDialogComponent
+    ],
     imports: [
         CommonModule,
         RouterModule.forChild(routes),
 
-        MatIconModule,
-        MatTableModule,
-        MatSortModule,
         MatButtonModule,
+        MatCheckboxModule,
+        MatDialogModule,
+        MatDatepickerModule,
+        MatFormFieldModule,
         MatIconModule,
         MatInputModule,
+        MatMenuModule,
+        MatRippleModule,
+        MatSortModule,
+        MatTableModule,
         MatToolbarModule,
         MatTooltipModule,
+        MatAutocompleteModule,
 
         FuseSharedModule,
         FuseHighlightModule,
-        FuseWidgetModule,
-        FuseConfirmDialogModule
+        FuseConfirmDialogModule,
+        FuseWidgetModule
     ],
     entryComponents: [
         FuelStationEditDialogComponent

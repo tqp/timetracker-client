@@ -4,6 +4,7 @@ import {TokenService} from '../../services/token.service';
 import {Observable} from 'rxjs';
 import {environment} from '../../../../environments/environment';
 import {FuelStation} from '../../models/FuelStation';
+import {ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
@@ -13,6 +14,8 @@ export class FuelStationService {
     constructor(private http: HttpClient,
                 private tokenService: TokenService) {
     }
+
+    // CRUD METHODS
 
     public createFuelStation(fuelStation: FuelStation): Promise<FuelStation> {
         const token = this.tokenService.getToken();
@@ -78,5 +81,7 @@ export class FuelStationService {
             return null;
         }
     }
+
+    // SUPPORT METHODS
 
 }
