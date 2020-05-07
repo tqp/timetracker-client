@@ -1,38 +1,34 @@
-import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import {MatTableDataSource} from '@angular/material/table';
-import {AuthService} from '../../../services/auth.service';
-import {FuseProgressBarService} from '../../../../../@fuse/components/progress-bar/progress-bar.service';
-import {FuelStationService} from '../fuel-station.service';
-import {FuelStation} from '../../../models/FuelStation';
-import {FuelStationEditDialogComponent} from '../fuel-station-edit-dialog/fuel-station-edit-dialog.component';
-import {FormGroup} from '@angular/forms';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {fuseAnimations} from '../../../../../@fuse/animations';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatSort} from '@angular/material/sort';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {FuseConfirmDialogComponent} from '../../../../../@fuse/components/confirm-dialog/confirm-dialog.component';
 import {ActivatedRoute, Router} from '@angular/router';
-import {FuelActivityService} from '../../fuel-activity/fuel-activity.service';
+import {AuthService} from '../../../services/auth.service';
+import {FuseProgressBarService} from '../../../../../@fuse/components/progress-bar/progress-bar.service';
+import {FormGroup} from '@angular/forms';
+import {MatTableDataSource} from '@angular/material/table';
+import {FuelVehicle} from '../../../models/FuelVehicle';
+import {FuelVehicleService} from '../fuel-vehicle.service';
+import {FuelVehicleEditDialogComponent} from '../fuel-vehicle-edit-dialog/fuel-vehicle-edit-dialog.component';
 
 @Component({
-    selector: 'app-fuel-station-list',
-    templateUrl: './fuel-station-list.component.html',
-    styleUrls: ['./fuel-station-list.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    animations: fuseAnimations
+    selector: 'app-fuel-vehicle-list',
+    templateUrl: './fuel-vehicle-list.component.html',
+    styleUrls: ['./fuel-vehicle-list.component.scss']
 })
-export class FuelStationListComponent implements OnInit {
+export class FuelVehicleListComponent implements OnInit {
     @ViewChild('dialogContent') public dialogRef: any;
     @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-    public title = 'Fuel Station List';
-    public fuelStationList: FuelStation[];
+    public title = 'Vehicles';
+    public fuelVehicleList: FuelVehicle[];
     public dataSource;
     public displayedColumns: string[] = [
-        'stationName',
-        'stationAffiliation',
-        'stationCity',
-        'stationState',
-        'stationVisitCount',
+        'vehicleName',
+        'vehicleYear',
+        'vehicleMake',
+        'vehicleModel',
+        'vehicleVin',
         'buttons'
     ];
     public tableHeight: number;
@@ -41,8 +37,7 @@ export class FuelStationListComponent implements OnInit {
     constructor(
         private activatedRoute: ActivatedRoute,
         private _fuseProgressBarService: FuseProgressBarService,
-        private fuelActivityService: FuelActivityService,
-        private fuelStationService: FuelStationService,
+        private fuelVehicleService: FuelVehicleService,
         public _matDialog: MatDialog,
         private authService: AuthService,
         private router: Router
@@ -51,7 +46,7 @@ export class FuelStationListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.getFuelStationList();
+        this.getFuelVehicleList();
     }
 
     private calculateTableHeight(): void {
@@ -60,9 +55,9 @@ export class FuelStationListComponent implements OnInit {
         this.tableHeight = Math.round((window.innerHeight.valueOf() - pixelsAboveTable - pixelsBelowTable));
     }
 
-    public createFuelStation(): void {
-        this.dialogRef = this._matDialog.open(FuelStationEditDialogComponent, {
-            panelClass: 'fuel-station-edit-dialog',
+    public createFuelVehicle(): void {
+        this.dialogRef = this._matDialog.open(FuelVehicleEditDialogComponent, {
+            panelClass: 'fuel-vehicle-edit-dialog',
             data: {
                 action: 'new'
             }
@@ -74,19 +69,19 @@ export class FuelStationListComponent implements OnInit {
                     return;
                 }
                 console.log('response', response.getRawValue());
-                const fuelStation: FuelStation = response.getRawValue().fuelStation;
-                this.fuelStationService.createFuelStation(fuelStation).then((newFuelStation) => {
-                    console.log('New Fuel Station Created', newFuelStation);
-                    this.getFuelStationList();
+                const fuelVehicle: FuelVehicle = response.getRawValue();
+                this.fuelVehicleService.createFuelVehicle(fuelVehicle).then((newFuelVehicle) => {
+                    console.log('New Vehicle Created', newFuelVehicle);
+                    this.getFuelVehicleList();
                 });
             });
     }
 
-    private getFuelStationList(): void {
+    private getFuelVehicleList(): void {
         this._fuseProgressBarService.show();
-        this.fuelStationService.getFuelStationList().subscribe(
+        this.fuelVehicleService.getFuelVehicleList().subscribe(
             (result: any) => {
-                this.fuelStationList = result;
+                this.fuelVehicleList = result;
                 this.dataSource = new MatTableDataSource(result);
                 this.dataSource.sort = this.sort;
                 this._fuseProgressBarService.hide();
@@ -99,11 +94,12 @@ export class FuelStationListComponent implements OnInit {
         );
     }
 
-    public editFuelStation(stationGuid: string): void {
-        this.dialogRef = this._matDialog.open(FuelStationEditDialogComponent, {
-            panelClass: 'fuel-station-edit-dialog',
+    public editFuelVehicle(vehicleGuid: string): void {
+        console.log('vehicleGuid', vehicleGuid);
+        this.dialogRef = this._matDialog.open(FuelVehicleEditDialogComponent, {
+            panelClass: 'fuel-vehicle-edit-dialog',
             data: {
-                stationGuid: stationGuid,
+                vehicleGuid: vehicleGuid,
                 action: 'edit'
             }
         });
@@ -117,18 +113,19 @@ export class FuelStationListComponent implements OnInit {
                 const formData: FormGroup = response[1];
                 switch (actionType) {
                     case 'save':
-                        this.fuelStationService.updateFuelStation(formData.getRawValue()).then(() => {
-                            this.getFuelStationList();
+                        console.log('formData', formData.getRawValue());
+                        this.fuelVehicleService.updateFuelVehicle(formData.getRawValue()).then(() => {
+                            this.getFuelVehicleList();
                         });
                         break;
                     case 'delete':
-                        this.deleteFuelStation(stationGuid);
+                        this.deleteFuelVehicle(vehicleGuid);
                         break;
                 }
             });
     }
 
-    deleteFuelStation(stationGuid: string): void {
+    deleteFuelVehicle(vehicleGuid: string): void {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: false
         });
@@ -137,15 +134,15 @@ export class FuelStationListComponent implements OnInit {
 
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if (result) {
-                this.fuelStationService.deleteFuelStation(stationGuid).then(() => {
-                    this.getFuelStationList();
+                this.fuelVehicleService.deleteFuelVehicle(vehicleGuid).then(() => {
+                    this.getFuelVehicleList();
                 });
             }
             this.confirmDialogRef = null;
         });
     }
 
-    public openDetail(fuelStation: FuelStation): void {
-        this.router.navigate(['/developer-pages/fuel-station-detail', fuelStation.stationGuid]).then();
+    public openDetail(fuelVehicle: FuelVehicle): void {
+        this.router.navigate(['/developer-pages/fuel-vehicle-detail', fuelVehicle.vehicleGuid]).then();
     }
 }

@@ -12,11 +12,6 @@ export class FuelStation {
     stationPhone?: string;
     stationVisitCount?: number;
 
-    /**
-     * Constructor
-     *
-     * @param station
-     */
     constructor(station) {
         {
             this.stationGuid = station.stationGuid || FuseUtils.generateGUID();

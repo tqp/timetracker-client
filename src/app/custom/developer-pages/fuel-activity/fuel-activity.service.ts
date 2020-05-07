@@ -29,7 +29,7 @@ export class FuelActivityService {
         if (token) {
             return new Promise((resolve, reject) => {
                 this.http.post(environment.apiUrl + '/api/v1/fuel/activity', {...fuelActivity}, {headers: this.tokenService.setAuthorizationHeader(token)})
-                    .subscribe(response => {
+                    .subscribe((response: any) => {
                         resolve(response);
                     });
             });
