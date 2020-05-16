@@ -1,0 +1,122 @@
+<div class="page-layout simple fullwidth angular-material-elements">
+
+    <!-- HEADER -->
+    <div class="header accent p-24 h-60" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row"
+         fxLayoutAlign.gt-xs="space-between center">
+
+        <div fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="column" fxLayoutAlign.gt-xs="center start">
+            <div class="h2 mt-0">{{title}}</div>
+        </div>
+
+        <!-- TOOLBAR -->
+        <div class="toolbar" fxLayout="row" fxLayoutAlign="start center">
+
+            <button mat-icon-button aria-label="Add New Station" matTooltip="Add New Station"
+                    (click)="createFuelStation()">
+                <mat-icon>add_box</mat-icon>
+            </button>
+
+        </div>
+        <!-- / TOOLBAR -->
+
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT -->
+    <div class="content p-24">
+
+        <div class="table-container" [style.height.px]="tableHeight"
+             style="border-bottom: 1px solid rgba(0, 0, 0, 0.12);"
+             [hidden]="!fuelStationList">
+
+            <table mat-table [dataSource]="dataSource"
+                   matSort matSortActive="stationName" matSortDirection="asc" matSortDisableClear>
+
+                <ng-container matColumnDef="stationName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Station Name</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div>
+                            {{element.stationName}}
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="stationAffiliation">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Affiliation</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div>
+                            {{element.stationAffiliation}}
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="stationCity">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>City</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div>
+                            {{element.stationCity}}
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="stationState">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>State</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div>
+                            {{element.stationState}}
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="stationVisitCount">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Visit Count</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div>
+                            {{element.stationVisitCount}}
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="buttons">
+                    <th mat-header-cell *matHeaderCellDef class="button-header-cell" style="width: 50px;"></th>
+                    <td mat-cell *matCellDef="let row" class="button-cell">
+                        <div style="text-align: right;">
+                            <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More"
+                                    (click)="$event.stopPropagation();">
+                                <mat-icon class="secondary-text">more_vert</mat-icon>
+                            </button>
+                            <mat-menu #moreMenu="matMenu">
+                                <button mat-menu-item aria-label="edit" (click)="editFuelStation(row.stationGuid)">
+                                    <mat-icon>edit</mat-icon>
+                                    <span>Edit</span>
+                                </button>
+                                <button mat-menu-item aria-label="delete"
+                                        (click)="deleteFuelStation(row.stationGuid)">
+                                    <mat-icon>delete</mat-icon>
+                                    <span>Delete</span>
+                                </button>
+                            </mat-menu>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                    (click)="openDetail(row)"></tr>
+            </table>
+
+            <div style="width: 100%; height: 48px; padding: 8px; background-color: white;" *ngIf="fuelStationList && fuelStationList.length <= 0">
+                <div style="padding: 8px 16px;">
+                    <div>
+                        No records to display.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+

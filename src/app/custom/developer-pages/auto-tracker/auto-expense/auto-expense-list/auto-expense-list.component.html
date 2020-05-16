@@ -1,0 +1,104 @@
+<div class="page-layout simple fullwidth angular-material-elements">
+
+    <!-- HEADER -->
+    <div class="header accent p-24 h-60" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row"
+         fxLayoutAlign.gt-xs="space-between center">
+
+        <div fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="column" fxLayoutAlign.gt-xs="center start">
+            <div class="h2 mt-0">{{title}}</div>
+        </div>
+
+        <!-- TOOLBAR -->
+        <div class="toolbar" fxLayout="row" fxLayoutAlign="start center">
+
+            <button mat-icon-button aria-label="Add New Vehicle" matTooltip="Add New Vehicle"
+                    (click)="createAutoExpense()">
+                <mat-icon>add_box</mat-icon>
+            </button>
+
+        </div>
+        <!-- / TOOLBAR -->
+
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT -->
+    <div class="content p-24">
+
+        <div class="table-container" [style.height.px]="tableHeight"
+             style="border-bottom: 1px solid rgba(0, 0, 0, 0.12);"
+             [hidden]="!autoExpenseList">
+
+            <table mat-table [dataSource]="dataSource"
+                   matSort matSortActive="expenseDate" matSortDirection="desc" matSortDisableClear>
+
+                <ng-container matColumnDef="expenseDate">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div>
+                            {{element.expenseDate}}
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="categoryName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div>
+                            {{element.categoryName}}
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="expenseCost">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Cost</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div>
+                            ${{element.expenseCost.toFixed(2)}}
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="buttons">
+                    <th mat-header-cell *matHeaderCellDef class="button-header-cell" style="width: 50px;"></th>
+                    <td mat-cell *matCellDef="let row" class="button-cell">
+                        <div style="text-align: right;">
+                            <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More"
+                                    (click)="$event.stopPropagation();">
+                                <mat-icon class="secondary-text">more_vert</mat-icon>
+                            </button>
+                            <mat-menu #moreMenu="matMenu">
+                                <button mat-menu-item aria-label="edit" (click)="editAutoExpense(row.expenseGuid)">
+                                    <mat-icon>edit</mat-icon>
+                                    <span>Edit</span>
+                                </button>
+                                <button mat-menu-item aria-label="delete"
+                                        (click)="deleteAutoExpense(row.expenseGuid)">
+                                    <mat-icon>delete</mat-icon>
+                                    <span>Delete</span>
+                                </button>
+                            </mat-menu>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                    (click)="openDetail(row)"></tr>
+            </table>
+
+            <div style="width: 100%; height: 48px; padding: 8px; background-color: white;" *ngIf="autoExpenseList && autoExpenseList.length <= 0">
+                <div style="padding: 8px 16px;">
+                    <div>
+                        No records to display.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+

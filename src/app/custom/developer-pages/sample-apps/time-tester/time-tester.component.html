@@ -1,0 +1,126 @@
+<div class="page-layout simple fullwidth angular-material-elements">
+
+    <!-- HEADER -->
+    <div class="header accent p-24 h-60" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row"
+         fxLayoutAlign.gt-xs="space-between center">
+
+        <div fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="column" fxLayoutAlign.gt-xs="center start">
+            <div class="h2 mt-0">{{title}}</div>
+        </div>
+
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT -->
+    <div class="content p-24">
+
+        <form [formGroup]="timeTesterForm">
+
+            <div style="width: 25%;">
+                <div fxLayout="row" fxLayoutAlign="start start">
+                    <mat-form-field appearance="outline" fxFlex>
+                        <mat-label>Date</mat-label>
+                        <input [matDatepicker]="testDatePicker" name="testDate"
+                               formControlName="testDate" matInput required>
+                        <mat-datepicker-toggle matSuffix [for]="testDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #testDatePicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+
+                <div fxLayout="row" fxLayoutAlign="start start">
+                    <mat-form-field appearance="outline" fxFlex>
+                        <mat-label>Time</mat-label>
+                        <input name="testTime" type="time" formControlName="testTime" matInput>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <button mat-raised-button color="primary" class="mr-8" (click)="calculateDates()">
+                Calculate Date-Times
+            </button>
+
+        </form>
+
+        <button mat-raised-button color="primary" class="mr-8" (click)="updateTimeTester()" style="margin-top: 20px;">
+            Update Main Date
+        </button>
+
+        <button mat-raised-button color="primary" class="mr-8" (click)="createTimeTester()" style="margin-top: 20px;">
+            Create New Date
+        </button>
+
+        <div class="section-box info-box general" fxLayout="column" style="margin-top: 30px;">
+
+            <header class="accent">
+                <div class="title">Time Tester Calculations</div>
+            </header>
+
+            <div class="content">
+
+                <div class="info-line">
+
+                    <table class="info table">
+                        <tr class="table-row">
+                            <td class="key">Raw Date Only (Epoch):</td>
+                            <td class="value">{{testDateEpoch}}</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">Raw Date Only (DateTime):</td>
+                            <td class="value">{{testDateDateTime}}</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">Time Entered:</td>
+                            <td class="value">1234</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">Epoch:</td>
+                            <td class="value">1234</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">Time Local:</td>
+                            <td class="value">1234</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">Time GMT:</td>
+                            <td class="value">1234</td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="section-box info-box general" fxLayout="column" style="margin-top: 30px;">
+
+            <header class="accent">
+                <div class="title">From Database
+
+                </div>
+            </header>
+
+            <div class="content">
+
+                <div class="info-line">
+
+                    <table class="info table">
+                        <tr class="table-row">
+                            <td class="key">TIME_EPOCH:</td>
+                            <td class="value">{{testDateEpoch}}</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">TIME_DATETIME:</td>
+                            <td class="value">{{testDateDateTime}}</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">TIME_DATE:</td>
+                            <td class="value">1234</td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

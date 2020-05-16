@@ -5,7 +5,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTabsModule} from '@angular/material/tabs';
-import {FuseSharedModule} from '../../../../@fuse/shared.module';
+import {FuseSharedModule} from '@fuse/shared.module';
 import {MyProfileService} from './my-profile.service';
 import { TokenInfoComponent } from './token-info/token-info.component';
 import { UserInfoComponent } from './user-info/user-info.component';

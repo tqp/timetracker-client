@@ -1,0 +1,110 @@
+<div class="dialog-content-wrapper" *ngIf="action === 'new' || action === 'edit' && fuelStationLoaded">
+    <mat-toolbar matDialogTitle class="mat-accent m-0">
+
+        <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+            <span class="title dialog-title">{{dialogTitle}}</span>
+            <button mat-icon-button (click)="matDialogRef.close()" aria-label="Close dialog">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-toolbar-row>
+
+    </mat-toolbar>
+
+    <div mat-dialog-content class="p-24 pb-0 m-0" fusePerfectScrollbar>
+
+        <form [formGroup]="fuelStationForm">
+
+            <!--
+            <div fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Station GUID</mat-label>
+                    <input name="stationGuid" formControlName="stationGuid" matInput required>
+                </mat-form-field>
+            </div>
+            -->
+
+            <div fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Station Name</mat-label>
+                    <input name="stationName" formControlName="stationName" matInput required>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Affiliation</mat-label>
+                    <input name="stationAffiliation" formControlName="stationAffiliation" matInput required>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Address</mat-label>
+                    <input name="stationAddress1" formControlName="stationAddress1" matInput required>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>City</mat-label>
+                    <input name="stationCity" formControlName="stationCity" matInput required>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>State</mat-label>
+                    <input name="stationState" formControlName="stationState" matInput required>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Zip Code</mat-label>
+                    <input name="stationZip" formControlName="stationZip" matInput required>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Phone Number</mat-label>
+                    <mat-icon matSuffix class="secondary-text">phone</mat-icon>
+                    <input name="stationPhone" formControlName="stationPhone" matInput>
+                </mat-form-field>
+            </div>
+
+        </form>
+
+    </div>
+
+    <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="end center">
+
+        <button *ngIf="action === 'edit'"
+                mat-button
+                class="mr-8"
+                (click)="matDialogRef.close(['delete',fuelStationForm])"
+                aria-label="Delete"
+                matTooltip="Delete">
+            DELETE
+        </button>
+
+        <button *ngIf="action !== 'edit'"
+                mat-button
+                class="save-button"
+                (click)="matDialogRef.close(fuelStationForm)"
+                [disabled]="fuelStationForm.invalid"
+                aria-label="SAVE">
+            CREATE
+        </button>
+
+        <button *ngIf="action === 'edit'"
+                mat-button
+                class="save-button"
+                (click)="matDialogRef.close(['save',fuelStationForm])"
+                [disabled]="fuelStationForm.invalid"
+                aria-label="SAVE">
+            SAVE
+        </button>
+
+    </div>
+</div>

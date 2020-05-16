@@ -1,0 +1,169 @@
+<div class="page-layout simple fullwidth angular-material-elements">
+
+    <!-- HEADER -->
+    <div class="header accent p-24 h-60" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row"
+         fxLayoutAlign.gt-xs="space-between center">
+
+        <div fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="column" fxLayoutAlign.gt-xs="center start">
+            <div class="h2 mt-0">{{title}}</div>
+        </div>
+
+        <!-- TOOLBAR -->
+        <div class="toolbar" fxLayout="row" fxLayoutAlign="start center">
+
+            <button mat-icon-button aria-label="Add New Station" matTooltip="Add New Station"
+                    (click)="createFuelActivity()">
+                <mat-icon>add_box</mat-icon>
+            </button>
+
+        </div>
+        <!-- / TOOLBAR -->
+
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT -->
+    <div class="content p-24">
+
+        <div class="table-container" [style.height.px]="tableHeight"
+             style="border-bottom: 1px solid rgba(0, 0, 0, 0.12);"
+             [hidden]="!fuelActivityListFlat">
+
+            <table mat-table [dataSource]="dataSource"
+                   matSort matSortActive="fillDate" matSortDirection="desc" matSortDisableClear>
+
+                <ng-container matColumnDef="index">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Index</th>
+                    <td mat-cell *matCellDef="let element; let i = index;">
+                        {{i}}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="fillDate">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div>
+                            {{element.fillDate | date: 'MM/dd/yyyy'}}
+                            {{element.fillComments != null ? '*' : ''}}
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="stationAffiliation">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Station</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div>
+                            {{element.stationAffiliation}}
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="stationLocation">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Location</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div>
+                            {{element.stationLocation}}
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="fillOdometer">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Odometer</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div style="max-width: 54px; text-align: right;">
+                            {{element.fillOdometer}}
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="fillMilesTraveled">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Distance</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div style="max-width: 49px; text-align: right;">
+                            {{element.fillMilesTraveled.toFixed(1)}}
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="fillGallons">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Gallons</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div style="max-width: 44px; text-align: right;">
+                            {{element.fillGallons.toFixed(3)}}
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="fillCostPerGallon">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>$/Gal.</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div style="max-width: 44px; text-align: right;">
+                            {{element.fillCostPerGallon.toFixed(3)}}
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="fillTotalCost">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Cost</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div style="max-width: 57px; text-align: right;"
+                             [ngStyle]="{'color': getTotalCostColor(element.fillGallons, element.fillCostPerGallon, element.fillTotalCost)}">
+                            ${{element.fillTotalCost.toFixed(2)}}
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="fillMilesPerGallon">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>MPG (Car/Calc.)</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div style="max-width: 80px; text-align: right; color: red;"
+                             [ngStyle]="{'color': getMilesPerGallonColor(element.fillMilesPerGallonCar, element.fillMilesPerGallonCalc)}">
+                            {{element.fillMilesPerGallonCar.toFixed(1)}}
+                            / {{element.fillMilesPerGallonCalc.toFixed(1)}}
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="buttons">
+                    <th mat-header-cell *matHeaderCellDef class="button-header-cell" style="width: 50px;"></th>
+                    <td mat-cell *matCellDef="let row" class="button-cell">
+                        <div style="text-align: right;">
+                            <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More"
+                                    (click)="$event.stopPropagation();">
+                                <mat-icon class="secondary-text">more_vert</mat-icon>
+                            </button>
+                            <mat-menu #moreMenu="matMenu">
+                                <button mat-menu-item aria-label="edit" (click)="editFuelActivity(row.fillGuid)">
+                                    <mat-icon>edit</mat-icon>
+                                    <span>Edit</span>
+                                </button>
+                                <button mat-menu-item aria-label="delete"
+                                        (click)="deleteFuelActivity(row.fillGuid)">
+                                    <mat-icon>delete</mat-icon>
+                                    <span>Delete</span>
+                                </button>
+                            </mat-menu>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                    (click)="openDetail(row)"></tr>
+            </table>
+
+            <div style="width: 100%; height: 48px; padding: 8px; background-color: white;" *ngIf="fuelActivityListFlat && fuelActivityListFlat.length <= 0">
+                <div style="padding: 8px 16px;">
+                    <div>
+                        No records to display.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+

@@ -119,19 +119,19 @@ export const navigation: FuseNavigation[] = [
         icon: 'apps',
         children: [
             {
-                id: 'fuel-tracker',
-                title: 'Fuel Tracker',
+                id: 'auto-tracker',
+                title: 'Auto Tracker',
                 type: 'collapsable',
                 role: 'ROLE_DEVELOPER',
                 icon: 'local_gas_station',
                 children: [
                     {
-                        id: 'fuel-dashboard',
-                        title: 'Fuel Dashboard',
+                        id: 'auto-tracker-dashboard',
+                        title: 'Dashboard',
                         type: 'item',
                         role: 'ROLE_DEVELOPER',
                         icon: 'insert_chart',
-                        url: 'developer-pages/fuel-dashboard'
+                        url: 'developer-pages/auto-tracker-dashboard'
                     },
                     {
                         id: 'fuel-activity-list',
@@ -140,6 +140,14 @@ export const navigation: FuseNavigation[] = [
                         role: 'ROLE_DEVELOPER',
                         icon: 'local_gas_station',
                         url: 'developer-pages/fuel-activity-list'
+                    },
+                    {
+                        id: 'auto-expense-list',
+                        title: 'Auto Expenses',
+                        type: 'item',
+                        role: 'ROLE_DEVELOPER',
+                        icon: 'directions_car',
+                        url: 'developer-pages/auto-expense-list'
                     },
                     {
                         id: 'fuel-station-list',
@@ -156,12 +164,54 @@ export const navigation: FuseNavigation[] = [
                         role: 'ROLE_DEVELOPER',
                         icon: 'directions_car',
                         url: 'developer-pages/fuel-vehicle-list'
+                    },
+                    {
+                        id: 'expense-category-list',
+                        title: 'Categories',
+                        type: 'item',
+                        role: 'ROLE_DEVELOPER',
+                        icon: 'category',
+                        url: 'developer-pages/expense-category-list'
                     }
                 ]
             },
             {
-                id: 'sample-code',
-                title: 'Sample Code',
+                id: 'reality-tracker',
+                title: 'Reality Tracker',
+                type: 'collapsable',
+                role: 'ROLE_DEVELOPER',
+                icon: 'live_tv',
+                children: [
+                    {
+                        id: 'series-list',
+                        title: 'Series List',
+                        type: 'item',
+                        role: 'ROLE_DEVELOPER',
+                        icon: 'tv',
+                        url: 'developer-pages/series-list'
+                    }
+                ]
+            },
+            {
+                id: 'charter-sauce',
+                title: 'Charter Sauce',
+                type: 'collapsable',
+                role: 'ROLE_DEVELOPER',
+                icon: 'directions_boat',
+                children: [
+                    {
+                        id: 'boat-list',
+                        title: 'Boat List',
+                        type: 'item',
+                        role: 'ROLE_DEVELOPER',
+                        icon: 'directions_boat',
+                        url: 'developer-pages/boat-list'
+                    }
+                ]
+            },
+            {
+                id: 'sample-apps',
+                title: 'Sample Apps',
                 type: 'collapsable',
                 role: 'ROLE_DEVELOPER',
                 icon: 'toys',
@@ -181,7 +231,15 @@ export const navigation: FuseNavigation[] = [
                         role: 'ROLE_DEVELOPER',
                         icon: 'insert_drive_file',
                         url: 'developer-pages/file-upload'
-                    }
+                    },
+                    {
+                        id: 'time-tester',
+                        title: 'Time Tester',
+                        type: 'item',
+                        role: 'ROLE_DEVELOPER',
+                        icon: 'access_time',
+                        url: 'developer-pages/time-tester'
+                    },
                 ]
             }
         ]

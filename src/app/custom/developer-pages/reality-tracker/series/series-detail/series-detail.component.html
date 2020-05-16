@@ -1,0 +1,62 @@
+<div class="page-layout simple fullwidth angular-material-elements">
+
+    <!-- HEADER -->
+    <div class="header accent p-24 h-60" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row"
+         fxLayoutAlign.gt-xs="space-between center">
+
+        <div fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="column" fxLayoutAlign.gt-xs="center start">
+            <div class="h2 mt-0">
+                <span *ngIf="series">Series: {{series.seriesName}}</span>
+            </div>
+        </div>
+
+        <!-- TOOLBAR -->
+        <div class="toolbar" fxLayout="row" fxLayoutAlign="start center">
+
+            <button mat-icon-button aria-label="Delete Series" matTooltip="Delete Series"
+                    (click)="deleteSeries(series.seriesGuid)">
+                <mat-icon>delete</mat-icon>
+            </button>
+
+            <button mat-icon-button aria-label="Edit Series" matTooltip="Edit Series"
+                    (click)="editSeries(series.seriesGuid)">
+                <mat-icon>edit</mat-icon>
+            </button>
+
+            <button mat-icon-button aria-label="Back to Series List" matTooltip="Back to Series List"
+                    [routerLink]="'/developer-pages/series-list'">
+                <mat-icon>arrow_back_ios</mat-icon>
+            </button>
+
+        </div>
+        <!-- / TOOLBAR -->
+
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT -->
+    <div class="content p-24">
+
+        <div class="section-box info-box general" fxLayout="column" *ngIf="series">
+
+            <header class="accent">
+                <div class="title">Series Information</div>
+            </header>
+
+            <div class="content">
+
+                <div class="info-line">
+
+                    <table class="info table">
+                        <tr class="table-row">
+                            <td class="key">Series Name:</td>
+                            <td class="value">{{series.seriesName}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>

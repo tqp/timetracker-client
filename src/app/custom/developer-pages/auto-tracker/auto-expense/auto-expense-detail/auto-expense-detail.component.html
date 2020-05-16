@@ -1,0 +1,70 @@
+<div class="page-layout simple fullwidth angular-material-elements">
+
+    <!-- HEADER -->
+    <div class="header accent p-24 h-60" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row"
+         fxLayoutAlign.gt-xs="space-between center">
+
+        <div fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="column" fxLayoutAlign.gt-xs="center start">
+            <div class="h2 mt-0">
+                <span *ngIf="autoExpense">Auto Expense: {{autoExpense.expenseDate}}</span>
+            </div>
+        </div>
+
+        <!-- TOOLBAR -->
+        <div class="toolbar" fxLayout="row" fxLayoutAlign="start center">
+
+            <button mat-icon-button aria-label="Delete AutoExpense" matTooltip="Delete Expense"
+                    (click)="deleteAutoExpense(autoExpense.expenseGuid)">
+                <mat-icon>delete</mat-icon>
+            </button>
+
+            <button mat-icon-button aria-label="Edit AutoExpense" matTooltip="Edit Expense"
+                    (click)="editAutoExpense(autoExpense.expenseGuid)">
+                <mat-icon>edit</mat-icon>
+            </button>
+
+            <button mat-icon-button aria-label="Back to AutoExpense List" matTooltip="Back to Expense List"
+                    [routerLink]="'/developer-pages/auto-expense-list'">
+                <mat-icon>arrow_back_ios</mat-icon>
+            </button>
+
+        </div>
+        <!-- / TOOLBAR -->
+
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT -->
+    <div class="content p-24">
+
+        <div class="section-box info-box general" fxLayout="column" *ngIf="autoExpense">
+
+            <header class="accent">
+                <div class="title">Expense Information</div>
+            </header>
+
+            <div class="content">
+
+                <div class="info-line">
+
+                    <table class="info table">
+                        <tr class="table-row">
+                            <td class="key">Date:</td>
+                            <td class="value">{{autoExpense.expenseDate | date: 'MM/dd/yyyy'}}</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">Category:</td>
+                            <td class="value">{{autoExpense.categoryName}}</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">Cost:</td>
+                            <td class="value">${{autoExpense.expenseCost.toFixed(2)}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>

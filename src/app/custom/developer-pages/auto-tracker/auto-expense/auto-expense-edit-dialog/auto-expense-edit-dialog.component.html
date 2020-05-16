@@ -1,0 +1,78 @@
+<div class="dialog-content-wrapper" *ngIf="action === 'new' || action === 'edit' && autoExpenseLoaded">
+    <mat-toolbar matDialogTitle class="mat-accent m-0">
+
+        <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+            <span class="title dialog-title">{{dialogTitle}}</span>
+            <button mat-icon-button (click)="matDialogRef.close()" aria-label="Close dialog">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-toolbar-row>
+
+    </mat-toolbar>
+
+    <div mat-dialog-content class="p-24 pb-0 m-0" fusePerfectScrollbar>
+
+        <form [formGroup]="autoExpenseForm">
+
+            <div fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Date</mat-label>
+                    <input [matDatepicker]="expenseDatePicker" name="expenseDate"
+                           formControlName="expenseDate" matInput required>
+                    <mat-datepicker-toggle matSuffix [for]="expenseDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #expenseDatePicker></mat-datepicker>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Category</mat-label>
+                    <mat-select placeholder="Select Expense Category" formControlName="categoryGuid">
+                        <mat-option *ngFor="let category of expenseCategoryList"
+                                    [value]="category.categoryGuid">{{category.categoryName}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Cost</mat-label>
+                    <input name="expenseCost" formControlName="expenseCost" matInput required>
+                </mat-form-field>
+            </div>
+
+        </form>
+
+    </div>
+
+    <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="end center">
+
+        <button *ngIf="action === 'edit'"
+                mat-button
+                class="mr-8"
+                (click)="matDialogRef.close(['delete',autoExpenseForm])"
+                aria-label="Delete"
+                matTooltip="Delete">
+            DELETE
+        </button>
+
+        <button *ngIf="action !== 'edit'"
+                mat-button
+                class="save-button"
+                (click)="matDialogRef.close(autoExpenseForm)"
+                [disabled]="autoExpenseForm.invalid"
+                aria-label="SAVE">
+            CREATE
+        </button>
+
+        <button *ngIf="action === 'edit'"
+                mat-button
+                class="save-button"
+                (click)="matDialogRef.close(['save',autoExpenseForm])"
+                [disabled]="autoExpenseForm.invalid"
+                aria-label="SAVE">
+            SAVE
+        </button>
+
+    </div>
+</div>

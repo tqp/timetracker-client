@@ -1,0 +1,70 @@
+<div class="page-layout simple fullwidth angular-material-elements">
+
+    <!-- HEADER -->
+    <div class="header accent p-24 h-60" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row"
+         fxLayoutAlign.gt-xs="space-between center">
+
+        <div fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="column" fxLayoutAlign.gt-xs="center start">
+            <div class="h2 mt-0">
+                <span *ngIf="boat">Boat: {{boat.boatName}}</span>
+            </div>
+        </div>
+
+        <!-- TOOLBAR -->
+        <div class="toolbar" fxLayout="row" fxLayoutAlign="start center">
+
+            <button mat-icon-button aria-label="Delete Boat" matTooltip="Delete Boat"
+                    (click)="deleteBoat(boat.boatGuid)">
+                <mat-icon>delete</mat-icon>
+            </button>
+
+            <button mat-icon-button aria-label="Edit Boat" matTooltip="Edit Boat"
+                    (click)="editBoat(boat.boatGuid)">
+                <mat-icon>edit</mat-icon>
+            </button>
+
+            <button mat-icon-button aria-label="Back to Boat List" matTooltip="Back to Boat List"
+                    [routerLink]="'/developer-pages/boat-list'">
+                <mat-icon>arrow_back_ios</mat-icon>
+            </button>
+
+        </div>
+        <!-- / TOOLBAR -->
+
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT -->
+    <div class="content p-24">
+
+        <div class="section-box info-box general" fxLayout="column" *ngIf="boat">
+
+            <header class="accent">
+                <div class="title">Boat Information</div>
+            </header>
+
+            <div class="content">
+
+                <div class="info-line">
+
+                    <table class="info table">
+                        <tr class="table-row">
+                            <td class="key">Name:</td>
+                            <td class="value">{{boat.boatName}}</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">Model:</td>
+                            <td class="value">{{boat.boatModel}}</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="key">Year:</td>
+                            <td class="value">{{boat.boatYear}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>

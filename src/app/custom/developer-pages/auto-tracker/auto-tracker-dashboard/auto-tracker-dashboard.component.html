@@ -1,0 +1,46 @@
+<div class="page-layout simple fullwidth angular-material-elements">
+
+    <!-- HEADER -->
+    <div class="header accent p-24 h-60" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row"
+         fxLayoutAlign.gt-xs="space-between center">
+
+        <div fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="column" fxLayoutAlign.gt-xs="center start">
+            <div class="h2 mt-0">{{title}}</div>
+        </div>
+
+        <!--
+        <a mat-raised-button class="reference-button mt-16 mt-sm-0" href="https://material.angular.io/"
+           target="_blank">
+            <mat-icon class="mr-8">link</mat-icon>
+            <span>Reference</span>
+        </a>
+        -->
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT -->
+    <div class="content p-24">
+
+        <div class="fuse-card auto-width">
+            <div class="position-relative" style="padding: 12px 0 0 24px;"
+                 fxLayout="row" fxLayoutAlign="space-between center">
+                <div fxLayout="column" fxLayoutAlign="start start">
+                    <span class="h2">Fill History</span>
+                </div>
+            </div>
+            <div class="position-relative" style="padding-bottom: 12px;" id="fillHistoryChart"></div>
+        </div>
+
+        <div class="fuse-card auto-width">
+            <div class="position-relative" style="padding: 12px 0 0 24px;"
+                 fxLayout="row" fxLayoutAlign="space-between center">
+                <div fxLayout="column" fxLayoutAlign="start start">
+                    <span class="h2">Cost per Gallon</span>
+                </div>
+            </div>
+            <div class="position-relative" style="padding-bottom: 12px;" id="costPerGallonChart"></div>
+        </div>
+
+    </div>
+</div>
+

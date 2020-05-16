@@ -1,0 +1,219 @@
+<div class="dialog-content-wrapper" *ngIf="action === 'new' || action === 'edit' && fuelActivityLoaded">
+    <mat-toolbar matDialogTitle class="mat-accent m-0">
+
+        <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+            <span class="title dialog-title">{{dialogTitle}}</span>
+            <button mat-icon-button (click)="matDialogRef.close()" aria-label="Close dialog">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-toolbar-row>
+
+    </mat-toolbar>
+
+    <div mat-dialog-content class="p-24 pb-0 m-0" fusePerfectScrollbar>
+
+        <div fxLayout="row" fxLayoutAlign="start start">
+
+            <div id="station-col" style="margin-right: 40px;">
+
+                <form [formGroup]="stationSubForm" *ngIf="fuelStation">
+
+                    <div fxLayout="row" fxLayoutAlign="start start">
+
+                        <mat-form-field appearance="outline" fxFlex>
+                            <mat-label>Station Name</mat-label>
+                            <input matInput #stationName name="stationName" id="stationName" formControlName="stationName" required
+                                   [matAutocomplete]="autocompleteStationName">
+                            <mat-autocomplete [autoActiveFirstOption]="true" #autocompleteStationName="matAutocomplete"
+                                              panelWidth="300px">
+                                <mat-option *ngFor="let option of stationNameAutoCompleteOptions | async"
+                                            [value]="option.stationName"
+                                            (onSelectionChange)="clickStationNameOption(option)">
+                                    {{option.stationName}}, {{option.stationCity}}, {{option.stationState}}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="start start">
+                        <mat-form-field appearance="outline" fxFlex>
+                            <mat-label>Station Affiliation</mat-label>
+                            <input matInput name="stationAffiliation" formControlName="stationAffiliation" required>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="start start">
+                        <mat-form-field appearance="outline" fxFlex>
+                            <mat-label>Address 1</mat-label>
+                            <input matInput name="stationAddress1" formControlName="stationAddress1" required>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="start start">
+                        <mat-form-field appearance="outline" fxFlex>
+                            <mat-label>City</mat-label>
+                            <input matInput name="stationCity" formControlName="stationCity" required>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="start start">
+                        <mat-form-field appearance="outline" fxFlex>
+                            <mat-label>State</mat-label>
+                            <input matInput name="stationState" formControlName="stationState" required>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="start start">
+                        <mat-form-field appearance="outline" fxFlex>
+                            <mat-label>Zip Code</mat-label>
+                            <input matInput name="stationZip" formControlName="stationZip" required>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="start start">
+                        <mat-form-field appearance="outline" fxFlex>
+                            <mat-label>Phone Number</mat-label>
+                            <mat-icon matSuffix class="secondary-text">phone</mat-icon>
+                            <input matInput name="stationPhone" formControlName="stationPhone">
+                        </mat-form-field>
+                    </div>
+
+                </form>
+
+            </div>
+
+            <div id="fill-col">
+
+                <form [formGroup]="fillSubForm">
+
+                    <!--
+                    <div fxLayout="row" fxLayoutAlign="start start">
+                        <mat-form-field appearance="outline" fxFlex>
+                            <mat-label>Fill GUID</mat-label>
+                            <input name="fillGuid" formControlName="fillGuid" matInput>
+                        </mat-form-field>
+                    </div>
+                    -->
+
+                    <!--
+                    <div fxLayout="row" fxLayoutAlign="start start">
+                        <mat-form-field appearance="outline" fxFlex>
+                            <mat-label>Station GUID</mat-label>
+                            <input name="stationGuid" formControlName="stationGuid" matInput>
+                        </mat-form-field>
+                    </div>
+                    -->
+
+                    <div fxLayout="row" fxLayoutAlign="start start">
+                        <mat-form-field appearance="outline" fxFlex>
+                            <mat-label>Date</mat-label>
+                            <input [matDatepicker]="fillDatePicker" name="fillDate"
+                                   formControlName="fillDate" matInput required>
+                            <mat-datepicker-toggle matSuffix [for]="fillDatePicker"></mat-datepicker-toggle>
+                            <mat-datepicker #fillDatePicker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="start start">
+                        <mat-form-field appearance="outline" fxFlex>
+                            <mat-label>Time</mat-label>
+                            <input name="fillTime" type="time" formControlName="fillTime" matInput>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="start start">
+                        <mat-form-field appearance="outline" fxFlex>
+                            <mat-label>Odometer</mat-label>
+                            <input name="fillOdometer" formControlName="fillOdometer" matInput required>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="start start">
+                        <mat-form-field appearance="outline" fxFlex>
+                            <mat-label>Distance</mat-label>
+                            <input name="fillMilesTraveled" formControlName="fillMilesTraveled" matInput
+                                   required>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="start start">
+                        <mat-form-field appearance="outline" fxFlex>
+                            <mat-label>Miles per Gallon</mat-label>
+                            <input name="fillMilesPerGallon" formControlName="fillMilesPerGallon"
+                                   matInput
+                                   required>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="start start">
+                        <mat-form-field appearance="outline" fxFlex>
+                            <mat-label>Gallons</mat-label>
+                            <input name="fillGallons" formControlName="fillGallons" matInput required>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="start start">
+                        <mat-form-field appearance="outline" fxFlex>
+                            <mat-label>$/Gal.</mat-label>
+                            <input name="fillCostPerGallon" formControlName="fillCostPerGallon"
+                                   matInput
+                                   required>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="start start">
+                        <mat-form-field appearance="outline" fxFlex>
+                            <mat-label>Total Cost</mat-label>
+                            <input name="fillTotalCost" formControlName="fillTotalCost" matInput
+                                   required>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="start start">
+                        <mat-form-field appearance="outline" fxFlex>
+                            <mat-label>Comments</mat-label>
+                            <textarea matInput #fillComments formControlName="fillComments" placeholder="" maxlength="100"></textarea>
+                            <mat-hint align="end">{{fillComments.value.length}} / 100</mat-hint>
+                        </mat-form-field>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="end center">
+
+        <button *ngIf="action === 'edit'"
+                mat-button
+                class="mr-8"
+                (click)="matDialogRef.close(['delete', fuelActivityForm])"
+                aria-label="Delete"
+                matTooltip="Delete">
+            DELETE
+        </button>
+
+        <button *ngIf="action !== 'edit'"
+                mat-button
+                class="save-button"
+                (click)="matDialogRef.close(fuelActivityForm)"
+                [disabled]="fuelActivityForm.invalid"
+                aria-label="SAVE">
+            CREATE
+        </button>
+
+        <button *ngIf="action === 'edit'"
+                mat-button
+                class="save-button"
+                (click)="matDialogRef.close(['save', fuelActivityForm])"
+                [disabled]="fuelActivityForm.invalid"
+                aria-label="SAVE">
+            SAVE
+        </button>
+
+    </div>
+</div>
