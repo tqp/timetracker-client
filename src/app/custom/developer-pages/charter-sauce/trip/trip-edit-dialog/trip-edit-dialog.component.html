@@ -1,0 +1,78 @@
+<div class="dialog-content-wrapper" *ngIf="action === 'new' || action === 'edit' && tripLoaded">
+    <mat-toolbar matDialogTitle class="mat-accent m-0">
+
+        <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+            <span class="title dialog-title">{{dialogTitle}}</span>
+            <button mat-icon-button (click)="matDialogRef.close()" aria-label="Close dialog">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-toolbar-row>
+
+    </mat-toolbar>
+
+    <div mat-dialog-content class="p-24 pb-0 m-0" fusePerfectScrollbar>
+
+        <form [formGroup]="tripForm">
+
+            <div fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Name</mat-label>
+                    <input name="tripName" formControlName="tripName" matInput required>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Start Date</mat-label>
+                    <input [matDatepicker]="tripStartDatePicker" name="tripStartDate"
+                           formControlName="tripStartDate" matInput required>
+                    <mat-datepicker-toggle matSuffix [for]="tripStartDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #tripStartDatePicker></mat-datepicker>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>End Date</mat-label>
+                    <input [matDatepicker]="tripEndDatePicker" name="tripEndDate"
+                           formControlName="tripEndDate" matInput required>
+                    <mat-datepicker-toggle matSuffix [for]="tripEndDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #tripEndDatePicker></mat-datepicker>
+                </mat-form-field>
+            </div>
+
+        </form>
+
+    </div>
+
+    <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="end center">
+
+        <button *ngIf="action === 'edit'"
+                mat-button
+                class="mr-8"
+                (click)="matDialogRef.close(['delete',tripForm])"
+                aria-label="Delete"
+                matTooltip="Delete">
+            DELETE
+        </button>
+
+        <button *ngIf="action !== 'edit'"
+                mat-button
+                class="save-button"
+                (click)="matDialogRef.close(tripForm)"
+                [disabled]="tripForm.invalid"
+                aria-label="SAVE">
+            CREATE
+        </button>
+
+        <button *ngIf="action === 'edit'"
+                mat-button
+                class="save-button"
+                (click)="matDialogRef.close(['save',tripForm])"
+                [disabled]="tripForm.invalid"
+                aria-label="SAVE">
+            SAVE
+        </button>
+
+    </div>
+</div>

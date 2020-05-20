@@ -30,7 +30,7 @@ export class FuelActivityService {
         const token = this.tokenService.getToken();
         if (token) {
             return new Promise((resolve, reject) => {
-                this.http.post(environment.apiUrl + '/api/v1/auto/fuel-activity', {...fuelActivity}, {headers: this.tokenService.setAuthorizationHeader(token)})
+                this.http.post(environment.apiUrl + '/api/v1/auto-tracker/fuel-activity', {...fuelActivity}, {headers: this.tokenService.setAuthorizationHeader(token)})
                     .subscribe((response: any) => {
                         resolve(response);
                     });
@@ -44,7 +44,7 @@ export class FuelActivityService {
     public getFuelActivityList(): Observable<FuelActivity> {
         const token = this.tokenService.getToken();
         if (token) {
-            return this.http.get<FuelActivity>(environment.apiUrl + '/api/v1/auto/fuel-activity', {headers: this.tokenService.setAuthorizationHeader(token)});
+            return this.http.get<FuelActivity>(environment.apiUrl + '/api/v1/auto-tracker/fuel-activity', {headers: this.tokenService.setAuthorizationHeader(token)});
         } else {
             console.error('No token was present.');
             return null;
@@ -54,7 +54,7 @@ export class FuelActivityService {
     public getFuelActivity(fillGuid: string): Observable<any> {
         const token = this.tokenService.getToken();
         if (token) {
-            return this.http.get(environment.apiUrl + '/api/v1/auto/fuel-activity/' + fillGuid, {headers: this.tokenService.setAuthorizationHeader(token)});
+            return this.http.get(environment.apiUrl + '/api/v1/auto-tracker/fuel-activity/' + fillGuid, {headers: this.tokenService.setAuthorizationHeader(token)});
         } else {
             console.error('No token was present.');
             return null;
@@ -65,7 +65,7 @@ export class FuelActivityService {
         const token = this.tokenService.getToken();
         if (token) {
             return new Promise((resolve, reject) => {
-                this.http.put(environment.apiUrl + '/api/v1/auto/fuel-activity', {...fuelFill}, {headers: this.tokenService.setAuthorizationHeader(token)})
+                this.http.put(environment.apiUrl + '/api/v1/auto-tracker/fuel-activity', {...fuelFill}, {headers: this.tokenService.setAuthorizationHeader(token)})
                     .subscribe(response => {
                         resolve(response);
                     });
@@ -80,7 +80,7 @@ export class FuelActivityService {
         const token = this.tokenService.getToken();
         if (token) {
             return new Promise((resolve, reject) => {
-                this.http.delete(environment.apiUrl + '/api/v1/auto/fuel-activity/' + fillGuid, {headers: this.tokenService.setAuthorizationHeader(token)})
+                this.http.delete(environment.apiUrl + '/api/v1/auto-tracker/fuel-activity/' + fillGuid, {headers: this.tokenService.setAuthorizationHeader(token)})
                     .subscribe(response => {
                         resolve(response);
                     });
@@ -96,7 +96,7 @@ export class FuelActivityService {
     public getFuelActivityListByStation(stationGuid: string): Observable<FuelActivity> {
         const token = this.tokenService.getToken();
         if (token) {
-            return this.http.get<FuelActivity>(environment.apiUrl + '/api/v1/auto/fuel-activity/station/' +
+            return this.http.get<FuelActivity>(environment.apiUrl + '/api/v1/auto-tracker/fuel-activity/station/' +
                 stationGuid, {headers: this.tokenService.setAuthorizationHeader(token)});
         } else {
             console.error('No token was present.');
@@ -128,7 +128,7 @@ export class FuelActivityService {
     retrieveStationNameOptions(filter: string): Observable<FuelStation> {
         console.log('AutoCompleteService -> retrieveStationNameOptions: filter=', filter);
         const token = this.tokenService.getToken();
-        const url = environment.apiUrl + '/api/v1/auto/fuel-station/auto-complete/station-name';
+        const url = environment.apiUrl + '/api/v1/auto-tracker/fuel-station/auto-complete/station-name';
         return this.http
             .get<FuelStation>(url, {
                 headers: this.setHeaders(token),

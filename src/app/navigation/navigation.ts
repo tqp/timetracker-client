@@ -200,12 +200,28 @@ export const navigation: FuseNavigation[] = [
                 icon: 'directions_boat',
                 children: [
                     {
+                        id: 'trip-list',
+                        title: 'Trip List',
+                        type: 'item',
+                        role: 'ROLE_DEVELOPER',
+                        icon: 'beach_access',
+                        url: 'developer-pages/trip-list'
+                    },
+                    {
                         id: 'boat-list',
                         title: 'Boat List',
                         type: 'item',
                         role: 'ROLE_DEVELOPER',
                         icon: 'directions_boat',
                         url: 'developer-pages/boat-list'
+                    },
+                    {
+                        id: 'crew-list',
+                        title: 'Crew List',
+                        type: 'item',
+                        role: 'ROLE_DEVELOPER',
+                        icon: 'people',
+                        url: 'developer-pages/crew-list'
                     }
                 ]
             },

@@ -24,6 +24,11 @@ import {ExpenseCategoryModule} from './auto-tracker/expense-category/expense-cat
 import {TimeTesterModule} from './sample-apps/time-tester/time-tester.module';
 import {SeriesModule} from './reality-tracker/series/series.module';
 import {BoatModule} from './charter-sauce/boat/boat.module';
+import {CrewModule} from './charter-sauce/crew/crew.module';
+import {MatSortModule} from '@angular/material/sort';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {RouterModule} from '@angular/router';
+import {TripModule} from './charter-sauce/trip/trip.module';
 
 @NgModule({
     declarations: [],
@@ -43,6 +48,8 @@ import {BoatModule} from './charter-sauce/boat/boat.module';
 
         // Charter Sauce App
         BoatModule,
+        CrewModule,
+        TripModule,
 
         // Sample Apps
         AutoCompleteModule,
@@ -60,10 +67,13 @@ import {BoatModule} from './charter-sauce/boat/boat.module';
         MatTableModule,
         MatToolbarModule,
         MatDialogModule,
+        MatSortModule,
+        MatTooltipModule,
 
         FuseSharedModule,
         FuseConfirmDialogModule,
-        FuseSidebarModule
+        FuseSidebarModule,
+        RouterModule
     ],
     entryComponents: []
 })

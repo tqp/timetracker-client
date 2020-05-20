@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {TokenService} from '../../../services/token.service';
+import {Trip} from '../charter-sauce-models/Trip';
 import {environment} from '../../../../../environments/environment';
 import {Observable} from 'rxjs';
-import {ExpenseCategory} from '../auto-tracker-models/ExpenseCategory';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ExpenseCategoryService {
+export class TripService {
 
     constructor(private http: HttpClient,
                 private tokenService: TokenService) {
@@ -16,11 +16,11 @@ export class ExpenseCategoryService {
 
     // CRUD METHODS
 
-    public createExpenseCategory(expenseCategory: ExpenseCategory): Promise<ExpenseCategory> {
+    public createTrip(trip: Trip): Promise<Trip> {
         const token = this.tokenService.getToken();
         if (token) {
             return new Promise((resolve, reject) => {
-                this.http.post(environment.apiUrl + '/api/v1/auto-tracker/expense-category', {...expenseCategory}, {headers: this.tokenService.setAuthorizationHeader(token)})
+                this.http.post(environment.apiUrl + '/api/v1/charter-sauce/trip', {...trip}, {headers: this.tokenService.setAuthorizationHeader(token)})
                     .subscribe((response: any) => {
                         resolve(response);
                     });
@@ -31,31 +31,31 @@ export class ExpenseCategoryService {
         }
     }
 
-    public getExpenseCategoryList(): Observable<any> {
+    public getTripList(): Observable<any> {
         const token = this.tokenService.getToken();
         if (token) {
-            return this.http.get(environment.apiUrl + '/api/v1/auto-tracker/expense-category', {headers: this.tokenService.setAuthorizationHeader(token)});
+            return this.http.get(environment.apiUrl + '/api/v1/charter-sauce/trip', {headers: this.tokenService.setAuthorizationHeader(token)});
         } else {
             console.error('No token was present.');
             return null;
         }
     }
 
-    public getExpenseCategory(vehicleGuid: string): Observable<any> {
+    public getTrip(tripGuid: string): Observable<any> {
         const token = this.tokenService.getToken();
         if (token) {
-            return this.http.get(environment.apiUrl + '/api/v1/auto-tracker/expense-category/' + vehicleGuid, {headers: this.tokenService.setAuthorizationHeader(token)});
+            return this.http.get(environment.apiUrl + '/api/v1/charter-sauce/trip/' + tripGuid, {headers: this.tokenService.setAuthorizationHeader(token)});
         } else {
             console.error('No token was present.');
             return null;
         }
     }
 
-    public updateExpenseCategory(expenseCategory: ExpenseCategory): Promise<any> {
+    public updateTrip(trip: Trip): Promise<any> {
         const token = this.tokenService.getToken();
         if (token) {
             return new Promise((resolve, reject) => {
-                this.http.put(environment.apiUrl + '/api/v1/auto-tracker/expense-category', {...expenseCategory}, {headers: this.tokenService.setAuthorizationHeader(token)})
+                this.http.put(environment.apiUrl + '/api/v1/charter-sauce/trip', {...trip}, {headers: this.tokenService.setAuthorizationHeader(token)})
                     .subscribe(response => {
                         resolve(response);
                     });
@@ -66,11 +66,11 @@ export class ExpenseCategoryService {
         }
     }
 
-    public deleteExpenseCategory(vehicleGuid: string): Promise<any> {
+    public deleteTrip(tripGuid: string): Promise<any> {
         const token = this.tokenService.getToken();
         if (token) {
             return new Promise((resolve, reject) => {
-                this.http.delete(environment.apiUrl + '/api/v1/auto-tracker/expense-category/' + vehicleGuid, {headers: this.tokenService.setAuthorizationHeader(token)})
+                this.http.delete(environment.apiUrl + '/api/v1/charter-sauce/trip/' + tripGuid, {headers: this.tokenService.setAuthorizationHeader(token)})
                     .subscribe(response => {
                         resolve(response);
                     });
@@ -80,7 +80,4 @@ export class ExpenseCategoryService {
             return null;
         }
     }
-
-    // SUPPORT METHODS
-
 }

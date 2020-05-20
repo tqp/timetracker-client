@@ -20,7 +20,7 @@ export class FuelVehicleService {
         const token = this.tokenService.getToken();
         if (token) {
             return new Promise((resolve, reject) => {
-                this.http.post(environment.apiUrl + '/api/v1/auto/vehicle', {...fuelVehicle}, {headers: this.tokenService.setAuthorizationHeader(token)})
+                this.http.post(environment.apiUrl + '/api/v1/auto-tracker/vehicle', {...fuelVehicle}, {headers: this.tokenService.setAuthorizationHeader(token)})
                     .subscribe((response: any) => {
                         resolve(response);
                     });
@@ -34,7 +34,7 @@ export class FuelVehicleService {
     public getFuelVehicleList(): Observable<any> {
         const token = this.tokenService.getToken();
         if (token) {
-            return this.http.get(environment.apiUrl + '/api/v1/auto/vehicle', {headers: this.tokenService.setAuthorizationHeader(token)});
+            return this.http.get(environment.apiUrl + '/api/v1/auto-tracker/vehicle', {headers: this.tokenService.setAuthorizationHeader(token)});
         } else {
             console.error('No token was present.');
             return null;
@@ -44,7 +44,7 @@ export class FuelVehicleService {
     public getFuelVehicle(vehicleGuid: string): Observable<any> {
         const token = this.tokenService.getToken();
         if (token) {
-            return this.http.get(environment.apiUrl + '/api/v1/auto/vehicle/' + vehicleGuid, {headers: this.tokenService.setAuthorizationHeader(token)});
+            return this.http.get(environment.apiUrl + '/api/v1/auto-tracker/vehicle/' + vehicleGuid, {headers: this.tokenService.setAuthorizationHeader(token)});
         } else {
             console.error('No token was present.');
             return null;
@@ -55,7 +55,7 @@ export class FuelVehicleService {
         const token = this.tokenService.getToken();
         if (token) {
             return new Promise((resolve, reject) => {
-                this.http.put(environment.apiUrl + '/api/v1/auto/vehicle', {...fuelVehicle}, {headers: this.tokenService.setAuthorizationHeader(token)})
+                this.http.put(environment.apiUrl + '/api/v1/auto-tracker/vehicle', {...fuelVehicle}, {headers: this.tokenService.setAuthorizationHeader(token)})
                     .subscribe(response => {
                         resolve(response);
                     });
@@ -70,7 +70,7 @@ export class FuelVehicleService {
         const token = this.tokenService.getToken();
         if (token) {
             return new Promise((resolve, reject) => {
-                this.http.delete(environment.apiUrl + '/api/v1/auto/vehicle/' + vehicleGuid, {headers: this.tokenService.setAuthorizationHeader(token)})
+                this.http.delete(environment.apiUrl + '/api/v1/auto-tracker/vehicle/' + vehicleGuid, {headers: this.tokenService.setAuthorizationHeader(token)})
                     .subscribe(response => {
                         resolve(response);
                     });

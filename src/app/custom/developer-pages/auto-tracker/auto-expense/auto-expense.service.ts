@@ -20,7 +20,7 @@ export class AutoExpenseService {
         const token = this.tokenService.getToken();
         if (token) {
             return new Promise((resolve, reject) => {
-                this.http.post(environment.apiUrl + '/api/v1/auto/expense', {...autoExpense}, {headers: this.tokenService.setAuthorizationHeader(token)})
+                this.http.post(environment.apiUrl + '/api/v1/auto-tracker/expense', {...autoExpense}, {headers: this.tokenService.setAuthorizationHeader(token)})
                     .subscribe((response: any) => {
                         resolve(response);
                     });
@@ -34,7 +34,7 @@ export class AutoExpenseService {
     public getAutoExpenseList(): Observable<any> {
         const token = this.tokenService.getToken();
         if (token) {
-            return this.http.get(environment.apiUrl + '/api/v1/auto/expense', {headers: this.tokenService.setAuthorizationHeader(token)});
+            return this.http.get(environment.apiUrl + '/api/v1/auto-tracker/expense', {headers: this.tokenService.setAuthorizationHeader(token)});
         } else {
             console.error('No token was present.');
             return null;
@@ -44,7 +44,7 @@ export class AutoExpenseService {
     public getAutoExpense(expenseGuid: string): Observable<any> {
         const token = this.tokenService.getToken();
         if (token) {
-            return this.http.get(environment.apiUrl + '/api/v1/auto/expense/' + expenseGuid, {headers: this.tokenService.setAuthorizationHeader(token)});
+            return this.http.get(environment.apiUrl + '/api/v1/auto-tracker/expense/' + expenseGuid, {headers: this.tokenService.setAuthorizationHeader(token)});
         } else {
             console.error('No token was present.');
             return null;
@@ -55,7 +55,7 @@ export class AutoExpenseService {
         const token = this.tokenService.getToken();
         if (token) {
             return new Promise((resolve, reject) => {
-                this.http.put(environment.apiUrl + '/api/v1/auto/expense', {...autoExpense}, {headers: this.tokenService.setAuthorizationHeader(token)})
+                this.http.put(environment.apiUrl + '/api/v1/auto-tracker/expense', {...autoExpense}, {headers: this.tokenService.setAuthorizationHeader(token)})
                     .subscribe(response => {
                         resolve(response);
                     });
@@ -70,7 +70,7 @@ export class AutoExpenseService {
         const token = this.tokenService.getToken();
         if (token) {
             return new Promise((resolve, reject) => {
-                this.http.delete(environment.apiUrl + '/api/v1/auto/expense/' + expenseGuid, {headers: this.tokenService.setAuthorizationHeader(token)})
+                this.http.delete(environment.apiUrl + '/api/v1/auto-tracker/expense/' + expenseGuid, {headers: this.tokenService.setAuthorizationHeader(token)})
                     .subscribe(response => {
                         resolve(response);
                     });
