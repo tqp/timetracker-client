@@ -77,8 +77,8 @@ export class DiagnosticInfoComponent implements OnInit, OnDestroy {
                 this.openTestResult = data.value;
             },
             error => {
-                // console.error('Error: ', error);
-                this.authService.errorHandler(error);
+                console.error('Error: ', error);
+                // this.authService.errorHandler(error);
             }
         );
 
@@ -87,8 +87,8 @@ export class DiagnosticInfoComponent implements OnInit, OnDestroy {
                 this.userTestResult = data.value;
             },
             error => {
-                // console.error('Error: ', error);
-                this.authService.errorHandler(error);
+                console.error('Error: ', error);
+                // this.authService.errorHandler(error);
             }
         );
 
@@ -97,8 +97,8 @@ export class DiagnosticInfoComponent implements OnInit, OnDestroy {
                 this.managerTestResult = data.value;
             },
             error => {
-                // console.error('Error: ', error);
-                this.authService.errorHandler(error);
+                console.error('Error: ', error);
+                // this.authService.errorHandler(error);
             }
         );
 
@@ -107,8 +107,8 @@ export class DiagnosticInfoComponent implements OnInit, OnDestroy {
                 this.adminTestResult = data.value;
             },
             error => {
-                // console.error('Error: ', error);
-                this.authService.errorHandler(error);
+                console.error('Error: ', error);
+                // this.authService.errorHandler(error);
             }
         );
 
@@ -117,8 +117,8 @@ export class DiagnosticInfoComponent implements OnInit, OnDestroy {
                 this.developerTestResult = data.value;
             },
             error => {
-                // console.error('Error: ', error);
-                this.authService.errorHandler(error);
+                console.error('Error: ', error);
+                // this.authService.errorHandler(error);
             }
         );
     }
